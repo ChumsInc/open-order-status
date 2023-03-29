@@ -1,0 +1,58 @@
+:root {
+    --bs-font-monospace: "Roboto Mono", SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+}
+
+.table thead th.sortable {
+    white-space: nowrap;
+}
+
+.table tr td {
+    white-space: nowrap;
+    font-weight: 500;
+}
+
+.table .font-monospace pre {
+    margin-bottom: 0;
+    font-size: 0.875rem;
+    white-space: pre-wrap;
+    font-weight: 400;
+}
+
+.table .font-monospace pre:before {
+    content: '* ';
+}
+
+.table tr.border-0 td {
+    border-bottom-width: 0;
+    padding-bottom: 0;
+}
+
+.table tr.comment-row td {
+    padding-top: 0;
+}
+
+.table tr.border-0.comment-row td {
+    padding-bottom: 0;
+}
+
+.btn-status {
+    min-width: 5rem;
+    --bs-btn-padding-y: 0.125rem;
+    --bs-btn-padding-x: 0.25rem;
+    --bs-btn-font-size: 0.825rem;
+    --bs-btn-border-radius: 0.25rem;
+    --bs-btn-font-weight: 300;
+}
+.btn-status-comments {
+    --bs-btn-padding-y: 0.125rem;
+    --bs-btn-padding-x: 0.25rem;
+    --bs-btn-font-size: 0.75rem !important;
+    --bs-btn-border-radius: 0.25rem;
+    --bs-btn-font-weight: 300;
+}
+
+/*tr:hover .btn-status {*/
+/*    color: var(--bs-btn-hover-color);*/
+/*    background-color: var(--bs-btn-hover-bg);*/
+/*    border-color: var(--bs-btn-hover-border-color);*/
+/*}*/
