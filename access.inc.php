@@ -1,2 +1,2 @@
 <?php
-$allowedGroups = array('production', 'cs');
+$allowedGroups = array('production', 'cs', 'imprint');
