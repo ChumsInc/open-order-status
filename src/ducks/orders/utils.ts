@@ -23,7 +23,6 @@ const initialTotals: SalesOrderTotals = {
 }
 
 export const initialState = (): OrdersState => ({
-    list: {},
     grouping: {},
     loading: false,
     loaded: false,
