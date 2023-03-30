@@ -24,13 +24,13 @@ const SalesOrderNo = ({row}:{row: SalesOrderRow}) => {
     if (!key) {
         return null;
     }
-    if (group.expanded || group.count === 1) {
+    if (group?.expanded || group?.count === 1) {
         return (
             <SalesOrderLink salesOrderNo={row.SalesOrderNo}/>
         )
     }
     return (
-        <SalesOrderNoRange salesOrderNos={group.salesOrders.map(row => row.SalesOrderNo)} onClick={clickHandler}/>
+        <SalesOrderNoRange salesOrderNos={group?.salesOrders.map(row => row.SalesOrderNo) ?? []} onClick={clickHandler}/>
     )
 }
 export default SalesOrderNo;

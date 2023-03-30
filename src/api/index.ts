@@ -1,4 +1,11 @@
-import {ARDivisionList, ARDivisionResponse, OpenOrderStatusCode, SalesOrderRow, SalesOrderStatusData} from "../types";
+import {
+    ARDivisionList,
+    ARDivisionResponse,
+    OpenOrderStatusCode,
+    SalesOrderRow,
+    SalesOrderStatusData,
+    SalesOrderStatusRow
+} from "../types";
 import {fetchJSON} from "chums-components";
 import dayjs from "dayjs";
 
@@ -43,7 +50,7 @@ export async function fetchOrdersList({imprint, maxDate}: FetchOrdersOptions): P
     }
 }
 
-export async function postOrderStatus(arg:SalesOrderStatusData):Promise<SalesOrderRow|null> {
+export async function postOrderStatus(arg:SalesOrderStatusData):Promise<SalesOrderStatusRow|null> {
     try {
         const body = {
             action: 'save',
@@ -53,9 +60,9 @@ export async function postOrderStatus(arg:SalesOrderStatusData):Promise<SalesOrd
             state: arg.StatusCode ?? '',
             note: arg.Notes ?? '',
         }
-        const url = `/node-sage/api/CHI/salesorder/status/${arg.SalesOrderNo}`;
-        const {line} = await fetchJSON<{line: SalesOrderRow}>(url, {method: 'POST', body: JSON.stringify(body)});
-        return line ?? null;
+        const url = `/node-sage/api/CHI/salesorder/status/v2/${arg.SalesOrderNo}`;
+        const {status} = await fetchJSON<{status: SalesOrderStatusRow}>(url, {method: 'POST', body: JSON.stringify(body)});
+        return status ?? null;
     } catch(err:unknown) {
         if (err instanceof Error) {
             console.debug("postOrderComment()", err.message);

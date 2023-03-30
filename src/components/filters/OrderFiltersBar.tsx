@@ -5,6 +5,7 @@ import ReloadButton from "./ReloadButton";
 import ARDivisionFilter from "./ARDivisionFilter";
 import CustomerFilter from "./CustomerFilter";
 import UserFilter from "./UserFilter";
+import StatusFilter from "./StatusFilter";
 
 const OrderFiltersBar = () => {
     return (
@@ -30,6 +31,9 @@ const OrderFiltersBar = () => {
             </div>
             <div className="col-auto">
                 <UserFilter />
+            </div>
+            <div className="col-auto">
+                <StatusFilter />
             </div>
         </div>
     )

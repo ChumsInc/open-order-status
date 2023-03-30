@@ -35,8 +35,8 @@ const fields: SortableTableField<SalesOrderRow>[] = [
     {field: 'OrderDate', title: 'Date', render: (row) => friendlyDate(row.OrderDate), sortable: true},
     {field: 'UserLogon', title: 'User', sortable: true, render: (row) => <UserName row={row}/>},
     {field: 'OrderType', title: 'Type', render: (row) => <OrderTypeBadge row={row}/>, sortable: true},
-    {field: 'CancelReasonCode', title: 'Hold', sortable: true, render: (row) => <HoldReasonBadge row={row}/>},
-    {field: 'UDF_IMPRINTED', title: 'IMP', render: (row) => <ImprintBadge row={row}/>, sortable: true},
+    {field: 'CancelReasonCode', title: 'Hold', sortable: false, render: (row) => <HoldReasonBadge row={row}/>},
+    {field: 'UDF_IMPRINTED', title: 'IMP', render: (row) => <ImprintBadge row={row}/>, sortable: false},
     {
         field: 'CustomerNo',
         title: 'Customer',
@@ -69,7 +69,7 @@ const commentFields: DataTableField<SalesOrderRow>[] = [
         field: 'lineComments',
         title: 'lineComments',
         render: (row) => <pre>{row.lineComments?.lineComments ?? null}</pre>,
-        colSpan: 6,
+        colSpan: 7,
         className: 'font-monospace'
     },
     {field: 'status', title: '', render: () => null}
@@ -144,7 +144,7 @@ const OrdersList = () => {
     return (
         <div>
             {loading && <LoadingProgressBar striped animated className="mt-1 mb-1" style={{height: '5px'}}/>}
-            <SortableTable fields={fields} className="table-sticky mt-3"
+            <SortableTable fields={fields} className="table-sticky mt-3 table-hover"
                            data={list.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)}
                            keyField={orderKey} rowClassName={rowClassName}
                            renderRow={(row) => renderRow(row)}

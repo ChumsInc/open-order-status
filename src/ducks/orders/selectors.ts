@@ -1,11 +1,9 @@
 import {RootState} from "../../app/configureStore";
 import {createSelector} from "@reduxjs/toolkit";
-import {customerKey} from "../../utils";
-import {calcStatus, groupKey, isInvoicing, orderSorter} from "./utils";
+import {calcStatus, orderSorter} from "./utils";
 import {FetchOrdersOptions} from "../../api";
-import {SalesOrderRow} from "../../types";
+import {SalesOrderGroup, SalesOrderRow} from "../../types";
 
-export const selectSalesOrderList = (state: RootState) => state.orders.list;
 export const selectLoading = (state: RootState) => state.orders.loading;
 export const selectLoaded = (state: RootState) => state.orders.loaded;
 export const selectImprint = (state: RootState) => state.orders.filters.imprint;
@@ -28,35 +26,34 @@ export const selectTotals = (state: RootState) => state.orders.totals;
 export const selectPage = (state: RootState) => state.orders.page;
 export const selectRowsPerPage = (state: RootState) => state.orders.rowsPerPage;
 export const selectSort = (state: RootState) => state.orders.sort;
-export const selectGrouping = (state:RootState) => state.orders.grouping;
-export const selectExpandAll = (state:RootState) => state.orders.expandAll;
-export const selectOrderGroup = (state:RootState, key:string) => state.orders.grouping[key] ?? null;
+export const selectGrouping = (state: RootState) => state.orders.grouping;
+export const selectExpandAll = (state: RootState) => state.orders.expandAll;
+export const selectOrderGroup = (state: RootState, key: string): SalesOrderGroup | null => state.orders.grouping[key] ?? null;
 
-export const selectSalesOrder = (state:RootState, salesOrderNo: string) => state.orders.list[salesOrderNo] ?? null;
 
 export const selectFetchOrderOptions = createSelector(
     [selectImprint, selectMaxShipDate],
-    (imprint, maxDate):FetchOrdersOptions => {
+    (imprint, maxDate): FetchOrdersOptions => {
         return {maxDate, imprint}
     }
 )
 
 export const selectGroupedList = createSelector(
-    [selectGrouping, selectExpandAll],
-    (grouping, expandAll) => {
-    const rows:SalesOrderRow[] = [];
-    Object.values(grouping)
-        .forEach(group => {
-            // if (expandAll) {
-            //     return rows.push(...group.salesOrders);
-            // }
-            if (group.salesOrders.length === 1 || !group.expanded) {
-                return rows.push(group.row);
-            }
-            rows.push(...group.salesOrders);
-        });
-    return rows;
-})
+    [selectGrouping],
+    (grouping) => {
+        const rows: SalesOrderRow[] = [];
+        Object.values(grouping)
+            .forEach(group => {
+                // if (expandAll) {
+                //     return rows.push(...group.salesOrders);
+                // }
+                if (group.salesOrders.length === 1 || !group.expanded) {
+                    return rows.push(group.row);
+                }
+                rows.push(...group.salesOrders);
+            });
+        return rows;
+    })
 
 export const selectFilteredOrders = createSelector(
     [selectGroupedList, selectImprint, selectARDivisionNo, selectCustomer, selectUser, selectStatus,
@@ -65,9 +62,9 @@ export const selectFilteredOrders = createSelector(
     ],
     (list, imprint, arDivisionNo, customerNo, user,
      statusCode, onTime, late, backOrders, onCancelDate, pastCancelDate,
-     invoicing, showChums, showEDI, showWeb, sort):SalesOrderRow[] => {
+     invoicing, showChums, showEDI, showWeb, sort): SalesOrderRow[] => {
         return Object.values(list)
-            .filter(row => ['S','B','R'].includes(row.OrderType))
+            .filter(row => ['S', 'B', 'R'].includes(row.OrderType))
             .filter(row => invoicing || !calcStatus(row).invoicing)
             .filter(row => onTime || !calcStatus(row).onTime)
             .filter(row => late || !calcStatus(row).late)
@@ -87,15 +84,8 @@ export const selectFilteredOrders = createSelector(
 
 export const selectFilteredOrderNos = createSelector([selectFilteredOrders], (orders) => orders.map(row => row.SalesOrderNo));
 
-export const selectTotal = createSelector(
-    [selectSalesOrderList, selectInvoicing, selectShowDollars],
-    (list, invoicing, showDollars) => {
-
-    }
-)
-
 export const selectAnyExpanded = createSelector(
     [selectGrouping, selectExpandAll],
     (groups, expandAll) => {
         return expandAll || Object.values(groups).reduce((expanded, group) => expanded || (group.count > 1 && group.expanded), false);
-})
+    })

@@ -24,6 +24,8 @@ export const selectLoading = (state: RootState) => state.orderStatus.loading;
 export const selectLoaded = (state: RootState) => state.orderStatus.loaded;
 export const selectCurrentStatus = (state:RootState) => state.orderStatus.current;
 
+export const selectStatusByCode = (state:RootState, code:string) => state.orderStatus.list.filter(status => status.StatusCode === code);
+
 export const statusSorter = (a: OpenOrderStatusCode, b: OpenOrderStatusCode) => {
     return a.StatusDescription.toLowerCase() > b.StatusDescription.toLowerCase() ? 1 : -1;
 }

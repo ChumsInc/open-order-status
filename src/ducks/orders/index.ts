@@ -1,21 +1,19 @@
-import {
-    GroupTotal,
-    OpenOrderStatusCode,
-    SalesOrderGroupList,
-    SalesOrderList,
-    SalesOrderRow,
-    SalesOrderTotals
-} from "../../types";
+import {SalesOrderGroupList, SalesOrderRow, SalesOrderTotals} from "../../types";
 import {SortProps} from "chums-types";
 import {createReducer} from "@reduxjs/toolkit";
 import {buildTotals, defaultOrderSorter, groupKey, initialState} from "./utils";
 import {
     loadOrders,
-    saveOrderStatus, setARDivisionNoFilter, setCustomerFilter,
+    saveGroupStatus,
+    saveOrderStatus,
+    setARDivisionNoFilter,
+    setCustomerFilter,
     setMaxShipDate,
     setPage,
     setRowsPerPage,
-    setSort, setStatusFilter, setUserFilter,
+    setSort,
+    setStatusFilter,
+    setUserFilter,
     toggleExpandAllGroups,
     toggleExpandGroup,
     toggleImprint,
@@ -37,7 +35,6 @@ import {setPreference, storageKeys} from "../../api/preferences";
 
 
 export interface OrdersState {
-    list: SalesOrderList;
     grouping: SalesOrderGroupList;
     loading: boolean;
     loaded: boolean;
@@ -84,13 +81,16 @@ const ordersReducer = createReducer(initialState, (builder) => {
         })
         .addCase(loadOrders.fulfilled, (state, action) => {
             state.loading = false;
-            state.list = {};
             state.grouping = {};
             action.payload.forEach(row => {
-                state.list[row.SalesOrderNo] = {...row};
                 const key = groupKey(row);
                 if (!state.grouping[key]) {
-                    state.grouping[key] = {count: 0, expanded: state.expandAll, row: {...row, OrderAmt: 0}, salesOrders: []};
+                    state.grouping[key] = {
+                        count: 0,
+                        expanded: state.expandAll,
+                        row: {...row, OrderAmt: 0},
+                        salesOrders: []
+                    };
                     if (row.CustomerNo === 'RETAIL') {
                         state.grouping[key].row.BillToName = row.CustomerName;
                     }
@@ -104,7 +104,15 @@ const ordersReducer = createReducer(initialState, (builder) => {
                 state.grouping[key].row.Comment = row.Comment === state.grouping[key].row.Comment ? row.Comment : VALUE_VARIES;
                 state.grouping[key].row.status = row.status?.StatusCode === state.grouping[key].row.status?.StatusCode
                     ? (row.status ?? null)
-                    : {id: 0, Notes: null, StatusCode: VALUE_VARIES, StatusType: null, User: null, timestamp: null};
+                    : {
+                        id: 0,
+                        SalesOrderNo: row.SalesOrderNo,
+                        Notes: null,
+                        StatusCode: VALUE_VARIES,
+                        StatusType: null,
+                        User: null,
+                        timestamp: null
+                    };
             });
             state.totals = buildTotals(action.payload ?? []);
         })
@@ -128,13 +136,16 @@ const ordersReducer = createReducer(initialState, (builder) => {
             const group = state.grouping[action.meta.arg.groupKey];
             if (group) {
                 const existing = group.salesOrders.filter(row => row.SalesOrderNo !== action.payload?.SalesOrderNo);
-                if (action.payload) {
+                const [matching] = group.salesOrders.filter(row => row.SalesOrderNo === action.payload?.SalesOrderNo);
+                if (action.payload && matching) {
+                    matching.status = action.payload;
                     group.salesOrders = [
                         ...existing,
-                        action.payload,
+                        {...matching, status: action.payload, saving: false},
                     ].sort(defaultOrderSorter)
                     if (group.row.SalesOrderNo === action.meta.arg.SalesOrderNo) {
-                        group.row = action.payload;
+                        group.row.status = action.payload;
+                        group.row.saving = false;
                     }
                 } else {
                     group.salesOrders = existing.sort(defaultOrderSorter);
@@ -155,6 +166,35 @@ const ordersReducer = createReducer(initialState, (builder) => {
                 group.row.saving = false;
             }
         })
+        .addCase(saveGroupStatus.pending, (state, action) => {
+            const group = state.grouping[action.meta.arg.groupKey];
+            if (group) {
+                group.saving = true;
+            }
+        })
+        .addCase(saveGroupStatus.fulfilled, (state, action) => {
+            const group = state.grouping[action.meta.arg.groupKey];
+            if (group) {
+                group.saving = false;
+                const groupStatus = group.salesOrders
+                    .filter(row => row.status)
+                    .reduce((pv, cv) => {
+                        if (!cv.status || !cv.status.StatusCode || pv.includes(cv.status.StatusCode)) {
+                            return pv;
+                        }
+                        return [...pv, cv.status.StatusCode];
+                    }, [] as string[]);
+                if (group.row.status && groupStatus.length > 1) {
+                    group.row.status.StatusCode = VALUE_VARIES;
+                }
+            }
+        })
+        .addCase(saveGroupStatus.rejected, (state, action) => {
+            const group = state.grouping[action.meta.arg.groupKey];
+            if (group) {
+                group.saving = false;
+            }
+        })
         .addCase(toggleExpandGroup, (state, action) => {
             if (action.payload && state.grouping[action.payload.groupKey]) {
                 state.grouping[action.payload.groupKey].expanded = !state.grouping[action.payload.groupKey].expanded;
@@ -172,16 +212,20 @@ const ordersReducer = createReducer(initialState, (builder) => {
         })
         .addCase(setARDivisionNoFilter, (state, action) => {
             state.filters.arDivisionNo = action.payload;
+            state.page = 0;
         })
         .addCase(setCustomerFilter, (state, action) => {
-            const [arDivisionNo, customerNo] = action.payload?.split('-') ?? [];
+            const [, customerNo] = action.payload?.split('-') ?? [];
             state.filters.customer = customerNo ?? action.payload ?? '';
+            state.page = 0;
         })
         .addCase(setUserFilter, (state, action) => {
             state.filters.user = action.payload;
+            state.page = 0;
         })
         .addCase(setStatusFilter, (state, action) => {
             state.filters.status = action.payload;
+            state.page = 0;
         })
         .addCase(toggleShowOpen, (state, action) => {
             state.filters.onTimeOrders = action.payload ?? !state.filters.onTimeOrders;

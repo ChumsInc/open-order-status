@@ -20,7 +20,7 @@ const CustomerFilter = () => {
 
     const submitHandler = (ev: FormEvent) => {
         ev.preventDefault();
-        dispatch(setCustomerFilter(value));
+        dispatch(setCustomerFilter(value.toUpperCase()));
     }
 
     const buttonClassName = {

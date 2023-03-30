@@ -31,6 +31,7 @@ export interface CustomerList {
 
 export interface SalesOrderStatusRow {
     id: number;
+    SalesOrderNo: string;
     StatusCode: string|null;
     Notes: string|null;
     User: string|null;
@@ -48,6 +49,7 @@ export interface SalesOrderRow extends Pick<SalesOrderHeader, 'ARDivisionNo' | '
     | 'UDF_IMPRINTED' | 'CancelReasonCode' | 'CurrentInvoiceNo'> {
     CancelDate: string|null;
     UserLogon: string;
+    UpdatedByUser: string;
     OrderAmt: number|string;
     isEDI: boolean;
     isB2B: boolean;
@@ -63,13 +65,16 @@ export interface SalesOrderList {
     [key:string]: SalesOrderRow;
 }
 
+export interface SalesOrderGroup {
+    count: number;
+    expanded: boolean;
+    row:SalesOrderRow;
+    salesOrders: SalesOrderRow[];
+    saving?: boolean;
+}
+
 export interface SalesOrderGroupList {
-    [key:string]: {
-        count: number;
-        expanded: boolean;
-        row:SalesOrderRow;
-        salesOrders: SalesOrderRow[];
-    }
+    [key:string]: SalesOrderGroup;
 }
 
 export type SalesOrderStatusGroup = 'onTime'|'late'|'backorder'|'onCancelDate'|'pastCancelDate'|'invoicing'|'edi'|'web'|'chums';
@@ -86,8 +91,8 @@ export interface SalesOrderStatusData {
     id: number;
     groupKey: string;
     SalesOrderNo: string;
-    StatusCode: string|null;
-    Notes: string|null;
+    StatusCode?: string|null;
+    Notes?: string|null;
 }
 
 export interface ToggleExpandOrder {

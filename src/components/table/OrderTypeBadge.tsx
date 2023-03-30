@@ -12,7 +12,7 @@ const statusClassName = ({OrderStatus, OrderType}:SalesOrderRow) => {
     case 'N':
         return {'bg-light': true, 'text-dark': true,};
     case 'H':
-        return {'bg-warning': true};
+        return {'bg-warning': true, "text-dark": true};
     }
     return {};
 }

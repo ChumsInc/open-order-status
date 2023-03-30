@@ -6,7 +6,7 @@ const HoldReasonBadge = ({row}: { row: SalesOrderRow }) => {
         return null;
     }
     return <span className="badge bg-warning text-dark">
-        {row.OrderType}/{row.OrderStatus}
+        {row.CancelReasonCode}
     </span>
 }
 

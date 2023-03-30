@@ -83,7 +83,7 @@ const OrderDateStatusToggles = () => {
                     <ToggleButton checked={openOrders} onChange={changeHandler('onTime')} color="primary">
                         <GroupToggleLabel total={totals.onTime}>Open</GroupToggleLabel>
                     </ToggleButton>
-                    <ToggleButton checked={late} onChange={changeHandler('late')} color="info">
+                    <ToggleButton checked={late} onChange={changeHandler('late')} color="danger">
                         <GroupToggleLabel total={totals.late}>Late</GroupToggleLabel>
                     </ToggleButton>
                     <ToggleButton checked={backOrders} onChange={changeHandler('backorder')} color="dark">
@@ -93,7 +93,7 @@ const OrderDateStatusToggles = () => {
                         <GroupToggleLabel total={totals.onCancelDate}>On Cancel Date</GroupToggleLabel>
                     </ToggleButton>
                     <ToggleButton checked={pastCancelDate} onChange={changeHandler('pastCancelDate')} color="danger">
-                        <GroupToggleLabel total={totals.pastCancelDate}>Past Cancel Date</GroupToggleLabel>
+                        <GroupToggleLabel total={totals.pastCancelDate}>Past Cancel <span className="bi-exclamation-triangle-fill"/></GroupToggleLabel>
                     </ToggleButton>
                     <ToggleButton checked={invoicing} onChange={changeHandler('invoicing')} color="success">
                         <GroupToggleLabel total={totals.invoicing}>Invoicing</GroupToggleLabel>
