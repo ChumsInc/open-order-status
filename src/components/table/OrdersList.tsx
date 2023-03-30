@@ -144,12 +144,14 @@ const OrdersList = () => {
     return (
         <div>
             {loading && <LoadingProgressBar striped animated className="mt-1 mb-1" style={{height: '5px'}}/>}
-            <SortableTable fields={fields} className="table-sticky mt-3 table-hover"
-                           data={list.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)}
-                           keyField={orderKey} rowClassName={rowClassName}
-                           renderRow={(row) => renderRow(row)}
-                           currentSort={sort} onChangeSort={onChangeSort}
-            />
+            <div className="table-responsive">
+                <SortableTable fields={fields} className="table-sticky mt-3 table-hover"
+                               data={list.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)}
+                               keyField={orderKey} rowClassName={rowClassName}
+                               renderRow={(row) => renderRow(row)}
+                               currentSort={sort} onChangeSort={onChangeSort}
+                />
+            </div>
             <TablePagination page={page} onChangePage={pageChangeHandler}
                              rowsPerPage={rowsPerPage} onChangeRowsPerPage={onChangeRowsPerPage}
                              showFirst showLast bsSize="sm"
