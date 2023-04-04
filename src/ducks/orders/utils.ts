@@ -138,7 +138,7 @@ export function isQuote(row: SalesOrderRow) {
 export function isLate(row: SalesOrderRow) {
     return !isQuote(row)
         && !isInvoicing(row)
-        && dayjs(row.CancelDate ?? row.ShipExpireDate).valueOf() < new Date().valueOf();
+        && dayjs(row.CancelDate ?? row.ShipExpireDate).hour(16).valueOf() < new Date().valueOf();
 }
 
 export function isOnCancelDate(row: SalesOrderRow) {
