@@ -1,6 +1,6 @@
 import React from 'react';
 import {SalesOrderRow} from "../../types";
-import {RootState, useAppDispatch, useAppSelector} from "../../app/configureStore";
+import {useAppDispatch, useAppSelector} from "../../app/configureStore";
 import {useSelector} from "react-redux";
 import {
     selectFilteredOrderNos,

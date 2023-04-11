@@ -1,7 +1,6 @@
 import React from 'react';
 import {SalesOrderRow} from "../../types";
 import {groupKey} from "../../ducks/orders/utils";
-import {useSelector} from "react-redux";
 import {RootState, useAppDispatch, useAppSelector} from "../../app/configureStore";
 import {selectOrderGroup, selectSalesOrderNo, selectSort} from "../../ducks/orders/selectors";
 import SalesOrderLink from "./SalesOrderLink";
