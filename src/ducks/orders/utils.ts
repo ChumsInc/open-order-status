@@ -34,6 +34,7 @@ export const initialState = (): OrdersState => ({
         ,
         arDivisionNo: '',
         customer: '',
+        salesOrderNo: '',
         user: '',
         status: null,
         onTimeOrders: getPreference(storageKeys.showOpen, true),

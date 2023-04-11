@@ -6,6 +6,7 @@ import ARDivisionFilter from "./ARDivisionFilter";
 import CustomerFilter from "./CustomerFilter";
 import UserFilter from "./UserFilter";
 import StatusFilter from "./StatusFilter";
+import SalesOrderFilter from "./SalesOrderFilter";
 
 const OrderFiltersBar = () => {
     return (
@@ -31,6 +32,9 @@ const OrderFiltersBar = () => {
             </div>
             <div className="col-auto">
                 <UserFilter />
+            </div>
+            <div className="col-auto">
+                <SalesOrderFilter />
             </div>
             <div className="col-auto">
                 <StatusFilter />

@@ -10,6 +10,7 @@ export const selectImprint = (state: RootState) => state.orders.filters.imprint;
 export const selectMaxShipDate = (state: RootState) => state.orders.filters.maxShipDate;
 export const selectARDivisionNo = (state: RootState) => state.orders.filters.arDivisionNo;
 export const selectCustomer = (state: RootState) => state.orders.filters.customer;
+export const selectSalesOrderNo = (state: RootState) => state.orders.filters.salesOrderNo;
 export const selectUser = (state: RootState) => state.orders.filters.user;
 export const selectStatus = (state: RootState) => state.orders.filters.status;
 export const selectOnTime = (state: RootState) => state.orders.filters.onTimeOrders;
@@ -39,14 +40,18 @@ export const selectFetchOrderOptions = createSelector(
 )
 
 export const selectGroupedList = createSelector(
-    [selectGrouping],
-    (grouping) => {
+    [selectGrouping, selectSalesOrderNo],
+    (grouping, salesOrderNo) => {
         const rows: SalesOrderRow[] = [];
         Object.values(grouping)
             .forEach(group => {
                 // if (expandAll) {
                 //     return rows.push(...group.salesOrders);
                 // }
+                if (!!salesOrderNo) {
+                    rows.push(...group.salesOrders.filter(so => so.SalesOrderNo.startsWith(salesOrderNo)));
+                    return;
+                }
                 if (group.salesOrders.length === 1 || !group.expanded) {
                     return rows.push(group.row);
                 }

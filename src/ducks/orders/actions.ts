@@ -8,7 +8,8 @@ import {SortProps} from "chums-types";
 export const setARDivisionNoFilter = createAction<string>('orders/filters/setARDivisionNo');
 export const setCustomerFilter = createAction<string | null>('orders/filters/setCustomer');
 export const setUserFilter = createAction<string | null>('orders/filters/setUser');
-export const setStatusFilter = createAction<string | null>('orders/filters/setStatus')
+export const setStatusFilter = createAction<string | null>('orders/filters/setStatus');
+export const setSalesOrderFilter = createAction<string|null>('orders/filters/setSalesOrder');
 
 export const setPage = createAction<number>('orders/setPage');
 export const setRowsPerPage = createAction<number>('orders/setRowsPerPage');

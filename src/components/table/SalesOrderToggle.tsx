@@ -1,8 +1,14 @@
 import React from 'react';
 import {SalesOrderRow} from "../../types";
-import {RootState, useAppDispatch} from "../../app/configureStore";
+import {RootState, useAppDispatch, useAppSelector} from "../../app/configureStore";
 import {useSelector} from "react-redux";
-import {selectFilteredOrderNos, selectOrderGroup, selectRowsPerPage, selectSort} from "../../ducks/orders/selectors";
+import {
+    selectFilteredOrderNos,
+    selectOrderGroup,
+    selectRowsPerPage,
+    selectSalesOrderNo,
+    selectSort
+} from "../../ducks/orders/selectors";
 import {groupKey, orderSorter} from "../../ducks/orders/utils";
 import {toggleExpandGroup} from "../../ducks/orders/actions";
 import classNames from "classnames";
@@ -12,7 +18,8 @@ import {VALUE_VARIES} from "../../utils";
 const SalesOrderToggle = ({row}: { row: SalesOrderRow }) => {
     const dispatch = useAppDispatch();
     const key = groupKey(row);
-    const group = useSelector((state: RootState) => selectOrderGroup(state, key));
+    const group = useAppSelector((state) => selectOrderGroup(state, key));
+    const salesOrderNo = useSelector(selectSalesOrderNo);
     const orders = useSelector(selectFilteredOrderNos);
     const sort = useSelector(selectSort);
     const rowsPerPage = useSelector(selectRowsPerPage);
@@ -27,6 +34,11 @@ const SalesOrderToggle = ({row}: { row: SalesOrderRow }) => {
     if (!key || !group || group.count === 1) {
         return null;
     }
+    if (!!salesOrderNo) {
+        return null;
+    }
+
+
     if (!group.expanded) {
         return (
             <Tooltip arrow title={row[sort.field] === VALUE_VARIES ? 'Unable to expand on current sort' : 'Expand group'}>

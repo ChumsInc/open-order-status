@@ -10,7 +10,7 @@ import {
     setCustomerFilter,
     setMaxShipDate,
     setPage,
-    setRowsPerPage,
+    setRowsPerPage, setSalesOrderFilter,
     setSort,
     setStatusFilter,
     setUserFilter,
@@ -43,6 +43,7 @@ export interface OrdersState {
         maxShipDate: string;
         arDivisionNo: string;
         customer: string | null;
+        salesOrderNo: string|null;
         user: string | null;
         status: string | null;
         onTimeOrders: boolean;
@@ -217,6 +218,10 @@ const ordersReducer = createReducer(initialState, (builder) => {
         .addCase(setCustomerFilter, (state, action) => {
             const [, customerNo] = action.payload?.split('-') ?? [];
             state.filters.customer = customerNo ?? action.payload ?? '';
+            state.page = 0;
+        })
+        .addCase(setSalesOrderFilter, (state, action) => {
+            state.filters.salesOrderNo = action.payload;
             state.page = 0;
         })
         .addCase(setUserFilter, (state, action) => {
