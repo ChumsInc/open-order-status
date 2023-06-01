@@ -5,6 +5,7 @@ import alertsReducer from "../ducks/alerts";
 import orderStatusReducer from "../ducks/order-status";
 import ordersReducer from "../ducks/orders";
 import filtersReducer from "../ducks/filters";
+import versionReducer from "../ducks/version";
 
 
 
@@ -13,6 +14,7 @@ const rootReducer = combineReducers({
     filters: filtersReducer,
     orders: ordersReducer,
     orderStatus: orderStatusReducer,
+    version: versionReducer,
 });
 
 const store = configureStore({

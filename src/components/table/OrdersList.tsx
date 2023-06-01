@@ -28,11 +28,13 @@ import ImprintBadge from "./ImprintBadge";
 import OrderStatusContainer from "../../ducks/order-status/OrderStatusContainer";
 import ToggleExpandAll from "./ToggleExpandAll";
 import SalesOrderNo from "./SalesOrderNo";
+import OrderDate from "./OrderDate";
+import Version from "../../ducks/version/Version";
 
 const fields: SortableTableField<SalesOrderRow>[] = [
     {field: 'SalesOrderNo', title: 'SO #', sortable: true, render: (row) => <SalesOrderNo row={row}/>},
     {field: 'SalesOrderNo', title: <ToggleExpandAll/>, render: (row) => <SalesOrderToggle row={row}/>},
-    {field: 'OrderDate', title: 'Date', render: (row) => friendlyDate(row.OrderDate), sortable: true},
+    {field: 'OrderDate', title: 'Date', render: (row) => <OrderDate row={row} />, sortable: true},
     {field: 'UserLogon', title: 'User', sortable: true, render: (row) => <UserName row={row}/>},
     {field: 'OrderType', title: 'Type', render: (row) => <OrderTypeBadge row={row}/>, sortable: true},
     {field: 'CancelReasonCode', title: 'Hold', sortable: false, render: (row) => <HoldReasonBadge row={row}/>},
@@ -60,7 +62,7 @@ const fields: SortableTableField<SalesOrderRow>[] = [
         render: (row) => numeral(row.OrderAmt).format('$0,0')
     },
     {field: 'Comment', title: 'Comment', sortable: true},
-    {field: 'status', title: 'Status', render: row => <OrderStatusContainer row={row}/>, sortable: true}
+    {field: 'status', title: 'Status', render: row => <OrderStatusContainer row={row}/>, sortable: true, className: 'text-end'}
 ];
 
 const commentFields: DataTableField<SalesOrderRow>[] = [
@@ -68,7 +70,7 @@ const commentFields: DataTableField<SalesOrderRow>[] = [
     {
         field: 'lineComments',
         title: 'lineComments',
-        render: (row) => <pre>{row.lineComments?.lineComments ?? null}</pre>,
+        render: (row) => <pre><span className="bi-info-circle me-1" />{row.lineComments?.lineComments ?? null}</pre>,
         colSpan: 7,
         className: 'font-monospace'
     },
@@ -79,7 +81,7 @@ const notesFields: DataTableField<SalesOrderRow>[] = [
     {
         field: 'status',
         title: 'lineComments',
-        render: (row) => <pre>{row.status?.Notes ?? null}</pre>,
+        render: (row) => <pre><span className="bi-pencil-square me-1" />{row.status?.Notes ?? null}</pre>,
         colSpan: 7,
         className: 'font-monospace'
     },
@@ -152,10 +154,13 @@ const OrdersList = () => {
                                currentSort={sort} onChangeSort={onChangeSort}
                 />
             </div>
-            <TablePagination page={page} onChangePage={pageChangeHandler}
-                             rowsPerPage={rowsPerPage} onChangeRowsPerPage={onChangeRowsPerPage}
-                             showFirst showLast bsSize="sm"
-                             count={list.length}/>
+            <div className="d-flex justify-content-between align-items-start">
+                <Version />
+                <TablePagination page={page} onChangePage={pageChangeHandler}
+                                 rowsPerPage={rowsPerPage} onChangeRowsPerPage={onChangeRowsPerPage}
+                                 showFirst showLast bsSize="sm"
+                                 count={list.length}/>
+            </div>
         </div>
     )
 }

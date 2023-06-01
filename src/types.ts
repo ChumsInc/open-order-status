@@ -29,13 +29,20 @@ export interface CustomerList {
     [key: string]: string;
 }
 
+export interface StatusHistoryRow {
+    StatusCode: string;
+    User: string;
+    timestamp: string;
+}
+
 export interface SalesOrderStatusRow {
     id: number;
-    SalesOrderNo: string;
+    SalesOrderNo?: string;
     StatusCode: string|null;
     Notes: string|null;
     User: string|null;
-    StatusType: string|null;
+    StatusType?: string|null;
+    StatusHistory?: StatusHistoryRow[]|null;
     timestamp: string|null;
 }
 
@@ -49,6 +56,10 @@ export interface SalesOrderRow extends Pick<SalesOrderHeader, 'ARDivisionNo' | '
     | 'UDF_IMPRINTED' | 'CancelReasonCode' | 'CurrentInvoiceNo'> {
     CancelDate: string|null;
     UserLogon: string;
+    DateCreated: string;
+    TimeCreated: string;
+    DateUpdated: string;
+    TimeUpdated: string;
     UpdatedByUser: string;
     OrderAmt: number|string;
     isEDI: boolean;

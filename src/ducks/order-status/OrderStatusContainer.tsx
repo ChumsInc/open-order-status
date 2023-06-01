@@ -9,7 +9,8 @@ import {saveGroupStatus, saveOrderStatus} from "../orders/actions";
 import {groupKey} from "../orders/utils";
 import Tooltip from "@mui/material/Tooltip";
 import OrderNoteModal from "./OrderNoteModal";
-import {selectOrderGroup} from "../orders/selectors";
+import {selectOrderGroup, selectSalesOrderNo} from "../orders/selectors";
+import OrderStatusTooltipTitle from "./OrderStatusTooltipTitle";
 
 
 const OrderStatusContainer = ({
@@ -21,12 +22,16 @@ const OrderStatusContainer = ({
     const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
     const [notesOpen, setNotesOpen] = useState(false);
     const group = useSelector((state: RootState) => selectOrderGroup(state, groupKey(row)));
+    const salesOrderFilter = useSelector(selectSalesOrderNo);
 
     const [currentStatus] = list.filter(status => status.StatusCode === row.status?.StatusCode);
-    const groupStatus = !!group && !group.expanded && group.salesOrders.length > 1;
+    const groupStatus = !!group && !group.expanded && group.salesOrders.length > 1 && !salesOrderFilter;
     const saving = groupStatus ? group?.saving : row.saving;
 
     const handleClick = (ev: React.MouseEvent<HTMLButtonElement>) => {
+        if (saving) {
+            return;
+        }
         setAnchorEl(ev.currentTarget);
     }
 
@@ -89,15 +94,15 @@ const OrderStatusContainer = ({
     return (
         <div>
             <div className="btn-group btn-group-sm">
-                <Tooltip title={currentStatus?.StatusDescription ?? undefined} arrow placement="left">
+                <Tooltip title={<OrderStatusTooltipTitle row={row} currentStatus={currentStatus}/>} arrow placement="left">
                     <button className={classNames('btn btn-sm btn-status', badgeClassName())}
-                            onClick={handleClick} disabled={saving}>
+                            onClick={handleClick}>
                         {saving && (
                             <div className="spinner-border spinner-border-sm" role="status">
                                 <span className="visually-hidden">Saving...</span>
                             </div>
                         )}
-                        {!saving && (row.status?.StatusCode || (defaultText ?? (groupStatus ? 'Set All' : 'Set Status')))}
+                        {!saving && (currentStatus?.StatusDescription || (defaultText ?? (groupStatus ? 'Set All' : 'Set Status')))}
                     </button>
                 </Tooltip>
                 <button className={classNames("btn btn-sm btn-status-comments", notesButtonClassName)}

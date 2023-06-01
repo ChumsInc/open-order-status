@@ -27,6 +27,7 @@ module.exports = merge(common, {
             '/node-sage/': {...localProxy},
             '/sage/': {...localProxy},
             '/images/': {...localProxy},
+            '/version': {...localProxy},
         },
         watchFiles: {
             paths: 'src/**/*',

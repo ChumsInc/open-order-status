@@ -15,7 +15,7 @@ export const initialAlertsState: AlertsState = {
 export const dismissAlert = createAction<number>('alerts/dismiss');
 export const addAlert = createAction<ErrorAlert>('alerts/addAlert');
 
-export const selectAlerts = (state:RootState) => state.alerts.list;
+export const selectAlerts = (state: RootState) => state.alerts.list;
 
 const alertsReducer = createReducer(initialAlertsState, (builder) => {
     builder
@@ -35,17 +35,26 @@ const alertsReducer = createReducer(initialAlertsState, (builder) => {
                 state.nextId += 1;
             }
         })
-        .addDefaultCase((state, action) => {
-            if (isRejected(action) && action.error) {
-                state.list.push({
-                    context: action.type.replace('/rejected', ''),
-                    message: action.error.message ?? '',
-                    id: state.nextId,
-                    count: 1
-                });
-                state.nextId += 1;
-            }
-        })
+        .addMatcher((action) => isRejected(action) && !!action.error,
+            (state, action) => {
+                const context = action.type.replace('/rejected', '');
+                const [contextAlert] = state.list.filter(alert => alert.context === context)
+                if (contextAlert) {
+                    contextAlert.count += 1;
+                    state.list = [
+                        ...state.list.filter(alert => alert.context !== context),
+                        contextAlert
+                    ];
+                } else {
+                    state.list.push({
+                        context,
+                        message: action.error.message ?? '',
+                        id: state.nextId,
+                        count: 1
+                    });
+                    state.nextId += 1;
+                }
+            })
 });
 
 export default alertsReducer;

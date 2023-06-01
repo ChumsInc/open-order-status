@@ -262,3 +262,7 @@ export function buildTotals(rows: SalesOrderRow[]): SalesOrderTotals {
         return total;
     }, {...initialTotals})
 }
+
+export const parseDateTime = (sageDate:string, sageTime:string):Date => {
+    return dayjs(sageDate).add(Number(sageTime), 'hours').toDate();
+}

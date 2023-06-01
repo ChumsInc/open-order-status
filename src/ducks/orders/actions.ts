@@ -74,7 +74,7 @@ export const saveGroupStatus = createAsyncThunk<void, SalesOrderStatusData>(
                 groupKey: arg.groupKey,
                 SalesOrderNo: so.SalesOrderNo,
                 StatusCode: arg.StatusCode ?? so.status?.StatusCode ?? '',
-                Notes: [arg.Notes, so.status?.Notes ?? ''].filter(txt => !!txt).join('\n'),
+                Notes: arg.Notes ?? so.status?.Notes ?? '',
             }
             await dispatch(saveOrderStatus(data));
         }
