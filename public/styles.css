@@ -20,8 +20,8 @@
 .table tr.text-success td {
     color: rgba(var(--bs-success-rgb), var(--bs-text-opacity)) !important;
 }
-.table tr.table-dark td {
-    background-color: var(--bs-tertiary-bg) !important;
+html[data-bs-theme="dark"] .table tr.table-dark td {
+    background-color: var(--bs-secondary-bg) !important;
 }
 
 .table .font-monospace pre {
@@ -69,7 +69,4 @@
 html[data-bs-theme="dark"] .btn-outline-dark {
     --bs-btn-border-color: var(--bs-secondary-color);
     --bs-btn-color: var(--bs-secondary-color);
-}
-html[data-bs-theme="dark"] .table tr.table-dark td {
-    background-color: var(--bs-secondary-bg) !important;
 }
