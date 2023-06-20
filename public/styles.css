@@ -11,6 +11,19 @@
     font-weight: 500;
 }
 
+.table tr.text-danger td {
+    color: rgba(var(--bs-danger-rgb), var(--bs-text-opacity)) !important;
+}
+.table tr.text-warning td {
+    color: rgba(var(--bs-warning-rgb), var(--bs-text-opacity)) !important;
+}
+.table tr.text-success td {
+    color: rgba(var(--bs-success-rgb), var(--bs-text-opacity)) !important;
+}
+.table tr.table-dark td {
+    background-color: var(--bs-tertiary-bg) !important;
+}
+
 .table .font-monospace pre {
     margin-bottom: 0;
     font-size: 0.875rem;
@@ -52,3 +65,11 @@
 /*    background-color: var(--bs-btn-hover-bg);*/
 /*    border-color: var(--bs-btn-hover-border-color);*/
 /*}*/
+
+html[data-bs-theme="dark"] .btn-outline-dark {
+    --bs-btn-border-color: var(--bs-secondary-color);
+    --bs-btn-color: var(--bs-secondary-color);
+}
+html[data-bs-theme="dark"] .table tr.table-dark td {
+    background-color: var(--bs-secondary-bg) !important;
+}
