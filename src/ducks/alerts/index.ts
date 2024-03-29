@@ -1,6 +1,7 @@
-import {createAction, createReducer, isRejected} from "@reduxjs/toolkit";
+import {AsyncThunkAction, createAction, createReducer, isRejected, isRejectedWithValue} from "@reduxjs/toolkit";
 import {RootState} from "../../app/configureStore";
 import {ErrorAlert} from "chums-components";
+
 
 export interface AlertsState {
     nextId: number;
@@ -35,7 +36,7 @@ const alertsReducer = createReducer(initialAlertsState, (builder) => {
                 state.nextId += 1;
             }
         })
-        .addMatcher((action) => isRejected(action) && !!action.error,
+        .addMatcher(isRejected,
             (state, action) => {
                 const context = action.type.replace('/rejected', '');
                 const [contextAlert] = state.list.filter(alert => alert.context === context)
