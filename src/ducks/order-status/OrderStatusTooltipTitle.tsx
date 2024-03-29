@@ -30,7 +30,7 @@ const OrderStatusTooltipTitle = ({row, currentStatus}:{
             <div><strong>{currentStatus?.StatusDescription ?? 'Not Set'}</strong></div>
             <div className="mt-1">
                 {row.status?.StatusHistory?.map(history => (
-                    <div>{statusDescription(history.StatusCode)} <small>({history.User} - {new Date(history.timestamp).toLocaleDateString()})</small></div>
+                    <div key={history.timestamp}>{statusDescription(history.StatusCode)} <small>({history.User} - {new Date(history.timestamp).toLocaleDateString()})</small></div>
                 ))}
             </div>
         </div>
