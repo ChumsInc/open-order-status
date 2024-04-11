@@ -12,7 +12,7 @@ import dayjs from "dayjs";
 export async function fetchStatusList(): Promise<OpenOrderStatusCode[]> {
     try {
         const url = '/node-sage/api/CHI/salesorder/status/codes';
-        const {states} = await fetchJSON<{ states: OpenOrderStatusCode[] }>(url);
+        const {states} = await fetchJSON<{ states: OpenOrderStatusCode[] }>(url, {cache: 'no-cache'});
         return states ?? [];
     } catch (err: unknown) {
         if (err instanceof Error) {
@@ -76,7 +76,7 @@ export async function postOrderStatus(arg:SalesOrderStatusData):Promise<SalesOrd
 export async function fetchARDivisions():Promise<ARDivisionList> {
     try {
         const url = '/api/search/division/chums';
-        const {result} = await fetchJSON<{result: ARDivisionResponse[]}>(url);
+        const {result} = await fetchJSON<{result: ARDivisionResponse[]}>(url, {cache: 'no-cache'});
         const response:ARDivisionList = {};
         result.forEach(div => {
             response[div.ARDivisionNo] = div.ARDivisionDesc;
