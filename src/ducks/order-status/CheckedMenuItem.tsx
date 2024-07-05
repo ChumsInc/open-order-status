@@ -2,11 +2,15 @@ import React from 'react';
 import MenuItem, {MenuItemProps} from "@mui/material/MenuItem";
 import ListItemText from "@mui/material/ListItemText";
 import ListItemIcon from "@mui/material/ListItemIcon";
+import {Box, Stack} from "@mui/material";
 
 export interface CheckedMenuItemProps extends MenuItemProps {
     checked?:boolean;
+    colorCode?: string;
+    children: React.ReactNode;
 }
-const CheckedMenuItem = ({checked, children, ...rest}:CheckedMenuItemProps) => {
+
+const CheckedMenuItem = ({checked, colorCode, children, ...rest}:CheckedMenuItemProps) => {
     return (
         <MenuItem {...rest} selected={checked} autoFocus={checked}>
             {checked && (
@@ -15,7 +19,10 @@ const CheckedMenuItem = ({checked, children, ...rest}:CheckedMenuItemProps) => {
                 </ListItemIcon>
             )}
             <ListItemText inset={!checked}>
-                {children}
+                <Stack direction="row" alignItems="center">
+                    <Box sx={{width: '10px', height: '10px', mr: 1}} className={`bg-${colorCode}`} />
+                    <Box>{children}</Box>
+                </Stack>
             </ListItemText>
         </MenuItem>
     )

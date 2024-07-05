@@ -70,3 +70,23 @@ html[data-bs-theme="dark"] .btn-outline-dark {
     --bs-btn-border-color: var(--bs-secondary-color);
     --bs-btn-color: var(--bs-secondary-color);
 }
+
+.bg-purple {
+    background-color: var(--bs-indigo);
+}
+.btn-purple {
+    --bs-btn-color: var(--bs-white);
+    --bs-btn-bg: var(--bs-indigo);
+    --bs-btn-border-color: var(--bs-indigo);
+    --bs-btn-hover-color: #fff;
+    --bs-btn-hover-bg: var(--bs-indigo);
+    --bs-btn-hover-border-color: var(--bs-indigo);
+    --bs-btn-focus-shadow-rgb: 130, 138, 145;
+    --bs-btn-active-color: #fff;
+    --bs-btn-active-bg: var(--bs-indigo);
+    --bs-btn-active-border-color: var(--bs-indigo);
+    --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+    --bs-btn-disabled-color: #fff;
+    --bs-btn-disabled-bg: var(--bs-indigo);
+    --bs-btn-disabled-border-color: var(--bs-indigo);
+}

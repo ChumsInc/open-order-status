@@ -37,7 +37,9 @@ export const selectStatusByCode = createSelector(
 
 
 export const statusSorter = (a: OpenOrderStatusCode, b: OpenOrderStatusCode) => {
-    return a.StatusDescription.toLowerCase() > b.StatusDescription.toLowerCase() ? 1 : -1;
+    return a.priority === b.priority
+        ? (a.StatusDescription.toLowerCase() > b.StatusDescription.toLowerCase() ? 1 : -1)
+        : a.priority - b.priority;
 }
 
 export const groupTitle = (val: OpenOrderStatusGroup): string => {
