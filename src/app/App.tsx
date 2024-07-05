@@ -5,20 +5,39 @@ import OrderDateStatusToggles from "../components/filters/OrderDateStatusToggles
 import OrderFiltersBar from "../components/filters/OrderFiltersBar";
 import {useAppDispatch} from "./configureStore";
 import {loadStatusList} from "../ducks/order-status";
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import CssBaseline from '@mui/material/CssBaseline';
+import useMediaQuery from "@mui/material/useMediaQuery";
 
 export default function App() {
     const dispatch = useAppDispatch();
+    const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
+
     useEffect(() => {
         dispatch(loadStatusList());
     }, []);
 
+    const theme = React.useMemo(
+        () =>
+            createTheme({
+                palette: {
+                    mode: prefersDarkMode ? 'dark' : 'light',
+                },
+            }),
+        [prefersDarkMode],
+    );
+
+
     return (
-        <div>
-            <OrderFiltersBar />
-            <OrderDateStatusToggles />
-            <AlertList/>
-            <OrdersList />
-        </div>
+        <ThemeProvider theme={theme}>
+            <CssBaseline />
+            <div>
+                <OrderFiltersBar />
+                <OrderDateStatusToggles />
+                <AlertList/>
+                <OrdersList />
+            </div>
+        </ThemeProvider>
     )
 }
 
