@@ -60,6 +60,9 @@ const OrderStatusContainer = ({
         if (!row.status || !row.status.StatusCode) {
             return !!anchorEl ? 'btn-secondary' : 'btn-outline-secondary';
         }
+        if (row.status?.colorCode) {
+            return `btn-${row.status.colorCode}`;
+        }
         switch (row.status?.StatusCode) {
         case 'shipping':
         case 'ready':

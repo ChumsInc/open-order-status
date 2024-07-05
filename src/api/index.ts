@@ -12,8 +12,8 @@ import dayjs from "dayjs";
 export async function fetchStatusList(): Promise<OpenOrderStatusCode[]> {
     try {
         const url = '/node-sage/api/CHI/salesorder/status/codes';
-        const {states} = await fetchJSON<{ states: OpenOrderStatusCode[] }>(url, {cache: 'no-cache'});
-        return states ?? [];
+        const res = await fetchJSON<{ states: OpenOrderStatusCode[] }>(url, {cache: 'no-cache'});
+        return res?.states ?? [];
     } catch (err: unknown) {
         if (err instanceof Error) {
             console.debug("fetchStatusList()", err.message);
@@ -38,8 +38,8 @@ export async function fetchOrdersList({imprint, maxDate}: FetchOrdersOptions): P
             options.set('type:imprint', 'on')
         }
         options.set('maxdate', dayjs(maxDate).format('YYYY-MM-DD'));
-        const {list} = await fetchJSON<{ list: SalesOrderRow[] }>(url + '?' + options.toString(), {cache: 'no-cache'})
-        return list;
+        const res = await fetchJSON<{ list: SalesOrderRow[] }>(url + '?' + options.toString(), {cache: 'no-cache'})
+        return res?.list ?? [];
     } catch (err: unknown) {
         if (err instanceof Error) {
             console.debug("fetchOrdersList()", err.message);
@@ -61,8 +61,8 @@ export async function postOrderStatus(arg:SalesOrderStatusData):Promise<SalesOrd
             note: arg.Notes ?? '',
         }
         const url = `/node-sage/api/CHI/salesorder/status/v2/${arg.SalesOrderNo}`;
-        const {status} = await fetchJSON<{status: SalesOrderStatusRow}>(url, {method: 'POST', body: JSON.stringify(body)});
-        return status ?? null;
+        const res = await fetchJSON<{status: SalesOrderStatusRow}>(url, {method: 'POST', body: JSON.stringify(body)});
+        return res?.status ?? null;
     } catch(err:unknown) {
         if (err instanceof Error) {
             console.debug("postOrderComment()", err.message);
@@ -76,9 +76,9 @@ export async function postOrderStatus(arg:SalesOrderStatusData):Promise<SalesOrd
 export async function fetchARDivisions():Promise<ARDivisionList> {
     try {
         const url = '/api/search/division/chums';
-        const {result} = await fetchJSON<{result: ARDivisionResponse[]}>(url, {cache: 'no-cache'});
+        const res = await fetchJSON<{result: ARDivisionResponse[]}>(url, {cache: 'no-cache'});
         const response:ARDivisionList = {};
-        result.forEach(div => {
+        res?.result?.forEach(div => {
             response[div.ARDivisionNo] = div.ARDivisionDesc;
         });
         return response;

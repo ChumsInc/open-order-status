@@ -12,7 +12,7 @@ export const selectARDivisionNo = (state: RootState) => state.orders.filters.arD
 export const selectCustomer = (state: RootState) => state.orders.filters.customer;
 export const selectSalesOrderNo = (state: RootState) => state.orders.filters.salesOrderNo;
 export const selectUser = (state: RootState) => state.orders.filters.user;
-export const selectStatus = (state: RootState) => state.orders.filters.status;
+export const selectStatusFilter = (state: RootState) => state.orders.filters.status;
 export const selectOnTime = (state: RootState) => state.orders.filters.onTimeOrders;
 export const selectLateOrders = (state: RootState) => state.orders.filters.lateOrders;
 export const selectBackOrders = (state: RootState) => state.orders.filters.backOrders;
@@ -29,7 +29,14 @@ export const selectRowsPerPage = (state: RootState) => state.orders.rowsPerPage;
 export const selectSort = (state: RootState) => state.orders.sort;
 export const selectGrouping = (state: RootState) => state.orders.grouping;
 export const selectExpandAll = (state: RootState) => state.orders.expandAll;
-export const selectOrderGroup = (state: RootState, key: string): SalesOrderGroup | null => state.orders.grouping[key] ?? null;
+export const selectOrderGroupKey = (state:RootState, key: string) => key;
+
+export const selectOrderGroup = createSelector(
+    [selectGrouping, selectOrderGroupKey],
+    (grouping, key) => {
+        return grouping[key] ?? null;
+    }
+)
 
 
 export const selectFetchOrderOptions = createSelector(
@@ -61,7 +68,7 @@ export const selectGroupedList = createSelector(
     })
 
 export const selectFilteredOrders = createSelector(
-    [selectGroupedList, selectImprint, selectARDivisionNo, selectCustomer, selectUser, selectStatus,
+    [selectGroupedList, selectImprint, selectARDivisionNo, selectCustomer, selectUser, selectStatusFilter,
         selectOnTime, selectLateOrders, selectBackOrders, selectOnCancelDateOrders, selectPastCancelDateOrders,
         selectInvoicing, selectShowChums, selectShowEDI, selectShowWeb, selectSort
     ],

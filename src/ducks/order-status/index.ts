@@ -1,5 +1,5 @@
 import {OpenOrderStatusCode, OpenOrderStatusGroup} from "../../types";
-import {createAction, createAsyncThunk, createReducer} from "@reduxjs/toolkit";
+import {createAction, createAsyncThunk, createReducer, createSelector} from "@reduxjs/toolkit";
 import {fetchStatusList} from "../../api";
 import {RootState} from "../../app/configureStore";
 
@@ -24,7 +24,17 @@ export const selectLoading = (state: RootState) => state.orderStatus.loading;
 export const selectLoaded = (state: RootState) => state.orderStatus.loaded;
 export const selectCurrentStatus = (state:RootState) => state.orderStatus.current;
 
-export const selectStatusByCode = (state:RootState, code:string) => state.orderStatus.list.filter(status => status.StatusCode === code);
+export const selectStatusCode = (state:RootState, code:string|null) => code;
+export const _selectStatusByCode = (state:RootState, code:string) => state.orderStatus.list.filter(status => status.StatusCode === code);
+export const selectStatusByCode = createSelector(
+    [selectList, selectStatusCode],
+    (list, code) => {
+        const [status] = list.filter(status => status.StatusCode === code);
+        return status ?? null;
+    }
+)
+
+
 
 export const statusSorter = (a: OpenOrderStatusCode, b: OpenOrderStatusCode) => {
     return a.StatusDescription.toLowerCase() > b.StatusDescription.toLowerCase() ? 1 : -1;
