@@ -149,19 +149,19 @@ export function isQuote(row: SalesOrderRow) {
 export function isLate(row: SalesOrderRow) {
     return !isQuote(row)
         && !isInvoicing(row)
-        && dayjs(row.CancelDate ?? row.ShipExpireDate).hour(16).valueOf() < new Date().valueOf();
+        && dayjs(row.CancelDate ?? row.ShipExpireDate).isBefore(new Date(), 'date');
 }
 
 export function isOnCancelDate(row: SalesOrderRow) {
     return !isQuote(row)
         && !!row.CancelDate
-        && dayjs(row.CancelDate).toDate().toDateString() === new Date().toDateString();
+        && dayjs(row.CancelDate).isSame(new Date(), 'date');
 }
 
 export function isPastCancelDate(row: SalesOrderRow) {
     return !isQuote(row)
         && !!row.CancelDate
-        && dayjs(row.CancelDate).format('YYYY-MM-DD') < dayjs(new Date()).format('YYYY-MM-DD');
+        && dayjs(row.CancelDate).isBefore(new Date(), 'date');
 }
 
 export function isBackOrder(row: SalesOrderRow) {
@@ -173,14 +173,13 @@ export function isInvoicing(row: SalesOrderRow) {
 }
 
 export function calcStatus(row: SalesOrderRow) {
-    const quote = isQuote(row);
-    const backorder = !quote && isBackOrder(row);
-    const invoicing = !quote && isInvoicing(row);
-    const onCancelDate = !quote && !invoicing && isOnCancelDate(row);
-    const pastCancelDate = !quote && !invoicing && isPastCancelDate(row);
-    const late = !quote && !invoicing && !pastCancelDate && !backorder && !onCancelDate && isLate(row);
-    const onTime = !quote && !invoicing && !backorder && !late && !onCancelDate && !pastCancelDate;
-    return {quote, backorder, invoicing, late, onCancelDate, pastCancelDate, onTime};
+    const backorder = isBackOrder(row);
+    const invoicing = isInvoicing(row);
+    const onCancelDate = !invoicing && isOnCancelDate(row);
+    const pastCancelDate = !invoicing && isPastCancelDate(row);
+    const late = !invoicing && !pastCancelDate && !backorder && !onCancelDate && isLate(row);
+    const onTime = !invoicing && !backorder && !late && !onCancelDate && !pastCancelDate;
+    return {backorder, invoicing, late, onCancelDate, pastCancelDate, onTime};
 }
 
 
