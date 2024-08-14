@@ -9,6 +9,7 @@ $ui = new WebUI2([
     'requiredRoles' => [Groups::PRODUCTION, Groups::CS, Groups::IMPRINT],
     'bodyClassName' => 'container-fluid',
     'title' => "Open Order Status",
+    'contentFile' => 'body.inc.php',
 ]);
 
 $ui->addCSS('public/styles.css')

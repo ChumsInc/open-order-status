@@ -4,6 +4,7 @@ import {groupTitle, selectStatusList} from "./index";
 import Menu from "@mui/material/Menu";
 import ListSubheader from "@mui/material/ListSubheader";
 import CheckedMenuItem from "./CheckedMenuItem";
+import {Paper} from "@mui/material";
 
 
 export interface OrderStatusSelectProps {
@@ -17,7 +18,7 @@ const OrderStatusSelect = ({value, onChange, anchorEl, onClose}: OrderStatusSele
     const list = useSelector(selectStatusList);
 
     return (
-        <Menu open={!!anchorEl} onClose={onClose} PaperProps={{style: {maxHeight: '75vh'}}}
+        <Menu open={!!anchorEl} onClose={onClose} sx={{maxHeight: '75vh'}}
               anchorEl={anchorEl} MenuListProps={{dense: true}}>
             <CheckedMenuItem onClick={() => onChange(null)} checked={!value}>
                 Clear Status
