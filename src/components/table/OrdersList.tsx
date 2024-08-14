@@ -28,6 +28,7 @@ import ToggleExpandAll from "./ToggleExpandAll";
 import SalesOrderNo from "./SalesOrderNo";
 import OrderDate from "./OrderDate";
 import Version from "../../ducks/version/Version";
+import InvoiceBadge from "./InvoiceBadge";
 
 const fields: SortableTableField<SalesOrderRow>[] = [
     {
@@ -44,9 +45,10 @@ const fields: SortableTableField<SalesOrderRow>[] = [
             <OrderTypeBadge row={row}/>
             <HoldReasonBadge row={row}/>
             <ImprintBadge row={row}/>
+            <InvoiceBadge row={row} />
         </>), sortable: true
     },
-    // {field: 'CancelReasonCode', title: 'Status', sortable: false, render: (row) => <><HoldReasonBadge row={row}/><ImprintBadge row={row}/></>},
+    // {field: 'CancelReasonCode', title: 'Status', sortable: false, render: (row) => <><HoldReasonBadge row={row}/><ImprintBadge row={row}/></Invo>},
     // {field: 'UDF_IMPRINTED', title: 'IMP', render: (row) => <ImprintBadge row={row}/>, sortable: false},
     {
         field: 'CustomerNo',
