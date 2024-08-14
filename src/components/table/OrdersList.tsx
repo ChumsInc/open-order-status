@@ -1,7 +1,13 @@
 import React, {Fragment, useEffect} from 'react';
-import {useAppDispatch} from "../../app/configureStore";
+import {useAppDispatch, useAppSelector} from "../../app/configureStore";
 import {useSelector} from "react-redux";
-import {selectFilteredOrders, selectPage, selectRowsPerPage, selectSort} from "../../ducks/orders/selectors";
+import {
+    selectFilteredOrders,
+    selectOrdersUpdated,
+    selectPage,
+    selectRowsPerPage,
+    selectSort
+} from "../../ducks/orders/selectors";
 import {
     Alert,
     DataTableField,
@@ -140,6 +146,7 @@ const OrdersList = () => {
     const rowsPerPage = useSelector(selectRowsPerPage);
     const list = useSelector(selectFilteredOrders);
     const sort = useSelector(selectSort);
+    const updated = useAppSelector(selectOrdersUpdated);
 
 
     useEffect(() => {
@@ -168,6 +175,16 @@ const OrdersList = () => {
             </Fragment>
         )
     }
+
+    if (!list.length && !updated) {
+        return (
+            <Alert color="warning">
+                <span className="bi-app-indicator me-3" />
+                Loading initial data.
+            </Alert>
+        )
+    }
+
     return (
         <div>
             <div className="table-responsive">

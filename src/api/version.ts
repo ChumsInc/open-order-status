@@ -2,7 +2,8 @@ import {fetchJSON} from "chums-components";
 
 export async function fetchVersion(): Promise<string|null> {
     try {
-        const res = await fetchJSON<{ version: string }>('package.json', {cache: "no-cache"});
+        const url = window.location.hostname === 'localhost' ? 'package.json' : '/apps/open-order-status/package.json';
+        const res = await fetchJSON<{ version: string }>(url, {cache: "no-cache"});
         return res?.version ?? null;
     } catch (err: unknown) {
         if (err instanceof Error) {
