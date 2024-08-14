@@ -1,18 +1,11 @@
 import React, {Fragment, useEffect} from 'react';
 import {useAppDispatch} from "../../app/configureStore";
 import {useSelector} from "react-redux";
-import {
-    selectFilteredOrders,
-    selectLoading,
-    selectPage,
-    selectRowsPerPage,
-    selectSort
-} from "../../ducks/orders/selectors";
+import {selectFilteredOrders, selectPage, selectRowsPerPage, selectSort} from "../../ducks/orders/selectors";
 import {
     Alert,
     DataTableField,
     DataTableRow,
-    LoadingProgressBar,
     SortableTable,
     SortableTableField,
     TablePagination
@@ -141,15 +134,16 @@ const rowClassName = (row: SalesOrderRow) => {
 const orderKey = (row: SalesOrderRow) => `${groupKey(row)}:${row.SalesOrderNo}}`
 const OrdersList = () => {
     const dispatch = useAppDispatch();
-    const loading = useSelector(selectLoading);
     const page = useSelector(selectPage);
     const rowsPerPage = useSelector(selectRowsPerPage);
     const list = useSelector(selectFilteredOrders);
     const sort = useSelector(selectSort);
 
+
     useEffect(() => {
         dispatch(loadOrders());
     }, [])
+
 
     const pageChangeHandler = (page: number) => dispatch(setPage(page));
     const onChangeSort = (sort: SortProps) => dispatch(setSort(sort));
@@ -174,7 +168,6 @@ const OrdersList = () => {
     }
     return (
         <div>
-            {loading && <LoadingProgressBar striped animated className="mt-1 mb-1" style={{height: '5px'}}/>}
             <div className="table-responsive">
                 <SortableTable fields={fields} className="mt-3 table-hover"
                                data={list.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)}

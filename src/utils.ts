@@ -27,3 +27,15 @@ export const dateUpdated = (row: Pick<SalesOrderRow, 'DateUpdated' | 'TimeUpdate
     }
     return dayjs(row.DateUpdated).add(+row.TimeUpdated, 'hours').format('MM/DD/YY HH:mm');
 }
+
+export interface ContainerElement extends HTMLDivElement {
+    dataset: {
+        showEdi?: string;
+        showWeb?: string;
+        refreshInterval?: string;
+        defaultDays?: string;
+    }
+}
+export const getContainerEl = ():ContainerElement|null => {
+    return document.querySelector('#apps-open-order-status') as HTMLDivElement;
+}

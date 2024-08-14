@@ -25,12 +25,16 @@ export const selectShowEDI = (state: RootState) => state.orders.filters.showEDI;
 export const selectShowWeb = (state: RootState) => state.orders.filters.showWeb;
 export const selectShowDollars = (state: RootState) => state.orders.filters.showDollars;
 export const selectTotals = (state: RootState) => state.orders.totals;
+export const selectEDITotals = (state:RootState) => state.orders.totals.edi;
+export const selectChumsTotals = (state:RootState) => state.orders.totals.chums;
+export const selectWebTotals = (state:RootState) => state.orders.totals.web;
 export const selectPage = (state: RootState) => state.orders.page;
 export const selectRowsPerPage = (state: RootState) => state.orders.rowsPerPage;
 export const selectSort = (state: RootState) => state.orders.sort;
 export const selectGrouping = (state: RootState) => state.orders.grouping;
 export const selectExpandAll = (state: RootState) => state.orders.expandAll;
 export const selectOrderGroupKey = (state: RootState, key: string) => key;
+export const selectOrdersUpdated = (state:RootState) => state.orders.updated;
 
 export const selectOrderGroup = createSelector(
     [selectGrouping, selectOrderGroupKey],

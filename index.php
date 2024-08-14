@@ -6,7 +6,7 @@ use chums\user\Groups;
 require_once ("autoload.inc.php");
 
 $ui = new WebUI2([
-    'requiredRoles' => [Groups::PRODUCTION, Groups::CS, Groups::IMPRINT],
+    'requiredRoles' => [Groups::PRODUCTION, Groups::CS, Groups::IMPRINT, Groups::SALES],
     'bodyClassName' => 'container-fluid',
     'title' => "Open Order Status",
     'contentFile' => 'body.inc.php',

@@ -18,22 +18,21 @@ const FilterByDate = () => {
     }
 
     return (
-        <>
-            <div className="input-group input-group-sm">
-                <div className="input-group-text">
-                    <span className="bi-calendar-range-fill" />
-                </div>
-                <input type="date" className="form-control form-control-sm"
-                       value={dayjs(maxShipDate).format('YYYY-MM-DD')}
-                       onChange={onChangeDate}
-                       min={dayjs().format('YYYY-MM-DD')} list="max-ship-date-list" />
+        <div className="input-group input-group-sm">
+            <div className="input-group-text">
+                Ship Date
             </div>
+            <input type="date" className="form-control form-control-sm"
+                   value={dayjs(maxShipDate).format('YYYY-MM-DD')}
+                   onChange={onChangeDate}
+                   min={dayjs().format('YYYY-MM-DD')} list="max-ship-date-list"/>
             <datalist id="max-ship-date-list">
                 <option value={dayjs().format('YYYY-MM-DD')}>Today</option>
+                <option value={dayjs().add(3, 'days').format('YYYY-MM-DD')}>+3 Days</option>
                 <option value={dayjs().add(2, 'weeks').format('YYYY-MM-DD')}>+2 Weeks</option>
                 <option value={dayjs().add(4, 'weeks').format('YYYY-MM-DD')}>+4 Weeks</option>
             </datalist>
-        </>
+        </div>
     )
 }
 export default FilterByDate

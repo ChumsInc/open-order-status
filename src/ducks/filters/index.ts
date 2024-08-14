@@ -1,7 +1,7 @@
 import {ARDivisionList, CustomerList} from "../../types";
 import {createReducer} from "@reduxjs/toolkit";
 import {loadOrders} from "../orders/actions";
-import {basicCustomer, customerKey} from "../../utils";
+import {basicCustomer, customerKey, getContainerEl} from "../../utils";
 import {loadDivisions} from "./actions";
 
 export interface FiltersState {
@@ -11,17 +11,25 @@ export interface FiltersState {
     };
     customers: CustomerList;
     users: string[];
+    refreshInterval: number|null;
 }
 
-const initialState: FiltersState = {
+const initialState = (): FiltersState => ({
     divisions: {
         list: {},
         loading: false,
     },
     customers: {},
     users: [],
-}
+    refreshInterval: getRefreshInterval(),
+})
 
+function getRefreshInterval():number|null {
+    const containerEl = getContainerEl();
+    return containerEl?.dataset?.refreshInterval
+        ? +(containerEl.dataset.refreshInterval)
+        : null;
+}
 
 const filtersReducer = createReducer(initialState, (builder) => {
     builder
@@ -37,7 +45,7 @@ const filtersReducer = createReducer(initialState, (builder) => {
         })
         .addCase(loadOrders.fulfilled, (state, action) => {
             state.customers = {};
-            action.payload.forEach(row => {
+            action.payload.orders.forEach(row => {
                 const key = customerKey(row);
                 if (!state.customers[key]) {
                     state.customers[key] = basicCustomer(row);
@@ -46,7 +54,7 @@ const filtersReducer = createReducer(initialState, (builder) => {
                     state.users.push(row.UserLogon);
                 }
             })
-            state.users = action.payload.reduce((pv, cv) => {
+            state.users = action.payload.orders.reduce((pv, cv) => {
                 return (pv.includes(cv.UserLogon)) ? pv : [...pv, cv.UserLogon];
             }, [] as string[]).sort();
         })

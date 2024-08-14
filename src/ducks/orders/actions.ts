@@ -30,12 +30,20 @@ export const toggleShowWeb = createAction<boolean | undefined>('orders/filters/t
 export const toggleExpandGroup = createAction<ToggleExpandOrder>('orders/groups/toggleExpanded');
 export const toggleExpandAllGroups = createAction<boolean | undefined>('orders/groups/expandAll');
 
-export const loadOrders = createAsyncThunk<SalesOrderRow[]>(
+export interface LoadOrdersResponse {
+    orders: SalesOrderRow[],
+    updated: string;
+}
+export const loadOrders = createAsyncThunk<LoadOrdersResponse>(
     'orders/load',
     async (arg, {getState}) => {
         const state = getState() as RootState
         const options = selectFetchOrderOptions(state);
-        return await fetchOrdersList(options);
+        const orders = await fetchOrdersList(options);
+        return {
+            orders,
+            updated: new Date().toISOString(),
+        }
     },
     {
         condition: (arg, {getState}) => {

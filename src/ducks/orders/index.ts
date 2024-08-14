@@ -62,7 +62,8 @@ export interface OrdersState {
     totals: SalesOrderTotals;
     page: number;
     rowsPerPage: number;
-    sort: SortProps<SalesOrderRow>
+    sort: SortProps<SalesOrderRow>;
+    updated: string|null;
 }
 
 const ordersReducer = createReducer(initialState, (builder) => {
@@ -84,7 +85,7 @@ const ordersReducer = createReducer(initialState, (builder) => {
         .addCase(loadOrders.fulfilled, (state, action) => {
             state.loading = false;
             state.grouping = {};
-            action.payload.forEach(row => {
+            action.payload.orders.forEach(row => {
                 const key = groupKey(row);
                 if (!state.grouping[key]) {
                     state.grouping[key] = {
@@ -116,7 +117,8 @@ const ordersReducer = createReducer(initialState, (builder) => {
                         timestamp: null
                     };
             });
-            state.totals = buildTotals(action.payload ?? []);
+            state.totals = buildTotals(action.payload.orders ?? []);
+            state.updated = action.payload.updated;
         })
         .addCase(loadOrders.rejected, (state) => {
             state.loading = false;

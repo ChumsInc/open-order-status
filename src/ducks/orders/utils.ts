@@ -4,7 +4,7 @@ import {SortProps} from "chums-types";
 import {SalesOrderRow, SalesOrderTotals} from "../../types";
 import dayjs from "dayjs";
 import Decimal from "decimal.js";
-import {customerKey} from "../../utils";
+import {customerKey, getContainerEl} from "../../utils";
 import {LocalStore} from "chums-components";
 
 
@@ -23,11 +23,9 @@ const initialTotals: SalesOrderTotals = {
     'web': {count: 0, value: 0},
 }
 
-const containerEl = document.querySelector('#apps-open-order-status') as HTMLDivElement;
-
 const getMaxShipDate = (): string => {
-    const days = containerEl.dataset.defaultDays;
-    if (!!days && !isNaN(Number(days))) {
+    const days = getContainerEl()?.dataset?.defaultDays ?? null;
+    if (days && !isNaN(Number(days))) {
         return dayjs().add(+days, 'days').toISOString();
     }
     return LocalStore.getItem<boolean>(storageKeys.imprint, false)
@@ -54,8 +52,8 @@ export const initialState = (): OrdersState => ({
         pastCancelDate: LocalStore.getItem(storageKeys.showPastCancelDate, true) ?? true,
         invoicing: LocalStore.getItem(storageKeys.showInvoicing, false) ?? false,
         showChums: LocalStore.getItem(storageKeys.showChums, true) ?? true,
-        showEDI: LocalStore.getItem(storageKeys.showEDI, containerEl?.dataset?.showEdi === 'true') ?? true,
-        showWeb: LocalStore.getItem(storageKeys.showWeb, containerEl?.dataset?.showWeb === 'true') ?? true,
+        showEDI: LocalStore.getItem(storageKeys.showEDI, getContainerEl()?.dataset?.showEdi === 'true') ?? true,
+        showWeb: LocalStore.getItem(storageKeys.showWeb, getContainerEl()?.dataset?.showWeb === 'true') ?? true,
         showDollars: LocalStore.getItem(storageKeys.showDollars, false) ?? false,
     },
     expandAll: LocalStore.getItem(storageKeys.expandAll, false) ?? false,
@@ -63,6 +61,7 @@ export const initialState = (): OrdersState => ({
     page: 0,
     rowsPerPage: LocalStore.getItem(storageKeys.rowsPerPage, 10) ?? 10,
     sort: {...initialSort},
+    updated: null,
 });
 
 export const groupKeyDate = (date: string | null) => !date ? '-' : dayjs(date).format('YYYYMMDD');

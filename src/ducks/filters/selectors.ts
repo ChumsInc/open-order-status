@@ -7,6 +7,7 @@ export const selectDivisionList = (state:RootState) => state.filters.divisions.l
 export const selectDivisionsLoading = (state:RootState) => state.filters.divisions.loading;
 export const selectCustomerList = (state:RootState) => state.filters.customers;
 export const selectUserNames = (state:RootState) => state.filters.users;
+export const selectRefreshInterval = (state:RootState) => state.filters.refreshInterval;
 
 export const selectFilteredCustomers = createSelector(
     [selectCustomerList, selectARDivisionNo],
