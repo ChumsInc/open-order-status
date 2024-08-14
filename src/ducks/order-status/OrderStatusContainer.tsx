@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {SalesOrderRow} from "../../types";
 import classNames from "classnames";
 import {RootState, useAppDispatch} from "../../app/configureStore";
-import {selectList} from "./index";
+import {selectStatusList} from "./index";
 import {useSelector} from "react-redux";
 import OrderStatusSelect from "./OrderStatusSelect";
 import {saveGroupStatus, saveOrderStatus} from "../orders/actions";
@@ -11,6 +11,7 @@ import Tooltip from "@mui/material/Tooltip";
 import OrderNoteModal from "./OrderNoteModal";
 import {selectOrderGroup, selectSalesOrderNo} from "../orders/selectors";
 import OrderStatusTooltipTitle from "./OrderStatusTooltipTitle";
+import {statusButtonClassName} from "./utils";
 
 
 const OrderStatusContainer = ({
@@ -18,7 +19,7 @@ const OrderStatusContainer = ({
                                   defaultText,
                               }: { row: SalesOrderRow, defaultText?: string }) => {
     const dispatch = useAppDispatch();
-    const list = useSelector(selectList);
+    const list = useSelector(selectStatusList);
     const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
     const [notesOpen, setNotesOpen] = useState(false);
     const group = useSelector((state: RootState) => selectOrderGroup(state, groupKey(row)));
@@ -56,39 +57,7 @@ const OrderStatusContainer = ({
         }
         setAnchorEl(null);
     }
-    const badgeClassName = () => {
-        if (!row.status || !row.status.StatusCode) {
-            return !!anchorEl ? 'btn-secondary' : 'btn-outline-secondary';
-        }
-        if (row.status?.colorCode) {
-            return `btn-${row.status.colorCode}`;
-        }
-        switch (row.status?.StatusCode) {
-        case 'shipping':
-        case 'ready':
-            return 'btn-success';
-        case 'credithold':
-            return 'btn-danger';
-        case 'creditcard':
-        case 'approval':
-        case 'woa':
-        case 'wop':
-        case 'swop':
-            return 'btn-warning';
-        case 'hurship':
-        case 'picksheet':
-            return 'btn-primary';
-        default:
-            return 'btn-secondary';
-        }
-    }
-    // const badgeClassName = {
-    //     'btn-primary': row.status?.StatusType === 'cs',
-    //     'btn-info': row.status?.StatusType === 'imp' || !!anchorEl,
-    //     'btn-success': row.status?.StatusType === 'shipping' && row.status.StatusCode !== 'swop',
-    //     'btn-warning': row.status?.StatusCode === 'swop',
-    //     'btn-outline-secondary': !row.status?.StatusCode && !anchorEl,
-    // }
+
     const notesButtonClassName = {
         'btn-warning': !!row.status?.Notes,
         'btn-outline-secondary': !row.status?.Notes,
@@ -98,7 +67,7 @@ const OrderStatusContainer = ({
         <div>
             <div className="btn-group btn-group-sm">
                 <Tooltip title={<OrderStatusTooltipTitle row={row} currentStatus={currentStatus}/>} arrow placement="left">
-                    <button className={classNames('btn btn-sm btn-status', badgeClassName())}
+                    <button className={classNames('btn btn-sm btn-status', statusButtonClassName({statusCode: row.status?.StatusCode, colorCode: row.status?.colorCode}))}
                             onClick={handleClick}>
                         {saving && (
                             <div className="spinner-border spinner-border-sm" role="status">

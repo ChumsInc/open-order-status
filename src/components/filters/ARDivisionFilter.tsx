@@ -2,7 +2,8 @@ import React, {ChangeEvent, useEffect} from "react";
 import {useAppDispatch} from "../../app/configureStore";
 import {useSelector} from "react-redux";
 import {selectARDivisionNo} from "../../ducks/orders/selectors";
-import {loadDivisions, selectDivisionList} from "../../ducks/filters";
+import {selectDivisionList} from "../../ducks/filters/selectors";
+import {loadDivisions} from "../../ducks/filters/actions";
 import {setARDivisionNoFilter} from "../../ducks/orders/actions";
 
 const ARDivisionFilter = () => {

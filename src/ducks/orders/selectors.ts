@@ -2,7 +2,8 @@ import {RootState} from "../../app/configureStore";
 import {createSelector} from "@reduxjs/toolkit";
 import {calcStatus, orderSorter} from "./utils";
 import {FetchOrdersOptions} from "../../api";
-import {SalesOrderGroup, SalesOrderRow} from "../../types";
+import {SalesOrderRow} from "../../types";
+import {customerKey} from "../../utils";
 
 export const selectLoading = (state: RootState) => state.orders.loading;
 export const selectLoaded = (state: RootState) => state.orders.loaded;
@@ -29,7 +30,7 @@ export const selectRowsPerPage = (state: RootState) => state.orders.rowsPerPage;
 export const selectSort = (state: RootState) => state.orders.sort;
 export const selectGrouping = (state: RootState) => state.orders.grouping;
 export const selectExpandAll = (state: RootState) => state.orders.expandAll;
-export const selectOrderGroupKey = (state:RootState, key: string) => key;
+export const selectOrderGroupKey = (state: RootState, key: string) => key;
 
 export const selectOrderGroup = createSelector(
     [selectGrouping, selectOrderGroupKey],
@@ -55,7 +56,7 @@ export const selectGroupedList = createSelector(
                 // if (expandAll) {
                 //     return rows.push(...group.salesOrders);
                 // }
-                if (!!salesOrderNo) {
+                if (salesOrderNo) {
                     rows.push(...group.salesOrders.filter(so => so.SalesOrderNo.startsWith(salesOrderNo)));
                     return;
                 }
@@ -72,7 +73,7 @@ export const selectFilteredOrders = createSelector(
         selectOnTime, selectLateOrders, selectBackOrders, selectOnCancelDateOrders, selectPastCancelDateOrders,
         selectInvoicing, selectShowChums, selectShowEDI, selectShowWeb, selectSort
     ],
-    (list, imprint, arDivisionNo, customerNo, user,
+    (list, imprint, arDivisionNo, customer, user,
      statusCode, onTime, late, backOrders, onCancelDate, pastCancelDate,
      invoicing, showChums, showEDI, showWeb, sort): SalesOrderRow[] => {
         return Object.values(list)
@@ -87,7 +88,7 @@ export const selectFilteredOrders = createSelector(
             .filter(row => !showEDI ? !row.isEDI : true)
             .filter(row => !showWeb ? !row.isWebsite : true)
             .filter(row => !arDivisionNo || row.ARDivisionNo === arDivisionNo)
-            .filter(row => !customerNo || row.CustomerNo.startsWith(customerNo))
+            .filter(row => !customer || customerKey(row) === customerKey(customer))
             .filter(row => !user || row.UserLogon === user)
             .filter(row => !statusCode || row.status?.StatusCode === statusCode)
             .sort(orderSorter(sort))

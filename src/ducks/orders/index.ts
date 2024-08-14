@@ -1,4 +1,4 @@
-import {SalesOrderGroupList, SalesOrderRow, SalesOrderTotals} from "../../types";
+import {BasicCustomer, SalesOrderGroupList, SalesOrderRow, SalesOrderTotals} from "../../types";
 import {SortProps} from "chums-types";
 import {createReducer} from "@reduxjs/toolkit";
 import {buildTotals, defaultOrderSorter, groupKey, initialState} from "./utils";
@@ -31,7 +31,8 @@ import {
 import dayjs from "dayjs";
 import Decimal from "decimal.js";
 import {VALUE_VARIES} from "../../utils";
-import {setPreference, storageKeys} from "../../api/preferences";
+import {storageKeys} from "../../api/preferences";
+import {LocalStore} from "chums-components";
 
 
 export interface OrdersState {
@@ -42,7 +43,7 @@ export interface OrdersState {
         imprint: boolean;
         maxShipDate: string;
         arDivisionNo: string;
-        customer: string | null;
+        customer: BasicCustomer | null;
         salesOrderNo: string|null;
         user: string | null;
         status: string | null;
@@ -71,7 +72,7 @@ const ordersReducer = createReducer(initialState, (builder) => {
             state.filters.maxShipDate = state.filters.imprint
                 ? dayjs().add(4, 'weeks').toISOString()
                 : dayjs().add(2, 'weeks').toISOString();
-            setPreference(storageKeys.imprint, state.filters.imprint);
+            LocalStore.setItem(storageKeys.imprint, state.filters.imprint);
         })
         .addCase(setMaxShipDate, (state, action) => {
             state.filters.maxShipDate = action.payload;
@@ -204,7 +205,7 @@ const ordersReducer = createReducer(initialState, (builder) => {
         })
         .addCase(toggleExpandAllGroups, (state, action) => {
             state.expandAll = action.payload ?? !state.expandAll;
-            setPreference(storageKeys.expandAll, state.expandAll);
+            LocalStore.setItem(storageKeys.expandAll, state.expandAll);
             Object.values(state.grouping).forEach(group => {
                 if (group.count > 1) {
                     group.expanded = state.expandAll;
@@ -216,8 +217,7 @@ const ordersReducer = createReducer(initialState, (builder) => {
             state.page = 0;
         })
         .addCase(setCustomerFilter, (state, action) => {
-            const [, customerNo] = action.payload?.split('-') ?? [];
-            state.filters.customer = customerNo ?? action.payload ?? '';
+            state.filters.customer = action.payload ?? null;
             state.page = 0;
         })
         .addCase(setSalesOrderFilter, (state, action) => {
@@ -235,52 +235,52 @@ const ordersReducer = createReducer(initialState, (builder) => {
         .addCase(toggleShowOpen, (state, action) => {
             state.filters.onTimeOrders = action.payload ?? !state.filters.onTimeOrders;
             state.page = 0;
-            setPreference(storageKeys.showOpen, state.filters.onTimeOrders);
+            LocalStore.setItem(storageKeys.showOpen, state.filters.onTimeOrders);
         })
         .addCase(toggleShowLate, (state, action) => {
             state.filters.lateOrders = action.payload ?? !state.filters.lateOrders;
             state.page = 0;
-            setPreference(storageKeys.showLate, state.filters.lateOrders);
+            LocalStore.setItem(storageKeys.showLate, state.filters.lateOrders);
         })
         .addCase(toggleShowBackorders, (state, action) => {
             state.filters.backOrders = action.payload ?? !state.filters.backOrders;
             state.page = 0;
-            setPreference(storageKeys.showBackOrder, state.filters.backOrders);
+            LocalStore.setItem(storageKeys.showBackOrder, state.filters.backOrders);
         })
         .addCase(toggleShowOnCancelDate, (state, action) => {
             state.filters.onCancelDate = action.payload ?? !state.filters.onCancelDate;
             state.page = 0;
-            setPreference(storageKeys.showOnCancelDate, state.filters.onCancelDate);
+            LocalStore.setItem(storageKeys.showOnCancelDate, state.filters.onCancelDate);
         })
         .addCase(toggleShowPastCancelDate, (state, action) => {
             state.filters.pastCancelDate = action.payload ?? !state.filters.pastCancelDate;
             state.page = 0;
-            setPreference(storageKeys.showPastCancelDate, state.filters.pastCancelDate);
+            LocalStore.setItem(storageKeys.showPastCancelDate, state.filters.pastCancelDate);
         })
         .addCase(toggleShowInvoicing, (state, action) => {
             state.filters.invoicing = action.payload ?? !state.filters.invoicing;
             state.page = 0;
-            setPreference(storageKeys.showInvoicing, state.filters.invoicing);
+            LocalStore.setItem(storageKeys.showInvoicing, state.filters.invoicing);
         })
         .addCase(toggleShowDollars, (state, action) => {
             state.filters.showDollars = action.payload ?? !state.filters.showDollars;
             state.page = 0;
-            setPreference(storageKeys.showDollars, state.filters.showDollars);
+            LocalStore.setItem(storageKeys.showDollars, state.filters.showDollars);
         })
         .addCase(toggleShowChums, (state, action) => {
             state.filters.showChums = action.payload ?? !state.filters.showChums;
             state.page = 0;
-            setPreference(storageKeys.showChums, state.filters.showChums);
+            LocalStore.setItem(storageKeys.showChums, state.filters.showChums);
         })
         .addCase(toggleShowEDI, (state, action) => {
             state.filters.showEDI = action.payload ?? !state.filters.showEDI;
             state.page = 0;
-            setPreference(storageKeys.showEDI, state.filters.showEDI);
+            LocalStore.setItem(storageKeys.showEDI, state.filters.showEDI);
         })
         .addCase(toggleShowWeb, (state, action) => {
             state.filters.showWeb = action.payload ?? !state.filters.showWeb;
             state.page = 0;
-            setPreference(storageKeys.showWeb, state.filters.showWeb);
+            LocalStore.setItem(storageKeys.showWeb, state.filters.showWeb);
         })
         .addCase(setSort, (state, action) => {
             state.sort = action.payload;
@@ -292,7 +292,7 @@ const ordersReducer = createReducer(initialState, (builder) => {
         .addCase(setRowsPerPage, (state, action) => {
             state.rowsPerPage = action.payload;
             state.page = 0;
-            setPreference(storageKeys.rowsPerPage, action.payload);
+            LocalStore.setItem(storageKeys.rowsPerPage, action.payload);
         })
 })
 

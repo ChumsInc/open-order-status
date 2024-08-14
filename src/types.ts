@@ -1,5 +1,5 @@
 import {SalesOrderHeader} from "chums-types";
-
+export type BasicCustomer = Pick<SalesOrderHeader, 'ARDivisionNo'|'CustomerNo'|'BillToName'>
 export type OpenOrderStatusGroup = 'shipping' | 'cs' | 'imp';
 
 export interface OpenOrderStatusCode {
@@ -11,13 +11,6 @@ export interface OpenOrderStatusCode {
     priority: number;
 }
 
-export interface BasicCustomer {
-    ARDivisionNo: string;
-    CustomerNo: string;
-    BillToName: string;
-}
-
-
 export interface ARDivisionList {
     [key:string]: string;
 }
@@ -28,7 +21,7 @@ export interface ARDivisionResponse {
 }
 
 export interface CustomerList {
-    [key: string]: string;
+    [key: string]: BasicCustomer;
 }
 
 export interface StatusHistoryRow {

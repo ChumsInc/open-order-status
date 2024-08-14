@@ -1,10 +1,11 @@
-import {getPreference, storageKeys} from "../../api/preferences";
+import {storageKeys} from "../../api/preferences";
 import {OrdersState} from "./index";
 import {SortProps} from "chums-types";
 import {SalesOrderRow, SalesOrderTotals} from "../../types";
 import dayjs from "dayjs";
 import Decimal from "decimal.js";
 import {customerKey} from "../../utils";
+import {LocalStore} from "chums-components";
 
 
 export const defaultSort: SortProps<SalesOrderRow> = {field: 'SalesOrderNo', ascending: true};
@@ -22,36 +23,45 @@ const initialTotals: SalesOrderTotals = {
     'web': {count: 0, value: 0},
 }
 
+const containerEl = document.querySelector('#apps-open-order-status') as HTMLDivElement;
+
+const getMaxShipDate = (): string => {
+    const days = containerEl.dataset.defaultDays;
+    if (!!days && !isNaN(Number(days))) {
+        return dayjs().add(+days, 'days').toISOString();
+    }
+    return LocalStore.getItem<boolean>(storageKeys.imprint, false)
+        ? dayjs().add(4, 'week').toISOString()
+        : dayjs().add(2, 'week').toISOString()
+}
+
 export const initialState = (): OrdersState => ({
     grouping: {},
     loading: false,
     loaded: false,
     filters: {
-        imprint: getPreference(storageKeys.imprint, false),
-        maxShipDate: getPreference(storageKeys.imprint, false)
-            ? dayjs().add(4, 'week').toISOString()
-            : dayjs().add(2, 'week').toISOString()
-        ,
+        imprint: LocalStore.getItem<boolean>(storageKeys.imprint, false) ?? false,
+        maxShipDate: getMaxShipDate(),
         arDivisionNo: '',
-        customer: '',
+        customer: null,
         salesOrderNo: '',
         user: '',
         status: null,
-        onTimeOrders: getPreference(storageKeys.showOpen, true),
-        lateOrders: getPreference(storageKeys.showLate, true),
-        backOrders: getPreference(storageKeys.showBackOrder, false),
-        onCancelDate: getPreference(storageKeys.showOnCancelDate, true),
-        pastCancelDate: getPreference(storageKeys.showPastCancelDate, true),
-        invoicing: getPreference(storageKeys.showInvoicing, false),
-        showChums: getPreference(storageKeys.showChums, true),
-        showEDI: getPreference(storageKeys.showEDI, true),
-        showWeb: getPreference(storageKeys.showWeb, true),
-        showDollars: getPreference(storageKeys.showDollars, false),
+        onTimeOrders: LocalStore.getItem(storageKeys.showOpen, true) ?? true,
+        lateOrders: LocalStore.getItem(storageKeys.showLate, true) ?? true,
+        backOrders: LocalStore.getItem(storageKeys.showBackOrder, false) ?? false,
+        onCancelDate: LocalStore.getItem(storageKeys.showOnCancelDate, true) ?? true,
+        pastCancelDate: LocalStore.getItem(storageKeys.showPastCancelDate, true) ?? true,
+        invoicing: LocalStore.getItem(storageKeys.showInvoicing, false) ?? false,
+        showChums: LocalStore.getItem(storageKeys.showChums, true) ?? true,
+        showEDI: LocalStore.getItem(storageKeys.showEDI, containerEl?.dataset?.showEdi === 'true') ?? true,
+        showWeb: LocalStore.getItem(storageKeys.showWeb, containerEl?.dataset?.showWeb === 'true') ?? true,
+        showDollars: LocalStore.getItem(storageKeys.showDollars, false) ?? false,
     },
-    expandAll: getPreference(storageKeys.expandAll, false),
+    expandAll: LocalStore.getItem(storageKeys.expandAll, false) ?? false,
     totals: {...initialTotals},
     page: 0,
-    rowsPerPage: getPreference(storageKeys.rowsPerPage, 10),
+    rowsPerPage: LocalStore.getItem(storageKeys.rowsPerPage, 10) ?? 10,
     sort: {...initialSort},
 });
 
@@ -72,63 +82,63 @@ export const orderSorter = ({field, ascending}: SortProps<SalesOrderRow>) =>
         const sortMod = ascending ? 1 : -1;
 
         switch (field) {
-        case 'SalesOrderNo':
-            return (a[field] > b[field] ? 1 : -1) * sortMod;
-        case 'ARDivisionNo':
-        case 'CustomerNo': {
-            const aVal = customerKey(a).toLowerCase();
-            const bVal = customerKey(b).toLowerCase();
-            return (
-                aVal === bVal
-                    ? defaultOrderSorter(a, b)
-                    : (aVal > bVal ? 1 : -1)
-            ) * sortMod;
-        }
-        case 'UserLogon':
-        case 'BillToName': {
-            const aVal = a[field].toLowerCase();
-            const bVal = b[field].toLowerCase();
-            return (
-                aVal === bVal
-                    ? defaultOrderSorter(a, b)
-                    : (aVal > bVal ? 1 : -1)
-            ) * sortMod;
+            case 'SalesOrderNo':
+                return (a[field] > b[field] ? 1 : -1) * sortMod;
+            case 'ARDivisionNo':
+            case 'CustomerNo': {
+                const aVal = customerKey(a).toLowerCase();
+                const bVal = customerKey(b).toLowerCase();
+                return (
+                    aVal === bVal
+                        ? defaultOrderSorter(a, b)
+                        : (aVal > bVal ? 1 : -1)
+                ) * sortMod;
+            }
+            case 'UserLogon':
+            case 'BillToName': {
+                const aVal = a[field].toLowerCase();
+                const bVal = b[field].toLowerCase();
+                return (
+                    aVal === bVal
+                        ? defaultOrderSorter(a, b)
+                        : (aVal > bVal ? 1 : -1)
+                ) * sortMod;
 
-        }
-        case 'CancelDate': {
-            const aVal = dayjs(a.CancelDate ?? a.ShipExpireDate).valueOf();
-            const bVal = dayjs(b.CancelDate ?? b.ShipExpireDate).valueOf();
-            return (
-                aVal === bVal
-                    ? defaultOrderSorter(a, b)
-                    : (aVal > bVal ? 1 : -1)
-            ) * sortMod;
-        }
-        case 'OrderDate':
-        case 'ShipExpireDate':
-            return (
-                dayjs(a[field] ?? 0).valueOf() === dayjs(b[field] ?? 0).valueOf()
-                    ? defaultOrderSorter(a, b)
-                    : (dayjs(a[field] ?? 0).valueOf() > dayjs(b[field] ?? 0).valueOf() ? 1 : -1)
-            ) * sortMod;
+            }
+            case 'CancelDate': {
+                const aVal = dayjs(a.CancelDate ?? a.ShipExpireDate).valueOf();
+                const bVal = dayjs(b.CancelDate ?? b.ShipExpireDate).valueOf();
+                return (
+                    aVal === bVal
+                        ? defaultOrderSorter(a, b)
+                        : (aVal > bVal ? 1 : -1)
+                ) * sortMod;
+            }
+            case 'OrderDate':
+            case 'ShipExpireDate':
+                return (
+                    dayjs(a[field] ?? 0).valueOf() === dayjs(b[field] ?? 0).valueOf()
+                        ? defaultOrderSorter(a, b)
+                        : (dayjs(a[field] ?? 0).valueOf() > dayjs(b[field] ?? 0).valueOf() ? 1 : -1)
+                ) * sortMod;
 
-        case 'ShipVia':
-            return (
-                (a[field] ?? '').toLowerCase() === (b[field] ?? '').toLowerCase()
-                    ? defaultOrderSorter(a, b)
-                    : ((a[field] ?? '').toLowerCase() > (b[field] ?? '').toLowerCase() ? 1 : -1)
-            ) * sortMod;
+            case 'ShipVia':
+                return (
+                    (a[field] ?? '').toLowerCase() === (b[field] ?? '').toLowerCase()
+                        ? defaultOrderSorter(a, b)
+                        : ((a[field] ?? '').toLowerCase() > (b[field] ?? '').toLowerCase() ? 1 : -1)
+                ) * sortMod;
 
-        case 'OrderAmt':
-            return (+a.OrderAmt - +b.OrderAmt) * sortMod;
-        case 'status':
-            return (
-                (a.status?.StatusCode ?? '') === (b.status?.StatusCode ?? '')
-                    ? defaultOrderSorter(a, b)
-                    : ((a.status?.StatusCode ?? '') > (b.status?.StatusCode ?? '') ? 1 : -1)
-            ) * sortMod;
-        default:
-            return defaultOrderSorter(a, b) * sortMod;
+            case 'OrderAmt':
+                return (+a.OrderAmt - +b.OrderAmt) * sortMod;
+            case 'status':
+                return (
+                    (a.status?.StatusCode ?? '') === (b.status?.StatusCode ?? '')
+                        ? defaultOrderSorter(a, b)
+                        : ((a.status?.StatusCode ?? '') > (b.status?.StatusCode ?? '') ? 1 : -1)
+                ) * sortMod;
+            default:
+                return defaultOrderSorter(a, b) * sortMod;
         }
     }
 
@@ -193,7 +203,7 @@ export function friendlyDate(value: string | Date | null): string | null {
 export function buildTotals(rows: SalesOrderRow[]): SalesOrderTotals {
     return rows.reduce((pv, cv) => {
         const status = calcStatus(cv);
-        let total = {
+        const total = {
             ...pv,
             chums: !(cv.isEDI || cv.isWebsite)
                 ? {count: pv.chums.count + 1, value: new Decimal(cv.OrderAmt).add(pv.chums.value).valueOf()}
@@ -263,6 +273,6 @@ export function buildTotals(rows: SalesOrderRow[]): SalesOrderTotals {
     }, {...initialTotals})
 }
 
-export const parseDateTime = (sageDate:string, sageTime:string):Date => {
+export const parseDateTime = (sageDate: string, sageTime: string): Date => {
     return dayjs(sageDate).add(Number(sageTime), 'hours').toDate();
 }

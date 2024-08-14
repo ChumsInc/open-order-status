@@ -90,3 +90,6 @@ html[data-bs-theme="dark"] .btn-outline-dark {
     --bs-btn-disabled-bg: var(--bs-indigo);
     --bs-btn-disabled-border-color: var(--bs-indigo);
 }
+.badge + .badge {
+    margin-left: 0.25rem;
+}

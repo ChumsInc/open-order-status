@@ -5,7 +5,7 @@ import {createRoot} from "react-dom/client";
 import store from "./app/configureStore";
 
 window.localStorage.setItem('debug', '*');
-const container = document.getElementById('app');
+const container = document.getElementById('apps-open-order-status');
 const root = createRoot(container!);
 
 root.render(

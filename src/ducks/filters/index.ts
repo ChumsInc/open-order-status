@@ -1,9 +1,8 @@
-import {CustomerList, ARDivisionList} from "../../types";
-import {createAsyncThunk, createReducer} from "@reduxjs/toolkit";
-import {fetchARDivisions} from "../../api";
+import {ARDivisionList, CustomerList} from "../../types";
+import {createReducer} from "@reduxjs/toolkit";
 import {loadOrders} from "../orders/actions";
-import {customerKey} from "../../utils";
-import {RootState} from "../../app/configureStore";
+import {basicCustomer, customerKey} from "../../utils";
+import {loadDivisions} from "./actions";
 
 export interface FiltersState {
     divisions: {
@@ -14,7 +13,7 @@ export interface FiltersState {
     users: string[];
 }
 
-const initialState:FiltersState = {
+const initialState: FiltersState = {
     divisions: {
         list: {},
         loading: false,
@@ -23,28 +22,12 @@ const initialState:FiltersState = {
     users: [],
 }
 
-export const selectDivisionList = (state:RootState) => state.filters.divisions.list;
-export const selectDivisionsLoading = (state:RootState) => state.filters.divisions.loading;
-export const selectCustomerList = (state:RootState) => state.filters.customers;
-export const selectUserNames = (state:RootState) => state.filters.users;
-
-export const loadDivisions = createAsyncThunk<ARDivisionList>(
-    'filters/loadDivisions',
-    async () => {
-        return await fetchARDivisions();
-    }, {
-        condition: (arg, {getState}) => {
-            const state = getState() as RootState;
-            return !selectDivisionsLoading(state);
-        }
-    }
-)
 
 const filtersReducer = createReducer(initialState, (builder) => {
     builder
         .addCase(loadDivisions.pending, (state) => {
-        state.divisions.loading = true;
-    })
+            state.divisions.loading = true;
+        })
         .addCase(loadDivisions.fulfilled, (state, action) => {
             state.divisions.loading = false;
             state.divisions.list = action.payload;
@@ -57,7 +40,7 @@ const filtersReducer = createReducer(initialState, (builder) => {
             action.payload.forEach(row => {
                 const key = customerKey(row);
                 if (!state.customers[key]) {
-                    state.customers[key] = row.CustomerName;
+                    state.customers[key] = basicCustomer(row);
                 }
                 if (!state.users.includes(row.UserLogon)) {
                     state.users.push(row.UserLogon);

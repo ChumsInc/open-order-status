@@ -1,12 +1,12 @@
 import {createAction, createAsyncThunk} from "@reduxjs/toolkit";
-import {SalesOrderRow, SalesOrderStatusData, SalesOrderStatusRow, ToggleExpandOrder} from "../../types";
+import {BasicCustomer, SalesOrderRow, SalesOrderStatusData, SalesOrderStatusRow, ToggleExpandOrder} from "../../types";
 import {fetchOrdersList, postOrderStatus} from "../../api";
 import {RootState} from "../../app/configureStore";
 import {selectFetchOrderOptions, selectLoading, selectOrderGroup} from "./selectors";
 import {SortProps} from "chums-types";
 
 export const setARDivisionNoFilter = createAction<string>('orders/filters/setARDivisionNo');
-export const setCustomerFilter = createAction<string | null>('orders/filters/setCustomer');
+export const setCustomerFilter = createAction<BasicCustomer | null>('orders/filters/setCustomer');
 export const setUserFilter = createAction<string | null>('orders/filters/setUser');
 export const setStatusFilter = createAction<string | null>('orders/filters/setStatus');
 export const setSalesOrderFilter = createAction<string|null>('orders/filters/setSalesOrder');

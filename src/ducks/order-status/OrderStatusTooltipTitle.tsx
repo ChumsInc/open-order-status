@@ -1,13 +1,13 @@
 import React from 'react';
 import {OpenOrderStatusCode, SalesOrderRow} from "../../types";
 import {useSelector} from "react-redux";
-import {selectList} from "./index";
+import {selectStatusList} from "./index";
 
 const OrderStatusTooltipTitle = ({row, currentStatus}:{
     row:SalesOrderRow,
     currentStatus?: OpenOrderStatusCode
 }) => {
-    const list = useSelector(selectList);
+    const list = useSelector(selectStatusList);
 
     if (!currentStatus && !row.status?.StatusHistory?.length) {
         return <span>Not Set</span>;

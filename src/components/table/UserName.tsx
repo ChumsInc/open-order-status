@@ -15,8 +15,8 @@ const UserName = ({row}: { row: SalesOrderRow }) => {
         return (
             <Tooltip title={ttTitle}>
                 <div>
-                    <span className="badge bg-primary">B2B</span>
-                    <span className="ms-1">{userName}</span>
+                    <div className="ms-1">{userName}</div>
+                    <div className="badge text-bg-primary">B2B</div>
                 </div>
             </Tooltip>
         )
@@ -25,8 +25,8 @@ const UserName = ({row}: { row: SalesOrderRow }) => {
         return (
             <Tooltip title={ttTitle}>
                 <div>
-                    <span className="badge bg-info text-light">EDI</span>
-                    <span className="ms-1">{userName}</span>
+                    <div className="ms-1">{userName}</div>
+                    <div className="badge text-bg-info">EDI</div>
                 </div>
             </Tooltip>
         )
@@ -34,7 +34,7 @@ const UserName = ({row}: { row: SalesOrderRow }) => {
     if (row.isWebsite) {
         return (
             <Tooltip title={ttTitle}>
-                <span className="badge bg-secondary">Shopify</span>
+                <span className="badge text-bg-secondary">Shopify</span>
             </Tooltip>
         )
     }

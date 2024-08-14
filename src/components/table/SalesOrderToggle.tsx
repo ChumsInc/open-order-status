@@ -34,7 +34,7 @@ const SalesOrderToggle = ({row}: { row: SalesOrderRow }) => {
     if (!key || !group || group.count === 1) {
         return null;
     }
-    if (!!salesOrderNo) {
+    if (salesOrderNo) {
         return null;
     }
 
@@ -61,9 +61,9 @@ const SalesOrderToggle = ({row}: { row: SalesOrderRow }) => {
     }
     return (
         <Tooltip arrow title="Collapse group">
-        <div onClick={onToggleClose} style={{cursor: 'pointer'}} className="px-1">
-            <span className={classNames("ms-3", toggleClassName)}/>
-        </div>
+            <div onClick={onToggleClose} style={{cursor: 'pointer'}} className="px-1">
+                <span className={classNames("ms-3", toggleClassName)}/>
+            </div>
         </Tooltip>
     )
 }

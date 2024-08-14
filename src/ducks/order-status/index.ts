@@ -19,15 +19,15 @@ export const initialState: OrderStatusState = {
 }
 
 
-export const selectList = (state: RootState) => state.orderStatus.list;
-export const selectLoading = (state: RootState) => state.orderStatus.loading;
+export const selectStatusList = (state: RootState) => state.orderStatus.list;
+export const selectStatusLoading = (state: RootState) => state.orderStatus.loading;
 export const selectLoaded = (state: RootState) => state.orderStatus.loaded;
 export const selectCurrentStatus = (state:RootState) => state.orderStatus.current;
 
 export const selectStatusCode = (state:RootState, code:string|null) => code;
 export const _selectStatusByCode = (state:RootState, code:string) => state.orderStatus.list.filter(status => status.StatusCode === code);
 export const selectStatusByCode = createSelector(
-    [selectList, selectStatusCode],
+    [selectStatusList, selectStatusCode],
     (list, code) => {
         const [status] = list.filter(status => status.StatusCode === code);
         return status ?? null;
@@ -63,7 +63,7 @@ export const loadStatusList = createAsyncThunk<OpenOrderStatusCode[]>(
     {
         condition: (arg, {getState}) => {
             const state = getState() as RootState;
-            return !selectLoading(state);
+            return !selectStatusLoading(state);
         }
     }
 )

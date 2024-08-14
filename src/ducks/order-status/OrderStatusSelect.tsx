@@ -1,10 +1,9 @@
 import React from 'react';
 import {useSelector} from "react-redux";
-import {groupTitle, selectList} from "./index";
+import {groupTitle, selectStatusList} from "./index";
 import Menu from "@mui/material/Menu";
 import ListSubheader from "@mui/material/ListSubheader";
 import CheckedMenuItem from "./CheckedMenuItem";
-import {Box, Stack} from "@mui/material";
 
 
 export interface OrderStatusSelectProps {
@@ -15,7 +14,7 @@ export interface OrderStatusSelectProps {
 }
 
 const OrderStatusSelect = ({value, onChange, anchorEl, onClose}: OrderStatusSelectProps) => {
-    const list = useSelector(selectList);
+    const list = useSelector(selectStatusList);
 
     return (
         <Menu open={!!anchorEl} onClose={onClose} PaperProps={{style: {maxHeight: '75vh'}}}

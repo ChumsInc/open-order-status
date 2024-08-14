@@ -7,6 +7,7 @@ import SalesOrderLink from "./SalesOrderLink";
 import SalesOrderNoRange from "./SalesOrderNoRange";
 import {toggleExpandGroup} from "../../ducks/orders/actions";
 import {VALUE_VARIES} from "../../utils";
+import SalesOrderToggle from "./SalesOrderToggle";
 
 const SalesOrderNo = ({row}:{row: SalesOrderRow}) => {
     const dispatch = useAppDispatch();
@@ -24,13 +25,27 @@ const SalesOrderNo = ({row}:{row: SalesOrderRow}) => {
     if (!key) {
         return null;
     }
-    if (group?.expanded || group?.count === 1 || !!salesOrderFilter) {
+    if (group?.count === 1 || !!salesOrderFilter) {
         return (
             <SalesOrderLink salesOrderNo={row.SalesOrderNo}/>
         )
     }
+    if (group?.expanded) {
+        return (
+            <div className="d-flex justify-content-between">
+                <SalesOrderLink salesOrderNo={row.SalesOrderNo}/>
+                <SalesOrderToggle row={row}/>
+            </div>
+        )
+    }
+
     return (
-        <SalesOrderNoRange salesOrderNos={group?.salesOrders.map(row => row.SalesOrderNo) ?? []} onClick={clickHandler}/>
+        <>
+            <SalesOrderNoRange row={row}
+                               salesOrderNos={group?.salesOrders.map(row => row.SalesOrderNo) ?? []}
+                               onClick={clickHandler}/>
+        </>
+
     )
 }
 export default SalesOrderNo;

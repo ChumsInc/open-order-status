@@ -5,9 +5,10 @@ import OrderDateStatusToggles from "../components/filters/OrderDateStatusToggles
 import OrderFiltersBar from "../components/filters/OrderFiltersBar";
 import {useAppDispatch} from "./configureStore";
 import {loadStatusList} from "../ducks/order-status";
-import { createTheme, ThemeProvider } from '@mui/material/styles';
+import {createTheme, ThemeProvider} from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import useMediaQuery from "@mui/material/useMediaQuery";
+import StatusCards from "../components/StatusCards";
 
 export default function App() {
     const dispatch = useAppDispatch();
@@ -30,12 +31,13 @@ export default function App() {
 
     return (
         <ThemeProvider theme={theme}>
-            <CssBaseline />
+            <CssBaseline/>
             <div>
-                <OrderFiltersBar />
-                <OrderDateStatusToggles />
+                <StatusCards/>
+                <OrderFiltersBar/>
+                <OrderDateStatusToggles/>
                 <AlertList/>
-                <OrdersList />
+                <OrdersList/>
             </div>
         </ThemeProvider>
     )

@@ -1,2 +1,2 @@
 
-<div id="app" data-nonce="<?php echo $_SESSION['nonce']; ?>"></div>
+<div id="apps-open-order-status" data-nonce="<?php echo $_SESSION['nonce']; ?>"></div>

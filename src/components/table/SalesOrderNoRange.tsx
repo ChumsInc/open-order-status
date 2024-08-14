@@ -1,6 +1,12 @@
 import React from "react";
+import {SalesOrderRow} from "../../types";
+import SalesOrderToggle from "./SalesOrderToggle";
 
-const SalesOrderNoRange = ({salesOrderNos, onClick}: { salesOrderNos: string[], onClick: () => void }) => {
+const SalesOrderNoRange = ({row, salesOrderNos, onClick}: {
+    row: SalesOrderRow;
+    salesOrderNos: string[];
+    onClick: () => void;
+}) => {
     if (!salesOrderNos.length) {
         return null;
     }
@@ -20,13 +26,15 @@ const SalesOrderNoRange = ({salesOrderNos, onClick}: { salesOrderNos: string[], 
     })
 
     return (
-        <div className="d-flex justify-content-between align-items-baseline"
-             style={{cursor: 'pointer'}} onClick={onClick}>
-            <div>{firstDigits.join('')}&hellip;{result.join('')}</div>
-            <div>
-                <small className="ms-1">({salesOrderNos.length})</small>
+        <>
+            <div style={{cursor: 'pointer'}} onClick={onClick}>
+                {firstDigits.join('')}&hellip;{result.join('')}
             </div>
-        </div>
+            <div className="d-flex justify-content-between">
+                <small className="ms-1">({salesOrderNos.length})</small>
+                <SalesOrderToggle row={row}/>
+            </div>
+        </>
     );
 }
 

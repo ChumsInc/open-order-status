@@ -31,6 +31,7 @@
     "@babel/preset-env": "^7.12.11",
     "@babel/preset-react": "^7.12.10",
     "@babel/register": "^7.12.10",
+    "@eslint/js": "^9.9.0",
     "@types/numeral": "^2.0.2",
     "@types/react": "^18.0.28",
     "@types/react-dom": "^18.0.11",
@@ -42,10 +43,14 @@
     "core-js": "^3.8.1",
     "css-loader": "^7.1.1",
     "dotenv": "^16.0.3",
+    "eslint": "^9.9.0",
+    "eslint-plugin-react": "^7.35.0",
+    "globals": "^15.9.0",
     "style-loader": "^4.0.0",
     "terser-webpack-plugin": "^5.0.3",
     "ts-loader": "^9.4.2",
     "typescript": "^5.0.3",
+    "typescript-eslint": "^8.1.0",
     "webpack": "^5.75.0",
     "webpack-bundle-analyzer": "^4.3.0",
     "webpack-chunk-hash": "^0.6.0",
@@ -55,8 +60,8 @@
     "webpack-merge": "^6.0.1"
   },
   "scripts": {
-    "start": "webpack serve --config webpack.dev.js --progress",
-    "build": "webpack --config webpack.prod.js --progress"
+    "start": "webpack serve --config webpack.dev.mjs --progress",
+    "build": "webpack --config webpack.prod.mjs --progress"
   },
   "author": "Steve Montgomery",
   "license": "ISC",

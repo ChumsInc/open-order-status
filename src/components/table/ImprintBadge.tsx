@@ -5,7 +5,7 @@ const ImprintBadge = ({row}: { row: SalesOrderRow }) => {
     if (!row.UDF_IMPRINTED || row.UDF_IMPRINTED === 'N') {
         return null;
     }
-    return <span className="badge bg-info text-light">IMP</span>
+    return <span className="badge text-bg-info">IMP</span>
 }
 
 export default ImprintBadge;

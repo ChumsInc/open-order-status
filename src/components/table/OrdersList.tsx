@@ -1,7 +1,13 @@
 import React, {Fragment, useEffect} from 'react';
 import {useAppDispatch} from "../../app/configureStore";
 import {useSelector} from "react-redux";
-import {selectFilteredOrders, selectLoading, selectPage, selectRowsPerPage, selectSort} from "../../ducks/orders/selectors";
+import {
+    selectFilteredOrders,
+    selectLoading,
+    selectPage,
+    selectRowsPerPage,
+    selectSort
+} from "../../ducks/orders/selectors";
 import {
     Alert,
     DataTableField,
@@ -19,7 +25,6 @@ import {SortProps} from "chums-types";
 import classNames from "classnames";
 import numeral from "numeral";
 import CancelDateField from "./CancelDateField";
-import SalesOrderToggle from "./SalesOrderToggle";
 import CustomerLink from "./CustomerLink";
 import OrderTypeBadge from "./OrderTypeBadge";
 import HoldReasonBadge from "./HoldReasonBadge";
@@ -32,26 +37,47 @@ import OrderDate from "./OrderDate";
 import Version from "../../ducks/version/Version";
 
 const fields: SortableTableField<SalesOrderRow>[] = [
-    {field: 'SalesOrderNo', title: 'SO #', sortable: true, render: (row) => <SalesOrderNo row={row}/>},
-    {field: 'SalesOrderNo', title: <ToggleExpandAll/>, render: (row) => <SalesOrderToggle row={row}/>},
-    {field: 'OrderDate', title: 'Date', render: (row) => <OrderDate row={row} />, sortable: true},
+    {
+        field: 'SalesOrderNo',
+        title: <div className="d-flex"><span className="me-3"> SO #</span><ToggleExpandAll/></div>,
+        sortable: true,
+        render: (row) => <SalesOrderNo row={row}/>
+    },
+    // {field: 'SalesOrderNo', title: <ToggleExpandAll/>, render: (row) => <SalesOrderToggle row={row}/>},
+    {field: 'OrderDate', title: 'Date', render: (row) => <OrderDate row={row}/>, sortable: true},
     {field: 'UserLogon', title: 'User', sortable: true, render: (row) => <UserName row={row}/>},
-    {field: 'OrderType', title: 'Type', render: (row) => <OrderTypeBadge row={row}/>, sortable: true},
-    {field: 'CancelReasonCode', title: 'Hold', sortable: false, render: (row) => <HoldReasonBadge row={row}/>},
-    {field: 'UDF_IMPRINTED', title: 'IMP', render: (row) => <ImprintBadge row={row}/>, sortable: false},
+    {
+        field: 'OrderType', title: 'Flags', render: (row) => (<>
+            <OrderTypeBadge row={row}/>
+            <HoldReasonBadge row={row}/>
+            <ImprintBadge row={row}/>
+        </>), sortable: true
+    },
+    // {field: 'CancelReasonCode', title: 'Status', sortable: false, render: (row) => <><HoldReasonBadge row={row}/><ImprintBadge row={row}/></>},
+    // {field: 'UDF_IMPRINTED', title: 'IMP', render: (row) => <ImprintBadge row={row}/>, sortable: false},
     {
         field: 'CustomerNo',
         title: 'Customer',
-        render: (row) => <CustomerLink row={row}>{customerKey(row)}</CustomerLink>,
+        render: (row) => <div>
+            <div><CustomerLink row={row}>{customerKey(row)}</CustomerLink></div>
+            <small className="text-secondary text-wrap">{row.BillToName}</small>
+        </div>,
         sortable: true
     },
+    // {
+    //     field: 'BillToName',
+    //     title: 'Bill-To Name',
+    //     sortable: true,
+    //     render: (row) => <CustomerLink row={row}>{row.BillToName}</CustomerLink>
+    // },
     {
-        field: 'BillToName',
-        title: 'Bill-To Name',
+        field: 'ShipVia',
+        title: 'Ship Via',
         sortable: true,
-        render: (row) => <CustomerLink row={row}>{row.BillToName}</CustomerLink>
+        render: (row) => <div>
+            <div>{row.ShipVia}</div>
+            <small className="text-secondary">{row.Comment}</small></div>
     },
-    {field: 'ShipVia', title: 'Ship Via', sortable: true},
     {field: 'ShipExpireDate', title: 'Ship', sortable: true, render: (row) => friendlyDate(row.ShipExpireDate)},
     {field: 'CancelDate', title: 'Cancel', sortable: true, render: (row) => <CancelDateField order={row}/>},
     {
@@ -61,42 +87,45 @@ const fields: SortableTableField<SalesOrderRow>[] = [
         className: 'text-end',
         render: (row) => numeral(row.OrderAmt).format('$0,0')
     },
-    {field: 'Comment', title: 'Comment', sortable: true},
-    {field: 'status', title: 'Status', render: row => <OrderStatusContainer row={row}/>, sortable: true, className: 'text-end'}
+    // {field: 'Comment', title: 'Comment', sortable: true},
+    {
+        field: 'status',
+        title: 'Status',
+        render: row => <OrderStatusContainer row={row}/>,
+        sortable: true,
+        className: 'text-end'
+    }
 ];
 
 const commentFields: DataTableField<SalesOrderRow>[] = [
-    {field: "SalesOrderNo", title: 'SO#', render: () => null, colSpan: 7},
+    {field: "SalesOrderNo", title: 'SO#', render: () => null, colSpan: 4},
     {
         field: 'lineComments',
         title: 'lineComments',
-        render: (row) => <pre><span className="bi-info-circle me-1" />{row.lineComments?.lineComments ?? null}</pre>,
-        colSpan: 7,
+        render: (row) => <pre><span className="bi-info-circle me-1"/>{row.lineComments?.lineComments ?? null}</pre>,
+        colSpan: 6,
         className: 'font-monospace'
     },
-    {field: 'status', title: '', render: () => null}
 ]
 const notesFields: DataTableField<SalesOrderRow>[] = [
-    {field: "SalesOrderNo", title: 'SO#', render: () => null, colSpan: 7},
+    {field: "SalesOrderNo", title: 'SO#', render: () => null, colSpan: 4},
     {
         field: 'status',
         title: 'lineComments',
-        render: (row) => <pre><span className="bi-pencil-square me-1" />{row.status?.Notes ?? null}</pre>,
-        colSpan: 7,
+        render: (row) => <pre><span className="bi-pencil-square me-1"/>{row.status?.Notes ?? null}</pre>,
+        colSpan: 6,
         className: 'font-monospace'
     },
-    {field: 'status', title: '', render: () => null}
 ]
 const errorFields: DataTableField<SalesOrderRow>[] = [
-    {field: "SalesOrderNo", title: 'SO#', render: () => null, colSpan: 7},
+    {field: "SalesOrderNo", title: 'SO#', render: () => null, colSpan: 4},
     {
         field: 'errorMessage',
         title: 'lineComments',
         render: (row) => <Alert color="warning">{row.errorMessage ?? null}</Alert>,
-        colSpan: 7,
+        colSpan: 6,
         className: 'font-monospace'
     },
-    {field: 'status', title: '', render: () => null}
 ]
 
 const rowClassName = (row: SalesOrderRow) => {
@@ -155,7 +184,7 @@ const OrdersList = () => {
                 />
             </div>
             <div className="d-flex justify-content-between align-items-start">
-                <Version />
+                <Version/>
                 <TablePagination page={page} onChangePage={pageChangeHandler}
                                  rowsPerPage={rowsPerPage} onChangeRowsPerPage={onChangeRowsPerPage}
                                  showFirst showLast bsSize="sm"
