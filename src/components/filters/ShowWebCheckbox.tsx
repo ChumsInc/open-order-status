@@ -3,6 +3,8 @@ import {useAppDispatch, useAppSelector} from "../../app/configureStore";
 import {selectShowWeb, selectWebTotals} from "../../ducks/orders/selectors";
 import {toggleShowWeb} from "../../ducks/orders/actions";
 import numeral from "numeral";
+import {LocalStore} from "chums-components";
+import {storageKeys} from "../../api/preferences";
 
 export default function ShowWebCheckbox() {
     const dispatch = useAppDispatch();
@@ -11,6 +13,7 @@ export default function ShowWebCheckbox() {
     const id = useId();
 
     const changeHandler = (ev: ChangeEvent<HTMLInputElement>) => {
+        LocalStore.setItem(storageKeys.showWeb, checked);
         dispatch(toggleShowWeb(ev.target.checked));
     }
     return (

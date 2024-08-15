@@ -3,6 +3,8 @@ import {useAppDispatch, useAppSelector} from "../../app/configureStore";
 import {selectEDITotals, selectShowEDI} from "../../ducks/orders/selectors";
 import {toggleShowEDI} from "../../ducks/orders/actions";
 import numeral from "numeral";
+import {LocalStore} from "chums-components";
+import {storageKeys} from "../../api/preferences";
 
 export default function ShowEDICheckbox() {
     const dispatch = useAppDispatch();
@@ -11,6 +13,7 @@ export default function ShowEDICheckbox() {
     const id = useId();
 
     const changeHandler = (ev: ChangeEvent<HTMLInputElement>) => {
+        LocalStore.setItem(storageKeys.showEDI, checked);
         dispatch(toggleShowEDI(ev.target.checked));
     }
     return (

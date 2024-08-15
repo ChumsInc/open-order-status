@@ -5,6 +5,8 @@ import {useAppDispatch} from "../app/configureStore";
 import StatusCard from "./StatusCard";
 import {GroupTotal} from "../types";
 import {toggleShowBackorders} from "../ducks/orders/actions";
+import {LocalStore} from "chums-components";
+import {storageKeys} from "../api/preferences";
 
 export default function BackOrdersCard() {
     const dispatch = useAppDispatch();
@@ -17,6 +19,7 @@ export default function BackOrdersCard() {
     }, [totals]);
 
     const visibilityToggle = (checked: boolean) => {
+        LocalStore.setItem(storageKeys.showBackOrder, checked);
         dispatch(toggleShowBackorders(checked));
     }
 

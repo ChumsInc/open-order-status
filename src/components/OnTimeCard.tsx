@@ -5,6 +5,8 @@ import {useAppDispatch} from "../app/configureStore";
 import StatusCard from "./StatusCard";
 import {GroupTotal} from "../types";
 import {toggleShowOpen} from "../ducks/orders/actions";
+import {LocalStore} from "chums-components";
+import {storageKeys} from "../api/preferences";
 
 export default function OnTimeCard() {
     const dispatch = useAppDispatch();
@@ -17,6 +19,7 @@ export default function OnTimeCard() {
     }, [totals]);
 
     const visibilityToggle = (checked:boolean) => {
+        LocalStore.setItem(storageKeys.showOpen, checked);
         dispatch(toggleShowOpen(checked));
     }
 

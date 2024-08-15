@@ -4,11 +4,12 @@ import {calcStatus, orderSorter} from "./utils";
 import {FetchOrdersOptions} from "../../api";
 import {SalesOrderRow} from "../../types";
 import {customerKey} from "../../utils";
+import dayjs from "dayjs";
 
 export const selectLoading = (state: RootState) => state.orders.loading;
 export const selectLoaded = (state: RootState) => state.orders.loaded;
 export const selectImprint = (state: RootState) => state.orders.filters.imprint;
-export const selectMaxShipDate = (state: RootState) => state.orders.filters.maxShipDate;
+export const selectLeadTime = (state:RootState) => state.orders.filters.leadTime;
 export const selectARDivisionNo = (state: RootState) => state.orders.filters.arDivisionNo;
 export const selectCustomer = (state: RootState) => state.orders.filters.customer;
 export const selectSalesOrderNo = (state: RootState) => state.orders.filters.salesOrderNo;
@@ -23,7 +24,6 @@ export const selectInvoicing = (state: RootState) => state.orders.filters.invoic
 export const selectShowChums = (state: RootState) => state.orders.filters.showChums;
 export const selectShowEDI = (state: RootState) => state.orders.filters.showEDI;
 export const selectShowWeb = (state: RootState) => state.orders.filters.showWeb;
-export const selectShowDollars = (state: RootState) => state.orders.filters.showDollars;
 export const selectTotals = (state: RootState) => state.orders.totals;
 export const selectEDITotals = (state:RootState) => state.orders.totals.edi;
 export const selectChumsTotals = (state:RootState) => state.orders.totals.chums;
@@ -45,8 +45,9 @@ export const selectOrderGroup = createSelector(
 
 
 export const selectFetchOrderOptions = createSelector(
-    [selectImprint, selectMaxShipDate],
-    (imprint, maxDate): FetchOrdersOptions => {
+    [selectImprint, selectLeadTime],
+    (imprint, leadTime): FetchOrdersOptions => {
+        const maxDate = dayjs().add(leadTime, 'days').toISOString();
         return {maxDate, imprint}
     }
 )

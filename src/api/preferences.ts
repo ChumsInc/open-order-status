@@ -20,5 +20,6 @@ export const storageKeys = {
 
     expandAll: `${localStoragePrefix}/expandAll`,
     imprint: `${localStoragePrefix}/imprint`,
+    leadTime: `${localStoragePrefix}/leadTime`,
     rowsPerPage: `${localStoragePrefix}/rowsPerPage`,
 };

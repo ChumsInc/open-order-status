@@ -3,6 +3,8 @@ import {useAppDispatch, useAppSelector} from "../../app/configureStore";
 import {selectChumsTotals, selectShowChums} from "../../ducks/orders/selectors";
 import {toggleShowChums} from "../../ducks/orders/actions";
 import numeral from "numeral";
+import {LocalStore} from "chums-components";
+import {storageKeys} from "../../api/preferences";
 
 export default function ShowChumsCheckbox() {
     const dispatch = useAppDispatch();
@@ -11,6 +13,7 @@ export default function ShowChumsCheckbox() {
     const id = useId();
 
     const changeHandler = (ev: ChangeEvent<HTMLInputElement>) => {
+        LocalStore.setItem(storageKeys.showChums, checked);
         dispatch(toggleShowChums(ev.target.checked));
     }
     return (

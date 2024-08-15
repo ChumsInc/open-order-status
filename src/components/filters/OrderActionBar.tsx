@@ -6,6 +6,7 @@ import UpdatedTimestamp from "./UpdatedTimestamp";
 import ShowEDICheckbox from "./ShowEDICheckbox";
 import ShowChumsCheckbox from "./ShowChumsCheckbox";
 import ShowWebCheckbox from "./ShowWebCheckbox";
+import AutoRefreshInterval from "./AutoRefreshInterval";
 
 const OrderActionBar = () => {
 
@@ -16,6 +17,9 @@ const OrderActionBar = () => {
             </div>
             <div className="col-auto">
                 <ImprintToggle/>
+            </div>
+            <div className="col-auto">
+                <AutoRefreshInterval />
             </div>
             <div className="col-auto">
                 <ReloadButton/>

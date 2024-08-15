@@ -2,7 +2,7 @@ import {ARDivisionList, CustomerList} from "../../types";
 import {createReducer} from "@reduxjs/toolkit";
 import {loadOrders} from "../orders/actions";
 import {basicCustomer, customerKey, getContainerEl} from "../../utils";
-import {loadDivisions} from "./actions";
+import {loadDivisions, setRefreshInterval} from "./actions";
 
 export interface FiltersState {
     divisions: {
@@ -11,7 +11,7 @@ export interface FiltersState {
     };
     customers: CustomerList;
     users: string[];
-    refreshInterval: number|null;
+    refreshInterval: number;
 }
 
 const initialState = (): FiltersState => ({
@@ -24,15 +24,18 @@ const initialState = (): FiltersState => ({
     refreshInterval: getRefreshInterval(),
 })
 
-function getRefreshInterval():number|null {
+function getRefreshInterval():number {
     const containerEl = getContainerEl();
     return containerEl?.dataset?.refreshInterval
         ? +(containerEl.dataset.refreshInterval)
-        : null;
+        : 0;
 }
 
 const filtersReducer = createReducer(initialState, (builder) => {
     builder
+        .addCase(setRefreshInterval, (state, action) => {
+            state.refreshInterval = action.payload;
+        })
         .addCase(loadDivisions.pending, (state) => {
             state.divisions.loading = true;
         })

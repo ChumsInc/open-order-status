@@ -12,6 +12,7 @@ import {
     Alert,
     DataTableField,
     DataTableRow,
+    LocalStore,
     SortableTable,
     SortableTableField,
     TablePagination
@@ -35,6 +36,7 @@ import SalesOrderNo from "./SalesOrderNo";
 import OrderDate from "./OrderDate";
 import Version from "../../ducks/version/Version";
 import InvoiceBadge from "./InvoiceBadge";
+import {storageKeys} from "../../api/preferences";
 
 const fields: SortableTableField<SalesOrderRow>[] = [
     {
@@ -43,7 +45,6 @@ const fields: SortableTableField<SalesOrderRow>[] = [
         sortable: true,
         render: (row) => <SalesOrderNo row={row}/>
     },
-    // {field: 'SalesOrderNo', title: <ToggleExpandAll/>, render: (row) => <SalesOrderToggle row={row}/>},
     {field: 'OrderDate', title: 'Date', render: (row) => <OrderDate row={row}/>, sortable: true},
     {field: 'UserLogon', title: 'User', sortable: true, render: (row) => <UserName row={row}/>},
     {
@@ -51,11 +52,9 @@ const fields: SortableTableField<SalesOrderRow>[] = [
             <OrderTypeBadge row={row}/>
             <HoldReasonBadge row={row}/>
             <ImprintBadge row={row}/>
-            <InvoiceBadge row={row} />
+            <InvoiceBadge row={row}/>
         </>), sortable: true
     },
-    // {field: 'CancelReasonCode', title: 'Status', sortable: false, render: (row) => <><HoldReasonBadge row={row}/><ImprintBadge row={row}/></Invo>},
-    // {field: 'UDF_IMPRINTED', title: 'IMP', render: (row) => <ImprintBadge row={row}/>, sortable: false},
     {
         field: 'CustomerNo',
         title: 'Customer',
@@ -65,12 +64,6 @@ const fields: SortableTableField<SalesOrderRow>[] = [
         </div>,
         sortable: true
     },
-    // {
-    //     field: 'BillToName',
-    //     title: 'Bill-To Name',
-    //     sortable: true,
-    //     render: (row) => <CustomerLink row={row}>{row.BillToName}</CustomerLink>
-    // },
     {
         field: 'ShipVia',
         title: 'Ship Via',
@@ -156,7 +149,10 @@ const OrdersList = () => {
 
     const pageChangeHandler = (page: number) => dispatch(setPage(page));
     const onChangeSort = (sort: SortProps) => dispatch(setSort(sort));
-    const onChangeRowsPerPage = (rpp: number) => dispatch(setRowsPerPage(rpp));
+    const onChangeRowsPerPage = (rpp: number) => {
+        LocalStore.setItem(storageKeys.rowsPerPage, rpp);
+        dispatch(setRowsPerPage(rpp));
+    }
 
     const renderRow = (row: SalesOrderRow) => {
         if (!row.lineComments && !row.status?.Notes && !row.errorMessage) {
@@ -179,7 +175,7 @@ const OrdersList = () => {
     if (!list.length && !updated) {
         return (
             <Alert color="warning">
-                <span className="bi-app-indicator me-3" />
+                <span className="bi-app-indicator me-3"/>
                 Loading initial data.
             </Alert>
         )

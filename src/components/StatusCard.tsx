@@ -32,7 +32,7 @@ export default function StatusCard({
             <div className="card-body">
                 <div className="row g-3">
                 <div className="col-auto">Sales</div>
-                    <div className="col text-end">{numeral(sales).format('$ 0,0.00')}</div>
+                    <div className="col text-end">{numeral(sales).format('$ 0,0')}</div>
                 </div>
                 <div className="row g-3">
                     <div className="col-auto">Count</div>

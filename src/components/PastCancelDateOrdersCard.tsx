@@ -5,6 +5,8 @@ import {useAppDispatch} from "../app/configureStore";
 import StatusCard from "./StatusCard";
 import {GroupTotal} from "../types";
 import {toggleShowPastCancelDate} from "../ducks/orders/actions";
+import {LocalStore} from "chums-components";
+import {storageKeys} from "../api/preferences";
 
 export default function PastCancelDateOrdersCard() {
     const dispatch = useAppDispatch();
@@ -17,6 +19,7 @@ export default function PastCancelDateOrdersCard() {
     }, [totals]);
 
     const visibilityToggle = (checked: boolean) => {
+        LocalStore.setItem(storageKeys.showPastCancelDate, checked);
         dispatch(toggleShowPastCancelDate(checked));
     }
 

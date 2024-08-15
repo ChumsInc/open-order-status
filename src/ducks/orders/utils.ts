@@ -23,14 +23,12 @@ const initialTotals: SalesOrderTotals = {
     'web': {count: 0, value: 0},
 }
 
-const getMaxShipDate = (): string => {
+const getLeadTime = (defaultValue: number): number => {
     const days = getContainerEl()?.dataset?.defaultDays ?? null;
     if (days && !isNaN(Number(days))) {
-        return dayjs().add(+days, 'days').toISOString();
+        return +days;
     }
-    return LocalStore.getItem<boolean>(storageKeys.imprint, false)
-        ? dayjs().add(4, 'week').toISOString()
-        : dayjs().add(2, 'week').toISOString()
+    return defaultValue;
 }
 
 export const initialState = (): OrdersState => ({
@@ -39,7 +37,7 @@ export const initialState = (): OrdersState => ({
     loaded: false,
     filters: {
         imprint: LocalStore.getItem<boolean>(storageKeys.imprint, false) ?? false,
-        maxShipDate: getMaxShipDate(),
+        leadTime: getLeadTime(14),
         arDivisionNo: '',
         customer: null,
         salesOrderNo: '',
@@ -54,7 +52,6 @@ export const initialState = (): OrdersState => ({
         showChums: LocalStore.getItem(storageKeys.showChums, true) ?? true,
         showEDI: LocalStore.getItem(storageKeys.showEDI, getContainerEl()?.dataset?.showEdi === 'true') ?? true,
         showWeb: LocalStore.getItem(storageKeys.showWeb, getContainerEl()?.dataset?.showWeb === 'true') ?? true,
-        showDollars: LocalStore.getItem(storageKeys.showDollars, false) ?? false,
     },
     expandAll: LocalStore.getItem(storageKeys.expandAll, false) ?? false,
     totals: {...initialTotals},

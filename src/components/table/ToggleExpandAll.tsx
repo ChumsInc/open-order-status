@@ -4,6 +4,8 @@ import {toggleExpandAllGroups} from "../../ducks/orders/actions";
 import {useSelector} from "react-redux";
 import {selectAnyExpanded} from "../../ducks/orders/selectors";
 import Tooltip from "@mui/material/Tooltip";
+import {LocalStore} from "chums-components";
+import {storageKeys} from "../../api/preferences";
 
 const ToggleExpandAll = () => {
     const dispatch = useAppDispatch();
@@ -11,6 +13,7 @@ const ToggleExpandAll = () => {
 
     const changeHandler = (ev: MouseEvent) => {
         ev.stopPropagation();
+        LocalStore.setItem(storageKeys.expandAll, !isExpanded);
         dispatch(toggleExpandAllGroups(!isExpanded));
     }
 

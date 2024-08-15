@@ -1,4 +1,4 @@
-import {createAsyncThunk} from "@reduxjs/toolkit";
+import {createAction, createAsyncThunk} from "@reduxjs/toolkit";
 import {ARDivisionList} from "../../types";
 import {fetchARDivisions} from "../../api";
 import {RootState} from "../../app/configureStore";
@@ -15,3 +15,5 @@ export const loadDivisions = createAsyncThunk<ARDivisionList>(
         }
     }
 )
+
+export const setRefreshInterval = createAction<number>('filters/setRefreshInterval');
