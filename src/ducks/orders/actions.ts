@@ -23,7 +23,6 @@ export const toggleShowBackorders = createAction<boolean>('orders/filters/toggle
 export const toggleShowOnCancelDate = createAction<boolean>('orders/filters/toggleOnCancelDate');
 export const toggleShowPastCancelDate = createAction<boolean>('orders/filters/togglePastCancelDate');
 export const toggleShowInvoicing = createAction<boolean>('orders/filters/toggleInvoicing');
-export const toggleShowDollars = createAction<boolean | undefined>('orders/filters/toggleShowDollars');
 export const toggleShowChums = createAction<boolean>('orders/filters/toggleShowChums');
 export const toggleShowEDI = createAction<boolean>('orders/filters/toggleShowEDI');
 export const toggleShowWeb = createAction<boolean>('orders/filters/toggleShowWeb');

@@ -12,7 +12,7 @@ import {statusButtonClassName} from "../../ducks/order-status/utils";
 const StatusFilter = () => {
     const dispatch = useAppDispatch();
     const statusCode = useSelector(selectStatusFilter);
-    const list = useAppSelector(selectStatusList)
+    const list = useAppSelector(selectStatusList);
     const currentStatus = useAppSelector(state => selectStatusByCode(state, statusCode));
     const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
     const [current, setCurrent] = useState<OpenOrderStatusCode | null>(null);
@@ -40,10 +40,10 @@ const StatusFilter = () => {
                         onClick={(ev) => setAnchorEl(ev.currentTarget)}>
                     {(currentStatus?.StatusDescription ?? statusCode) || 'Filter by Status'}
                 </button>
-                <button className="btn btn-outline-secondary" aria-label="Clear Status Filter"
+                <button className="btn btn-secondary" aria-label="Clear Status Filter"
                         disabled={!current}
                         onClick={clearStatusHandler}>
-                    <span className="btn-close" />
+                    <span className="btn-close"/>
                 </button>
             </div>
             <OrderStatusSelect value={statusCode ?? null} anchorEl={anchorEl}

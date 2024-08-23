@@ -8,7 +8,6 @@ import {customerKey, getContainerEl} from "../../utils";
 import {LocalStore} from "chums-components";
 
 
-export const defaultSort: SortProps<SalesOrderRow> = {field: 'SalesOrderNo', ascending: true};
 export const initialSort: SortProps<SalesOrderRow> = {field: 'ShipExpireDate', ascending: true};
 
 const initialTotals: SalesOrderTotals = {
@@ -24,6 +23,10 @@ const initialTotals: SalesOrderTotals = {
 }
 
 const getLeadTime = (defaultValue: number): number => {
+    const leadTime = LocalStore.getItem<number|null>(storageKeys.leadTime, null);
+    if (leadTime) {
+        return leadTime;
+    }
     const days = getContainerEl()?.dataset?.defaultDays ?? null;
     if (days && !isNaN(Number(days))) {
         return +days;
@@ -53,6 +56,7 @@ export const initialState = (): OrdersState => ({
         showEDI: LocalStore.getItem(storageKeys.showEDI, getContainerEl()?.dataset?.showEdi === 'true') ?? true,
         showWeb: LocalStore.getItem(storageKeys.showWeb, getContainerEl()?.dataset?.showWeb === 'true') ?? true,
     },
+    counts: {},
     expandAll: LocalStore.getItem(storageKeys.expandAll, false) ?? false,
     totals: {...initialTotals},
     page: 0,
@@ -129,9 +133,9 @@ export const orderSorter = ({field, ascending}: SortProps<SalesOrderRow>) =>
                 return (+a.OrderAmt - +b.OrderAmt) * sortMod;
             case 'status':
                 return (
-                    (a.status?.StatusCode ?? '') === (b.status?.StatusCode ?? '')
+                    (a.status?.timestamp ?? '') === (b.status?.timestamp ?? '')
                         ? defaultOrderSorter(a, b)
-                        : ((a.status?.StatusCode ?? '') > (b.status?.StatusCode ?? '') ? 1 : -1)
+                        : ((a.status?.timestamp ?? '') > (b.status?.timestamp ?? '') ? 1 : -1)
                 ) * sortMod;
             default:
                 return defaultOrderSorter(a, b) * sortMod;

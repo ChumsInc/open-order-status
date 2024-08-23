@@ -12,6 +12,7 @@ import OrderNoteModal from "./OrderNoteModal";
 import {selectOrderGroup, selectSalesOrderNo} from "../orders/selectors";
 import OrderStatusTooltipTitle from "./OrderStatusTooltipTitle";
 import {statusButtonClassName} from "./utils";
+import dayjs from "dayjs";
 
 
 const OrderStatusContainer = ({
@@ -83,6 +84,7 @@ const OrderStatusContainer = ({
                     <span className="bi-pencil-fill"/>
                 </button>
             </div>
+            <div className="text-secondary font-monospace"><small>{row.status?.timestamp ? dayjs(row.status?.timestamp).format('MM/DD/YYYY hh:mm a') : null}</small></div>
             <OrderStatusSelect value={row.status?.StatusCode ?? null} anchorEl={anchorEl}
                                onChange={statusChangeHandler} onClose={() => setAnchorEl(null)}/>
             <OrderNoteModal row={row} open={notesOpen} onClose={() => setNotesOpen(false)} groupStatus={groupStatus}/>

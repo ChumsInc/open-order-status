@@ -21,11 +21,8 @@ export const initialState: OrderStatusState = {
 
 export const selectStatusList = (state: RootState) => state.orderStatus.list;
 export const selectStatusLoading = (state: RootState) => state.orderStatus.loading;
-export const selectLoaded = (state: RootState) => state.orderStatus.loaded;
-export const selectCurrentStatus = (state:RootState) => state.orderStatus.current;
 
 export const selectStatusCode = (state:RootState, code:string|null) => code;
-export const _selectStatusByCode = (state:RootState, code:string) => state.orderStatus.list.filter(status => status.StatusCode === code);
 export const selectStatusByCode = createSelector(
     [selectStatusList, selectStatusCode],
     (list, code) => {

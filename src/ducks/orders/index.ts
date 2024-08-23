@@ -31,6 +31,7 @@ import {
 import Decimal from "decimal.js";
 import {VALUE_VARIES} from "../../utils";
 
+export type OrderStatusCounts = Record<string, number>;
 
 export interface OrdersState {
     grouping: SalesOrderGroupList;
@@ -54,6 +55,7 @@ export interface OrdersState {
         showEDI: boolean;
         showWeb: boolean;
     }
+    counts: OrderStatusCounts;
     expandAll: boolean;
     totals: SalesOrderTotals;
     page: number;
@@ -76,6 +78,7 @@ const ordersReducer = createReducer(initialState, (builder) => {
         .addCase(loadOrders.fulfilled, (state, action) => {
             state.loading = false;
             state.grouping = {};
+            state.counts = {};
             action.payload.orders.forEach(row => {
                 const key = groupKey(row);
                 if (!state.grouping[key]) {
@@ -107,6 +110,9 @@ const ordersReducer = createReducer(initialState, (builder) => {
                         User: null,
                         timestamp: null
                     };
+                if (row.status?.StatusCode) {
+                    state.counts[row.status.StatusCode] = (state.counts[row.status.StatusCode] ?? 0) + 1;
+                }
             });
             state.totals = buildTotals(action.payload.orders ?? []);
             state.updated = action.payload.updated;
@@ -146,6 +152,15 @@ const ordersReducer = createReducer(initialState, (builder) => {
                     group.salesOrders = existing.sort(defaultOrderSorter);
                 }
             }
+            state.counts = {};
+            Object.values(state.grouping).map(group => {
+                group.salesOrders.forEach(row => {
+                    if (row.status?.StatusCode) {
+                        state.counts[row.status.StatusCode] = (state.counts[row.status.StatusCode] ?? 0) + 1;
+                    }
+
+                })
+            })
         })
         .addCase(saveOrderStatus.rejected, (state, action) => {
             const group = state.grouping[action.meta.arg.groupKey];
@@ -183,6 +198,15 @@ const ordersReducer = createReducer(initialState, (builder) => {
                     group.row.status.StatusCode = VALUE_VARIES;
                 }
             }
+            state.counts = {};
+            Object.values(state.grouping).map(group => {
+                group.salesOrders.forEach(row => {
+                    if (row.status?.StatusCode) {
+                        state.counts[row.status.StatusCode] = (state.counts[row.status.StatusCode] ?? 0) + 1;
+                    }
+
+                })
+            })
         })
         .addCase(saveGroupStatus.rejected, (state, action) => {
             const group = state.grouping[action.meta.arg.groupKey];

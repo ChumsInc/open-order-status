@@ -4,8 +4,12 @@ import {groupTitle, selectStatusList} from "./index";
 import Menu from "@mui/material/Menu";
 import ListSubheader from "@mui/material/ListSubheader";
 import CheckedMenuItem from "./CheckedMenuItem";
-import {Paper} from "@mui/material";
+import {useAppSelector} from "../../app/configureStore";
+import {selectStatusCounts} from "../orders/selectors";
+import {OpenOrderStatusGroup} from "../../types";
 
+
+const orderStatusGroups: OpenOrderStatusGroup[] = ['cs', 'imp', 'shipping'];
 
 export interface OrderStatusSelectProps {
     value: string | null,
@@ -16,6 +20,8 @@ export interface OrderStatusSelectProps {
 
 const OrderStatusSelect = ({value, onChange, anchorEl, onClose}: OrderStatusSelectProps) => {
     const list = useSelector(selectStatusList);
+    const counts = useAppSelector(selectStatusCounts);
+
 
     return (
         <Menu open={!!anchorEl} onClose={onClose} sx={{maxHeight: '75vh'}}
@@ -23,28 +29,18 @@ const OrderStatusSelect = ({value, onChange, anchorEl, onClose}: OrderStatusSele
             <CheckedMenuItem onClick={() => onChange(null)} checked={!value}>
                 Clear Status
             </CheckedMenuItem>
-            <ListSubheader>{groupTitle('cs')}</ListSubheader>
-            {list.filter(item => item.StatusType === 'cs').map(item => (
-                <CheckedMenuItem key={item.id} onClick={() => onChange(item.StatusCode)}
-                                 colorCode={item.colorCode}
-                                 checked={value === item.StatusCode}>
-                    {item.StatusDescription}                </CheckedMenuItem>
-            ))}
-            <ListSubheader>{groupTitle('imp')}</ListSubheader>
-            {list.filter(item => item.StatusType === 'imp').map(item => (
-                <CheckedMenuItem key={item.id} onClick={() => onChange(item.StatusCode)}
-                                 colorCode={item.colorCode}
-                                 checked={value === item.StatusCode}>
-                    {item.StatusDescription}
-                </CheckedMenuItem>
-            ))}
-            <ListSubheader>{groupTitle('shipping')}</ListSubheader>
-            {list.filter(item => item.StatusType === 'shipping').map(item => (
-                <CheckedMenuItem key={item.id} onClick={() => onChange(item.StatusCode)}
-                                 colorCode={item.colorCode}
-                                 checked={value === item.StatusCode}>
-                    {item.StatusDescription}
-                </CheckedMenuItem>
+            {orderStatusGroups.map(groupId => (
+                <div key={groupId}>
+                    <ListSubheader>{groupTitle(groupId)}</ListSubheader>
+                    {list.filter(item => item.StatusType === groupId).map(item => (
+                        <CheckedMenuItem key={item.id} onClick={() => onChange(item.StatusCode)}
+                                         count={counts[item.StatusCode]}
+                                         colorCode={item.colorCode}
+                                         checked={value === item.StatusCode}>
+                            {item.StatusDescription}
+                        </CheckedMenuItem>
+                    ))}
+                </div>
             ))}
         </Menu>
     )

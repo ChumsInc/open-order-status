@@ -7,7 +7,6 @@ import {customerKey} from "../../utils";
 import dayjs from "dayjs";
 
 export const selectLoading = (state: RootState) => state.orders.loading;
-export const selectLoaded = (state: RootState) => state.orders.loaded;
 export const selectImprint = (state: RootState) => state.orders.filters.imprint;
 export const selectLeadTime = (state:RootState) => state.orders.filters.leadTime;
 export const selectARDivisionNo = (state: RootState) => state.orders.filters.arDivisionNo;
@@ -35,6 +34,7 @@ export const selectGrouping = (state: RootState) => state.orders.grouping;
 export const selectExpandAll = (state: RootState) => state.orders.expandAll;
 export const selectOrderGroupKey = (state: RootState, key: string) => key;
 export const selectOrdersUpdated = (state:RootState) => state.orders.updated;
+export const selectStatusCounts = (state:RootState) => state.orders.counts;
 
 export const selectOrderGroup = createSelector(
     [selectGrouping, selectOrderGroupKey],

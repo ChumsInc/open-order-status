@@ -68,10 +68,6 @@ export interface SalesOrderRow extends Pick<SalesOrderHeader, 'ARDivisionNo' | '
     errorMessage?: string;
 }
 
-export interface SalesOrderList {
-    [key:string]: SalesOrderRow;
-}
-
 export interface SalesOrderGroup {
     count: number;
     expanded: boolean;
