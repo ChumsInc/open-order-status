@@ -7,37 +7,37 @@ import ShowEDICheckbox from "./ShowEDICheckbox";
 import ShowChumsCheckbox from "./ShowChumsCheckbox";
 import ShowWebCheckbox from "./ShowWebCheckbox";
 import AutoRefreshInterval from "./AutoRefreshInterval";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+import Stack from "react-bootstrap/Stack";
 
 const OrderActionBar = () => {
-
     return (
-        <div className="row g-3 mb-3 align-items-baseline">
-            <div className="col-auto">
+        <Row className="row g-3 mb-3 align-items-baseline">
+            <Col xs="auto">
                 <FilterByDate/>
-            </div>
-            <div className="col-auto">
+            </Col>
+            <Col xs="auto">
                 <ImprintToggle/>
-            </div>
-            <div className="col-auto">
-                <AutoRefreshInterval />
-            </div>
-            <div className="col-auto">
+            </Col>
+            <Col xs="auto">
+                <AutoRefreshInterval/>
+            </Col>
+            <Col xs="auto">
                 <ReloadButton/>
-            </div>
-            <div className="col-auto">
+            </Col>
+            <Col xs="auto">
                 <UpdatedTimestamp/>
-            </div>
-            <div className="col"/>
-            <div className="col-auto">
-                <ShowChumsCheckbox/>
-            </div>
-            <div className="col-auto">
-                <ShowEDICheckbox/>
-            </div>
-            <div className="col-auto">
-                <ShowWebCheckbox/>
-            </div>
-        </div>
+            </Col>
+            <Col/>
+            <Col xs="auto">
+                <Stack direction="horizontal" gap={2}>
+                    <ShowChumsCheckbox/>
+                    <ShowEDICheckbox/>
+                    <ShowWebCheckbox/>
+                </Stack>
+            </Col>
+        </Row>
     )
 }
 

@@ -3,33 +3,35 @@ import ARDivisionFilter from "./ARDivisionFilter";
 import UserFilter from "./UserFilter";
 import SalesOrderFilter from "./SalesOrderFilter";
 import StatusFilter from "./StatusFilter";
-import CustomerAutoComplete from "./CustomerAutoComplete";
 import ImprintOnlyAlert from "./ImprintOnlyAlert";
+import CustomerDropDown from "./CustomerDropDown";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
 
 const OrderFiltersBar = () => {
     return (
         <>
-            <div className="row g-3 align-items-baseline">
-                <div className="col-auto">
+            <Row className="g-3 align-items-baseline">
+                <Col xs="auto">
                     Filters:
-                </div>
-                <div className="col-auto">
+                </Col>
+                <Col xs="auto">
                     <ARDivisionFilter/>
-                </div>
-                <div className="col-auto">
-                    <CustomerAutoComplete/>
-                </div>
-                <div className="col-auto">
+                </Col>
+                <Col xs="auto">
+                    <CustomerDropDown/>
+                </Col>
+                <Col xs="auto">
                     <UserFilter/>
-                </div>
-                <div className="col-auto">
+                </Col>
+                <Col xs="auto">
                     <SalesOrderFilter/>
-                </div>
-                <div className="col-auto">
+                </Col>
+                <Col xs="auto">
                     <StatusFilter/>
-                </div>
-            </div>
-            <ImprintOnlyAlert />
+                </Col>
+            </Row>
+            <ImprintOnlyAlert/>
         </>
     )
 }

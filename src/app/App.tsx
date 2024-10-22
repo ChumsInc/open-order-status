@@ -36,7 +36,7 @@ export default function App() {
             <div>
                 <StatusCards/>
                 <OrderActionBar/>
-                <OrdersLoading />
+                <OrdersLoading/>
                 <OrderFiltersBar/>
                 <AlertList/>
                 <OrdersList/>
