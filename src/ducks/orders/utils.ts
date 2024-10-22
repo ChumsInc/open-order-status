@@ -34,36 +34,39 @@ const getLeadTime = (defaultValue: number): number => {
     return defaultValue;
 }
 
-export const initialState = (): OrdersState => ({
-    grouping: {},
-    loading: false,
-    loaded: false,
-    filters: {
-        imprint: LocalStore.getItem<boolean>(storageKeys.imprint, false) ?? false,
-        leadTime: getLeadTime(14),
-        arDivisionNo: '',
-        customer: null,
-        salesOrderNo: '',
-        user: '',
-        status: null,
-        onTimeOrders: LocalStore.getItem(storageKeys.showOpen, true) ?? true,
-        lateOrders: LocalStore.getItem(storageKeys.showLate, true) ?? true,
-        backOrders: LocalStore.getItem(storageKeys.showBackOrder, false) ?? false,
-        onCancelDate: LocalStore.getItem(storageKeys.showOnCancelDate, true) ?? true,
-        pastCancelDate: LocalStore.getItem(storageKeys.showPastCancelDate, true) ?? true,
-        invoicing: LocalStore.getItem(storageKeys.showInvoicing, false) ?? false,
-        showChums: LocalStore.getItem(storageKeys.showChums, true) ?? true,
-        showEDI: LocalStore.getItem(storageKeys.showEDI, getContainerEl()?.dataset?.showEdi === 'true') ?? true,
-        showWeb: LocalStore.getItem(storageKeys.showWeb, getContainerEl()?.dataset?.showWeb === 'true') ?? true,
-    },
-    counts: {},
-    expandAll: LocalStore.getItem(storageKeys.expandAll, false) ?? false,
-    totals: {...initialTotals},
-    page: 0,
-    rowsPerPage: LocalStore.getItem(storageKeys.rowsPerPage, 10) ?? 10,
-    sort: {...initialSort},
-    updated: null,
-});
+export const initialState = (): OrdersState => {
+    const container = getContainerEl();
+    return {
+        grouping: {},
+        loading: false,
+        loaded: false,
+        filters: {
+            imprint: LocalStore.getItem<boolean>(storageKeys.imprint, false) ?? false,
+            leadTime: getLeadTime(14),
+            arDivisionNo: '',
+            customer: null,
+            salesOrderNo: '',
+            user: '',
+            status: null,
+            onTimeOrders: LocalStore.getItem(storageKeys.showOpen, true) ?? true,
+            lateOrders: LocalStore.getItem(storageKeys.showLate, true) ?? true,
+            backOrders: LocalStore.getItem(storageKeys.showBackOrder, false) ?? false,
+            onCancelDate: LocalStore.getItem(storageKeys.showOnCancelDate, true) ?? true,
+            pastCancelDate: LocalStore.getItem(storageKeys.showPastCancelDate, true) ?? true,
+            invoicing: LocalStore.getItem(storageKeys.showInvoicing, false) ?? false,
+            showChums: LocalStore.getItem(storageKeys.showChums, true) ?? true,
+            showEDI: LocalStore.getItem(storageKeys.showEDI, container?.dataset?.showEdi === 'true') ?? true,
+            showWeb: LocalStore.getItem(storageKeys.showWeb, container?.dataset?.showWeb === 'true') ?? true,
+        },
+        counts: {},
+        expandAll: LocalStore.getItem(storageKeys.expandAll, false) ?? false,
+        totals: {...initialTotals},
+        page: 0,
+        rowsPerPage: LocalStore.getItem(storageKeys.rowsPerPage, 10) ?? 10,
+        sort: {...initialSort},
+        updated: null,
+    };
+}
 
 export const groupKeyDate = (date: string | null) => !date ? '-' : dayjs(date).format('YYYYMMDD');
 export const groupKey = (row: SalesOrderRow) => [`${row.ARDivisionNo}-${row.CustomerNo}`, row.OrderType,

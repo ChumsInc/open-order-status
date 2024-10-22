@@ -13,7 +13,7 @@ export default function ShowChumsCheckbox() {
     const id = useId();
 
     const changeHandler = (ev: ChangeEvent<HTMLInputElement>) => {
-        LocalStore.setItem(storageKeys.showChums, checked);
+        LocalStore.setItem(storageKeys.showChums, ev.target.checked);
         dispatch(toggleShowChums(ev.target.checked));
     }
     return (

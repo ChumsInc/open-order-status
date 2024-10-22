@@ -34,6 +34,7 @@ export default function StatusCard({
             </Card.Header>
             <Card.Body>
                 <h3 className="text-center text-nowrap">{numeral(sales).format('$ 0,0')}</h3>
+                <hr />
                 <h4 className="text-center text-secondary">{numeral(count).format('0,0')}</h4>
             </Card.Body>
             <Card.Footer className="card-footer">

@@ -1,4 +1,4 @@
-import React, {ChangeEvent, useEffect, useId, useState} from 'react';
+import React, {useId} from 'react';
 import {useAppDispatch, useAppSelector} from "../../app/configureStore";
 import {selectFilteredCustomers} from "../../ducks/filters/selectors";
 import {selectCustomer} from "../../ducks/orders/selectors";
@@ -14,13 +14,12 @@ export default React.forwardRef(function CustomerDropDown() {
     const dispatch = useAppDispatch();
     const customers = useAppSelector(selectFilteredCustomers);
     const customer = useAppSelector(selectCustomer);
-    const [_inputValue, setInputValue] = useState(customer ? customerKey(customer) : '');
-    const [show, setShow] = useState(false);
+    // const [_inputValue, setInputValue] = useState(customer ? customerKey(customer) : '');
     const id = useId();
 
-    useEffect(() => {
-        setInputValue(customer ? customerKey(customer) : '');
-    }, [customer]);
+    // useEffect(() => {
+    //     setInputValue(customer ? customerKey(customer) : '');
+    // }, [customer]);
 
     const changeHandler = (ev: React.SyntheticEvent, value: BasicCustomer | null) => {
         dispatch(setCustomerFilter(value));
@@ -49,11 +48,8 @@ export default React.forwardRef(function CustomerDropDown() {
         onChange: changeHandler
     });
 
-    const inputChangeHandler = (ev: ChangeEvent<HTMLInputElement>) => {
-        setInputValue(ev.target.value);
-        setShow(true);
-    }
-    console.debug('CustomerDropDown()', getRootProps());
+
+    // console.debug('CustomerDropDown()', getRootProps());
     return (
         <StyledCustomerDropdownRoot {...getRootProps()} >
             <InputGroup size="sm">
@@ -63,7 +59,7 @@ export default React.forwardRef(function CustomerDropDown() {
                 <input type="text" className="form-control form-control-sm" id={id}
                        {...getInputProps()} />
             </InputGroup>
-            <Dropdown show={popupOpen} >
+            <Dropdown show={popupOpen}>
                 {groupedOptions.length > 0 && (
                     <Dropdown.Menu as="ul" {...getListboxProps()} show={popupOpen}>
                         {(groupedOptions as BasicCustomer[])

@@ -13,9 +13,10 @@ export default function ShowWebCheckbox() {
     const id = useId();
 
     const changeHandler = (ev: ChangeEvent<HTMLInputElement>) => {
-        LocalStore.setItem(storageKeys.showWeb, checked);
+        LocalStore.setItem(storageKeys.showWeb, ev.target.checked);
         dispatch(toggleShowWeb(ev.target.checked));
     }
+
     return (
         <div className="form-check form-check-inline">
             <input className="form-check-input" type="checkbox" id={id} onChange={changeHandler} checked={checked}/>

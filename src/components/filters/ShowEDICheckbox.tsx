@@ -13,9 +13,10 @@ export default function ShowEDICheckbox() {
     const id = useId();
 
     const changeHandler = (ev: ChangeEvent<HTMLInputElement>) => {
-        LocalStore.setItem(storageKeys.showEDI, checked);
+        LocalStore.setItem(storageKeys.showEDI, ev.target.checked);
         dispatch(toggleShowEDI(ev.target.checked));
     }
+
     return (
         <div className="form-check form-check-inline">
             <input className="form-check-input" type="checkbox" id={id} onChange={changeHandler} checked={checked}/>
