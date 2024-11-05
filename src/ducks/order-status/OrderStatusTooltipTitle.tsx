@@ -2,6 +2,7 @@ import React from 'react';
 import {OpenOrderStatusCode, SalesOrderRow} from "../../types";
 import {useSelector} from "react-redux";
 import {selectStatusList} from "./index";
+import dayjs from "dayjs";
 
 const OrderStatusTooltipTitle = ({row, currentStatus}:{
     row:SalesOrderRow,
@@ -30,7 +31,10 @@ const OrderStatusTooltipTitle = ({row, currentStatus}:{
             <div><strong>{currentStatus?.StatusDescription ?? 'Not Set'}</strong></div>
             <div className="mt-1">
                 {row.status?.StatusHistory?.map(history => (
-                    <div key={history.timestamp}>{statusDescription(history.StatusCode)} <small>({history.User} - {new Date(history.timestamp).toLocaleDateString()})</small></div>
+                    <div key={history.timestamp} className="flex flex-column mb-1">
+                        <div>{statusDescription(history.StatusCode)}</div>
+                        <div><small>{history.User} - {dayjs(history.timestamp).format('MM/DD/YYYY - h:mm a')}</small></div>
+                    </div>
                 ))}
             </div>
         </div>
