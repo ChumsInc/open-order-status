@@ -5,30 +5,32 @@ import SalesOrderFilter from "./SalesOrderFilter";
 import StatusFilter from "./StatusFilter";
 import CustomerAutoComplete from "./CustomerAutoComplete";
 import ImprintOnlyAlert from "./ImprintOnlyAlert";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
 
 const OrderFiltersBar = () => {
     return (
         <>
-            <div className="row g-3 align-items-baseline">
-                <div className="col-auto">
+            <Row gap={3} className="align-items-baseline">
+                <Col xs="auto">
                     Filters:
-                </div>
-                <div className="col-auto">
+                </Col>
+                <Col xs="auto">
                     <ARDivisionFilter/>
-                </div>
-                <div className="col-auto">
+                </Col>
+                <Col xs="auto">
                     <CustomerAutoComplete/>
-                </div>
-                <div className="col-auto">
+                </Col>
+                <Col xs="auto">
                     <UserFilter/>
-                </div>
-                <div className="col-auto">
+                </Col>
+                <Col xs="auto">
                     <SalesOrderFilter/>
-                </div>
-                <div className="col-auto">
+                </Col>
+                <Col xs="auto">
                     <StatusFilter/>
-                </div>
-            </div>
+                </Col>
+            </Row>
             <ImprintOnlyAlert />
         </>
     )

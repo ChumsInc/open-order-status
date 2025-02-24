@@ -1,6 +1,6 @@
 import {RootState} from "../../app/configureStore";
 import {createSelector} from "@reduxjs/toolkit";
-import {calcStatus, orderSorter} from "./utils";
+import {calcStatus, isChumsOrder, isEDIOrder, orderSorter, showOrderType} from "./utils";
 import {FetchOrdersOptions} from "../../api";
 import {SalesOrderRow} from "../../types";
 import {customerKey} from "../../utils";
@@ -22,10 +22,12 @@ export const selectPastCancelDateOrders = (state: RootState) => state.orders.fil
 export const selectInvoicing = (state: RootState) => state.orders.filters.invoicing;
 export const selectShowChums = (state: RootState) => state.orders.filters.showChums;
 export const selectShowEDI = (state: RootState) => state.orders.filters.showEDI;
+export const selectShowTest = (state:RootState) => state.orders.filters.showTest;
 export const selectShowWeb = (state: RootState) => state.orders.filters.showWeb;
 export const selectTotals = (state: RootState) => state.orders.totals;
 export const selectEDITotals = (state:RootState) => state.orders.totals.edi;
 export const selectChumsTotals = (state:RootState) => state.orders.totals.chums;
+export const selectTestTotals = (state:RootState) => state.orders.totals.test;
 export const selectWebTotals = (state:RootState) => state.orders.totals.web;
 export const selectPage = (state: RootState) => state.orders.page;
 export const selectRowsPerPage = (state: RootState) => state.orders.rowsPerPage;
@@ -76,11 +78,11 @@ export const selectGroupedList = createSelector(
 export const selectFilteredOrders = createSelector(
     [selectGroupedList, selectImprint, selectARDivisionNo, selectCustomer, selectUser, selectStatusFilter,
         selectOnTime, selectLateOrders, selectBackOrders, selectOnCancelDateOrders, selectPastCancelDateOrders,
-        selectInvoicing, selectShowChums, selectShowEDI, selectShowWeb, selectSort
+        selectInvoicing, selectShowChums, selectShowEDI, selectShowWeb, selectShowTest, selectSort
     ],
     (list, imprint, arDivisionNo, customer, user,
      statusCode, onTime, late, backOrders, onCancelDate, pastCancelDate,
-     invoicing, showChums, showEDI, showWeb, sort): SalesOrderRow[] => {
+     invoicing, showChums, showEDI, showWeb, showTest, sort): SalesOrderRow[] => {
         return Object.values(list)
             .filter(row => ['S', 'B', 'R'].includes(row.OrderType))
             .filter(row => invoicing || !calcStatus(row).invoicing)
@@ -89,9 +91,7 @@ export const selectFilteredOrders = createSelector(
             .filter(row => backOrders || !calcStatus(row).backorder)
             .filter(row => onCancelDate || !calcStatus(row).onCancelDate)
             .filter(row => pastCancelDate || !calcStatus(row).pastCancelDate)
-            .filter(row => !showChums ? !(!row.isEDI && !row.isWebsite) : true)
-            .filter(row => !showEDI ? !row.isEDI : true)
-            .filter(row => !showWeb ? !row.isWebsite : true)
+            .filter(row => showOrderType(row, {showEDI, showWeb, showTest, showChums}))
             .filter(row => !arDivisionNo || row.ARDivisionNo === arDivisionNo)
             .filter(row => !customer || customerKey(row) === customerKey(customer))
             .filter(row => !user || row.UserLogon === user)

@@ -1,9 +1,10 @@
 import React, {useEffect, useRef} from 'react';
-import {useAppDispatch, useAppSelector} from "../../app/configureStore";
+import {useAppDispatch, useAppSelector} from "_app/configureStore";
 import {useSelector} from "react-redux";
-import {selectLoading} from "../../ducks/orders/selectors";
-import {loadOrders} from "../../ducks/orders/actions";
-import {selectRefreshInterval} from "../../ducks/filters/selectors";
+import {selectLoading} from "_ducks/orders/selectors";
+import {loadOrders} from "_ducks/orders/actions";
+import {selectRefreshInterval} from "_ducks/filters/selectors";
+import Button from "react-bootstrap/Button";
 
 const ReloadButton = () => {
     const dispatch = useAppDispatch();
@@ -27,13 +28,13 @@ const ReloadButton = () => {
         dispatch(loadOrders())
     }
 
-
     return (
-        <button className="btn btn-sm btn-primary" disabled={loading} onClick={reloadHandler}>
+        <Button size="sm" variant="primary" disabled={loading} onClick={reloadHandler}>
             Reload
-        </button>
+        </Button>
     )
 
 }
 
+ReloadButton.displayName = 'ReloadButton';
 export default ReloadButton;

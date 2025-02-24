@@ -80,7 +80,7 @@ export interface SalesOrderGroupList {
     [key:string]: SalesOrderGroup;
 }
 
-export type SalesOrderStatusGroup = 'onTime'|'late'|'backorder'|'onCancelDate'|'pastCancelDate'|'invoicing'|'edi'|'web'|'chums';
+export type SalesOrderStatusGroup = 'onTime'|'late'|'backorder'|'onCancelDate'|'pastCancelDate'|'invoicing'|'edi'|'web'|'chums'|'test';
 export interface GroupTotal {
     count: number;
     value: string|number;

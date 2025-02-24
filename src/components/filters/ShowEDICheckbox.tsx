@@ -1,27 +1,24 @@
-import React, {ChangeEvent, useId} from 'react';
-import {useAppDispatch, useAppSelector} from "../../app/configureStore";
-import {selectEDITotals, selectShowEDI} from "../../ducks/orders/selectors";
-import {toggleShowEDI} from "../../ducks/orders/actions";
-import numeral from "numeral";
+import React, {ChangeEvent} from 'react';
+import {useAppDispatch, useAppSelector} from "_app/configureStore";
+import {selectEDITotals, selectShowEDI} from "_ducks/orders/selectors";
+import {toggleShowEDI} from "_ducks/orders/actions";
 import {LocalStore} from "chums-components";
-import {storageKeys} from "../../api/preferences";
+import {storageKeys} from "_src/api/preferences";
+import ShowTotalCheckbox from "_components/filters/ShowTotalCheckbox";
 
-export default function ShowEDICheckbox() {
+function ShowEDICheckbox() {
     const dispatch = useAppDispatch();
     const checked = useAppSelector(selectShowEDI);
     const total = useAppSelector(selectEDITotals);
-    const id = useId();
 
     const changeHandler = (ev: ChangeEvent<HTMLInputElement>) => {
         LocalStore.setItem(storageKeys.showEDI, checked);
         dispatch(toggleShowEDI(ev.target.checked));
     }
     return (
-        <div className="form-check form-check-inline">
-            <input className="form-check-input" type="checkbox" id={id} onChange={changeHandler} checked={checked}/>
-            <label htmlFor={id} className="form-check-label">
-                EDI ({numeral(total.count).format('0,0')})
-            </label>
-        </div>
+        <ShowTotalCheckbox checked={checked} total={total} labelPrefix="EDI" onChange={changeHandler}/>
     )
 }
+
+ShowEDICheckbox.displayName = 'ShowEDICheckbox';
+export default ShowEDICheckbox;

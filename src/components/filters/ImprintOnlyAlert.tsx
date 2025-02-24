@@ -1,7 +1,7 @@
 import React from 'react';
 import {useSelector} from "react-redux";
-import {selectImprint} from "../../ducks/orders/selectors";
-import {Alert} from "chums-components";
+import {selectImprint} from "_ducks/orders/selectors";
+import Alert from "react-bootstrap/Alert";
 
 export default function ImprintOnlyAlert() {
     const imprint = useSelector(selectImprint);
@@ -9,6 +9,6 @@ export default function ImprintOnlyAlert() {
         return null;
     }
     return (
-        <Alert color="info"><strong className="me-3">Note</strong> Only imprint orders selected.</Alert>
+        <Alert variant="info"><strong className="me-3">Note</strong> Only imprint orders selected.</Alert>
     )
 }

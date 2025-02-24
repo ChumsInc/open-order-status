@@ -5,28 +5,29 @@ import BackOrdersCard from "./BackOrdersCard";
 import CancelDateOrdersCard from "./CancelDateOrdersCard";
 import PastCancelDateOrdersCard from "./PastCancelDateOrdersCard";
 import InvoicingCard from "./InvoicingCard";
+import {Grid2} from "@mui/material";
 
 export default function StatusCards() {
     return (
-        <div className="row g-3 mb-5">
-            <div className="col">
+        <Grid2 container spacing={3} className="mb-5">
+            <Grid2 size={2}>
                 <OnTimeCard/>
-            </div>
-            <div className="col">
+            </Grid2>
+            <Grid2 size={2}>
                 <LateOrdersCard/>
-            </div>
-            <div className="col">
+            </Grid2>
+            <Grid2 size={2}>
                 <BackOrdersCard/>
-            </div>
-            <div className="col">
+            </Grid2>
+            <Grid2 size={2}>
                 <CancelDateOrdersCard/>
-            </div>
-            <div className="col">
+            </Grid2>
+            <Grid2 size={2}>
                 <PastCancelDateOrdersCard/>
-            </div>
-            <div className="col">
+            </Grid2>
+            <Grid2 size={2}>
                 <InvoicingCard/>
-            </div>
-        </div>
+            </Grid2>
+        </Grid2>
     )
 }

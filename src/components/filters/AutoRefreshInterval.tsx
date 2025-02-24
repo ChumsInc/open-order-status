@@ -1,7 +1,9 @@
 import React, {ChangeEvent, useId} from 'react';
-import {useAppDispatch, useAppSelector} from "../../app/configureStore";
-import {selectRefreshInterval} from "../../ducks/filters/selectors";
-import {setRefreshInterval} from "../../ducks/filters/actions";
+import {useAppDispatch, useAppSelector} from "_app/configureStore";
+import {selectRefreshInterval} from "_ducks/filters/selectors";
+import {setRefreshInterval} from "_ducks/filters/actions";
+import {InputGroup} from "react-bootstrap";
+import FormSelect from "react-bootstrap/FormSelect";
 
 export default function AutoRefreshInterval() {
     const dispatch = useAppDispatch();
@@ -14,16 +16,16 @@ export default function AutoRefreshInterval() {
     }
 
     return (
-        <div className="input-group input-group-sm">
-            <label className="input-group-text" htmlFor={id}>
+        <InputGroup size="sm">
+            <InputGroup.Text as="label" htmlFor={id}>
                 <span className="bi-stopwatch me-1"/>
                 Refresh
-            </label>
-            <select value={interval ?? 0} onChange={changeHandler} id={id} className="form-select">
+            </InputGroup.Text>
+            <FormSelect value={interval ?? 0} onChange={changeHandler} id={id}>
                 <option value={0}>Off</option>
                 <option value={10}>10 Minutes</option>
                 <option value={60}>60 Minutes</option>
-            </select>
-        </div>
+            </FormSelect>
+        </InputGroup>
     )
 }

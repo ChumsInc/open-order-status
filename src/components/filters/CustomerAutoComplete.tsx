@@ -1,13 +1,17 @@
 import React, {useEffect, useState} from 'react';
-import {customerKey} from "../../utils";
-import {useAppDispatch, useAppSelector} from "../../app/configureStore";
-import {selectFilteredCustomers} from "../../ducks/filters/selectors";
+import {customerKey} from "_src/utils";
+import {useAppDispatch, useAppSelector} from "_app/configureStore";
+import {selectFilteredCustomers} from "_ducks/filters/selectors";
 import {useSelector} from "react-redux";
-import {selectCustomer} from "../../ducks/orders/selectors";
-import {Autocomplete, Box, Stack} from "@mui/material";
-import {BasicCustomer} from "../../types";
-import {setCustomerFilter} from "../../ducks/orders/actions";
+import {selectCustomer} from "_ducks/orders/selectors";
+import Autocomplete from "@mui/material/Autocomplete";
+import Box from "@mui/material/Box";
+import Stack from "@mui/material/Stack";
+import {BasicCustomer} from "_src/types";
+import {setCustomerFilter} from "_ducks/orders/actions";
 import {Popper, PopperProps} from "@mui/base";
+import FormControl from "react-bootstrap/FormControl";
+import InputGroup from "react-bootstrap/InputGroup";
 
 export default React.forwardRef(function CustomerAutoComplete() {
     const dispatch = useAppDispatch();
@@ -35,14 +39,14 @@ export default React.forwardRef(function CustomerAutoComplete() {
                 || c.BillToName.toUpperCase().includes(state.inputValue.toUpperCase()))}
             renderInput={(params) => {
                 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-                const {className, ...inputProps} = params.inputProps;
+                const {className, value, size, ...inputProps} = params.inputProps;
                 return (
-                    <div className="input-group input-group-sm" ref={params.InputProps.ref}>
-                        <div className="input-group-text">
+                    <InputGroup size="sm" ref={params.InputProps.ref}>
+                        <InputGroup.Text>
                             <span className="bi-shop-window"/>
-                        </div>
-                        <input type="search" className="form-control form-control-sm" {...inputProps} />
-                    </div>
+                        </InputGroup.Text>
+                        <FormControl type="search" value={(value ?? '') as string} {...inputProps} />
+                    </InputGroup>
                 )
             }}
             fullWidth
@@ -61,7 +65,9 @@ export default React.forwardRef(function CustomerAutoComplete() {
                     </Box>
                 )
             }}
-            PopperComponent={CustomPopperComponent}
+            slots={{
+                popper: CustomPopperComponent
+            }}
         />
     )
 })

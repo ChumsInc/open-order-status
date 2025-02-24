@@ -1,10 +1,11 @@
 import React, {ChangeEvent, useId} from 'react';
-import {useAppDispatch} from "../../app/configureStore";
+import {useAppDispatch} from "_app/configureStore";
 import {useSelector} from "react-redux";
-import {selectImprint, selectLoading} from "../../ducks/orders/selectors";
-import {toggleImprint} from "../../ducks/orders/actions";
+import {selectImprint, selectLoading} from "_ducks/orders/selectors";
+import {toggleImprint} from "_ducks/orders/actions";
 import {LocalStore} from "chums-components";
-import {storageKeys} from "../../api/preferences";
+import {storageKeys} from "_src/api/preferences";
+import FormCheck from "react-bootstrap/FormCheck";
 
 const imprintOrders = "imprint-orders";
 const allOrders = "all-orders";
@@ -23,23 +24,13 @@ const ImprintToggle = () => {
     }
 
 
-
     return (
         <div>
-            <div className="form-check form-check-inline">
-                <input className="form-check-input" type="radio"
-                       value={allOrders}
-                       name="imprint-toggle" id={allOrdersId} checked={!imprint}
-                       onChange={changeHandler}
-                       disabled={loading}/>
-                <label className="form-check-label" htmlFor={allOrdersId}>All Orders</label>
-            </div>
-            <div className="form-check form-check-inline">
-                <input className="form-check-input" type="radio"
-                       value={imprintOrders} name="imprint-toggle" id={imprintId} checked={imprint}
-                       onChange={changeHandler} disabled={loading}/>
-                <label className="form-check-label" htmlFor={imprintId}>Imprint</label>
-            </div>
+            <FormCheck inline id={allOrdersId} onChange={changeHandler} type="radio" name="imprint-toggle" value={allOrders}
+                       label="All Orders" checked={!imprint} disabled={loading}/>
+            <FormCheck inline id={imprintId} onChange={changeHandler} type="radio" name="imprint-toggle"
+                       value={imprintOrders} label="Imprint" disabled={loading}
+                       checked={imprint}/>
         </div>
     )
 }

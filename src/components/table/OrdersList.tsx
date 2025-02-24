@@ -9,7 +9,6 @@ import {
     selectSort
 } from "../../ducks/orders/selectors";
 import {
-    Alert,
     DataTableField,
     DataTableRow,
     LocalStore,
@@ -37,6 +36,7 @@ import OrderDate from "./OrderDate";
 import Version from "../../ducks/version/Version";
 import InvoiceBadge from "./InvoiceBadge";
 import {storageKeys} from "../../api/preferences";
+import Alert from 'react-bootstrap/Alert'
 
 const fields: SortableTableField<SalesOrderRow>[] = [
     {
@@ -116,7 +116,7 @@ const errorFields: DataTableField<SalesOrderRow>[] = [
     {
         field: 'errorMessage',
         title: 'lineComments',
-        render: (row) => <Alert color="warning">{row.errorMessage ?? null}</Alert>,
+        render: (row) => <Alert variant="warning">{row.errorMessage ?? null}</Alert>,
         colSpan: 6,
         className: 'font-monospace'
     },

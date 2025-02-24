@@ -25,7 +25,7 @@ import {
     toggleShowLate,
     toggleShowOnCancelDate,
     toggleShowOpen,
-    toggleShowPastCancelDate,
+    toggleShowPastCancelDate, toggleShowTest,
     toggleShowWeb
 } from "./actions";
 import Decimal from "decimal.js";
@@ -54,6 +54,7 @@ export interface OrdersState {
         showChums: boolean;
         showEDI: boolean;
         showWeb: boolean;
+        showTest: boolean;
     }
     counts: OrderStatusCounts;
     expandAll: boolean;
@@ -282,6 +283,10 @@ const ordersReducer = createReducer(initialState, (builder) => {
         })
         .addCase(toggleShowWeb, (state, action) => {
             state.filters.showWeb = action.payload ?? !state.filters.showWeb;
+            state.page = 0;
+        })
+        .addCase(toggleShowTest, (state, action) => {
+            state.filters.showTest = action.payload ?? !state.filters.showTest;
             state.page = 0;
         })
         .addCase(setSort, (state, action) => {

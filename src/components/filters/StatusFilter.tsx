@@ -8,8 +8,10 @@ import {selectStatusByCode, selectStatusList} from "../../ducks/order-status";
 import {setStatusFilter} from "../../ducks/orders/actions";
 import {OpenOrderStatusCode} from "../../types";
 import {statusButtonClassName} from "../../ducks/order-status/utils";
+import ButtonGroup from "react-bootstrap/ButtonGroup";
+import Button from "react-bootstrap/Button";
 
-const StatusFilter = () => {
+function StatusFilter() {
     const dispatch = useAppDispatch();
     const statusCode = useSelector(selectStatusFilter);
     const list = useAppSelector(selectStatusList);
@@ -33,23 +35,24 @@ const StatusFilter = () => {
 
     return (
         <div>
-            <div className="btn-group btn-group-sm">
+            <ButtonGroup size="sm" className="btn-group btn-group-sm">
                 <button className={classNames(
                     'btn',
                     statusButtonClassName({statusCode: current?.StatusCode, colorCode: current?.colorCode}))}
                         onClick={(ev) => setAnchorEl(ev.currentTarget)}>
                     {(currentStatus?.StatusDescription ?? statusCode) || 'Filter by Status'}
                 </button>
-                <button className="btn btn-secondary" aria-label="Clear Status Filter"
+                <Button variant="outline-secondary" aria-label="Clear Status Filter"
                         disabled={!current}
                         onClick={clearStatusHandler}>
                     <span className="btn-close"/>
-                </button>
-            </div>
+                </Button>
+            </ButtonGroup>
             <OrderStatusSelect value={statusCode ?? null} anchorEl={anchorEl}
                                onChange={statusChangeHandler} onClose={() => setAnchorEl(null)}/>
         </div>
     )
 }
 
+StatusFilter.displayName = 'StatusFilter';
 export default StatusFilter;

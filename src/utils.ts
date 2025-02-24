@@ -32,6 +32,7 @@ export interface ContainerElement extends HTMLDivElement {
     dataset: {
         showEdi?: string;
         showWeb?: string;
+        showTest?: string;
         refreshInterval?: string;
         defaultDays?: string;
     }

@@ -2,7 +2,8 @@ import React from 'react';
 import MenuItem, {MenuItemProps} from "@mui/material/MenuItem";
 import ListItemText from "@mui/material/ListItemText";
 import ListItemIcon from "@mui/material/ListItemIcon";
-import {Box, Stack} from "@mui/material";
+import Box from "@mui/material/Box";
+import Stack from "@mui/material/Stack";
 
 export interface CheckedMenuItemProps extends MenuItemProps {
     checked?:boolean;

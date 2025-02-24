@@ -1,26 +1,33 @@
 {
   "compilerOptions": {
-    "target": "es2020",
+    "allowJs": true,
+    "allowSyntheticDefaultImports": true,
+    "baseUrl": "./src",
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "isolatedModules": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitAny": true,
+    "noEmit": false,
+    "jsx": "react",
+    "resolveJsonModule": true,
     "lib": [
       "dom",
       "dom.iterable",
       "esnext"
     ],
-    "allowJs": true,
+    "paths": {
+      "_src/*": ["./*"],
+      "_app/*": ["./app/*"],
+      "_components/*": ["./components/*"],
+      "_ducks/*": ["./ducks/*"],
+    },
     "skipLibCheck": true,
-    "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true,
+    "sourceMap": true,
     "strict": true,
-    "forceConsistentCasingInFileNames": true,
-    "noFallthroughCasesInSwitch": true,
-    "module": "esnext",
-    "moduleResolution": "node",
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "noEmit": false,
-    "jsx": "react",
-    "noImplicitAny": true,
-    "sourceMap": true
+    "target": "es2020"
   },
   "include": [
     "src/**/*"

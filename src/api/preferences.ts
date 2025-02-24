@@ -9,6 +9,7 @@ export const storageKeys = {
     filterStatus: `${sessionStoragePrefix}/filterStatus`,
     showChums: `${sessionStoragePrefix}/showChums`,
     showEDI: `${sessionStoragePrefix}/showEDI`,
+    showTest: `${sessionStoragePrefix}/showTest`,
     showWeb: `${sessionStoragePrefix}/showWeb`,
     showOpen: `${sessionStoragePrefix}/showOpen`,
     showLate: `${sessionStoragePrefix}/showLate`,

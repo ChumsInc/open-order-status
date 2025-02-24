@@ -1,5 +1,5 @@
 import React from 'react';
-import {SalesOrderRow} from "../../types";
+import {SalesOrderRow} from "_src/types";
 
 const ImprintBadge = ({row}: { row: SalesOrderRow }) => {
     if (!row.UDF_IMPRINTED || row.UDF_IMPRINTED === 'N') {

@@ -20,6 +20,7 @@ const initialTotals: SalesOrderTotals = {
     'chums': {count: 0, value: 0},
     'edi': {count: 0, value: 0},
     'web': {count: 0, value: 0},
+    'test': {count: 0, value: 0},
 }
 
 const getLeadTime = (defaultValue: number): number => {
@@ -55,6 +56,7 @@ export const initialState = (): OrdersState => ({
         showChums: LocalStore.getItem(storageKeys.showChums, true) ?? true,
         showEDI: LocalStore.getItem(storageKeys.showEDI, getContainerEl()?.dataset?.showEdi === 'true') ?? true,
         showWeb: LocalStore.getItem(storageKeys.showWeb, getContainerEl()?.dataset?.showWeb === 'true') ?? true,
+        showTest: LocalStore.getItem(storageKeys.showTest, getContainerEl()?.dataset?.showTest === 'true') ?? false,
     },
     counts: {},
     expandAll: LocalStore.getItem(storageKeys.expandAll, false) ?? false,
@@ -204,15 +206,18 @@ export function buildTotals(rows: SalesOrderRow[]): SalesOrderTotals {
         const status = calcStatus(cv);
         const total = {
             ...pv,
-            chums: !(cv.isEDI || cv.isWebsite)
+            chums: isChumsOrder(cv)
                 ? {count: pv.chums.count + 1, value: new Decimal(cv.OrderAmt).add(pv.chums.value).valueOf()}
                 : pv.chums,
-            edi: cv.isEDI
+            edi: isEDIOrder(cv)
                 ? {count: pv.edi.count + 1, value: new Decimal(cv.OrderAmt).add(pv.edi.value).valueOf()}
                 : pv.edi,
-            web: cv.isWebsite
+            web: isWebOrder(cv)
                 ? {count: pv.web.count + 1, value: new Decimal(cv.OrderAmt).add(pv.web.value).valueOf()}
                 : pv.web,
+            test: cv.CustomerNo === 'TEST'
+                ? {count: pv.test.count + 1, value: new Decimal(cv.OrderAmt).add(pv.test.value).valueOf()}
+                : pv.test,
         };
         if (status.invoicing) {
             return {
@@ -274,4 +279,35 @@ export function buildTotals(rows: SalesOrderRow[]): SalesOrderTotals {
 
 export const parseDateTime = (sageDate: string, sageTime: string): Date => {
     return dayjs(sageDate).add(Number(sageTime), 'hours').toDate();
+}
+
+export function isChumsOrder(row:SalesOrderRow) {
+    return !row.isEDI && !row.isWebsite && row.CustomerNo !== 'TEST';
+}
+
+export function isEDIOrder(row:SalesOrderRow) {
+    return row.isEDI && row.CustomerNo !== 'TEST';
+}
+
+export function isWebOrder(row:SalesOrderRow) {
+    return row.isWebsite;
+}
+
+export interface ShowOrderProps {
+    showEDI: boolean;
+    showWeb: boolean;
+    showTest: boolean;
+    showChums: boolean;
+}
+export function showOrderType(row:SalesOrderRow, {showEDI, showWeb, showTest, showChums}:ShowOrderProps) {
+    if (showEDI && isEDIOrder(row)) {
+        return true;
+    }
+    if (showWeb && isWebOrder(row)) {
+        return true;
+    }
+    if (showTest && row.CustomerNo === 'TEST') {
+        return true;
+    }
+    return showChums && isChumsOrder(row);
 }

@@ -1,6 +1,6 @@
 import React from 'react';
-import {useAppSelector} from "../../app/configureStore";
-import {selectOrdersUpdated} from "../../ducks/orders/selectors";
+import {useAppSelector} from "_app/configureStore";
+import {selectOrdersUpdated} from "_ducks/orders/selectors";
 
 export default function UpdatedTimestamp() {
     const updated = useAppSelector(selectOrdersUpdated);

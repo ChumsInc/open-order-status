@@ -2,7 +2,7 @@ import React from 'react';
 import {useAppDispatch} from "../../app/configureStore";
 import {useSelector} from "react-redux";
 import {dismissAlert, selectAlerts} from "./index";
-import {Alert} from "chums-components";
+import ContextAlert from "./ContextAlert";
 
 const AlertList = () => {
     const dispatch = useAppDispatch();
@@ -11,10 +11,11 @@ const AlertList = () => {
     return (
         <div>
             {list.map(alert => (
-                <Alert key={alert.id} context={alert.context} count={alert.count} color={alert.color ?? 'warning'}
-                       canDismiss onDismiss={() => dispatch(dismissAlert(alert.id))}>
+                <ContextAlert key={alert.id} context={alert.context} count={alert.count}
+                              variant={alert.color ?? 'warning'}
+                              dismissible onClose={() => dispatch(dismissAlert(alert.id))}>
                     {alert.message}
-                </Alert>
+                </ContextAlert>
             ))}
         </div>
     )

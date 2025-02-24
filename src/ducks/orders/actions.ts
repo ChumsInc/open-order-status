@@ -25,6 +25,7 @@ export const toggleShowPastCancelDate = createAction<boolean>('orders/filters/to
 export const toggleShowInvoicing = createAction<boolean>('orders/filters/toggleInvoicing');
 export const toggleShowChums = createAction<boolean>('orders/filters/toggleShowChums');
 export const toggleShowEDI = createAction<boolean>('orders/filters/toggleShowEDI');
+export const toggleShowTest = createAction<boolean>('orders/filters/toggleShowTest');
 export const toggleShowWeb = createAction<boolean>('orders/filters/toggleShowWeb');
 export const toggleExpandGroup = createAction<ToggleExpandOrder>('orders/groups/toggleExpanded');
 export const toggleExpandAllGroups = createAction<boolean | undefined>('orders/groups/expandAll');
