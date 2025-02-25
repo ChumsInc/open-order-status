@@ -33,10 +33,12 @@ export default function App() {
     return (
         <ThemeProvider theme={theme}>
             <CssBaseline/>
-            <div>
+            <div id="oos--status-cards">
                 <StatusCards/>
+            </div>
+            <div id="oos--orders-list" className="collapse show">
                 <OrderActionBar/>
-                <OrdersLoading />
+                <OrdersLoading/>
                 <OrderFiltersBar/>
                 <AlertList/>
                 <OrdersList/>

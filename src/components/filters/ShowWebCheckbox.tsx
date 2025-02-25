@@ -12,9 +12,10 @@ function ShowWebCheckbox() {
     const total = useAppSelector(selectWebTotals);
 
     const changeHandler = (ev: ChangeEvent<HTMLInputElement>) => {
-        LocalStore.setItem(storageKeys.showWeb, checked);
+        LocalStore.setItem(storageKeys.showWeb, ev.target.checked);
         dispatch(toggleShowWeb(ev.target.checked));
     }
+
     return (
         <ShowTotalCheckbox checked={checked} total={total} labelPrefix="Chums.com" onChange={changeHandler}/>
     )

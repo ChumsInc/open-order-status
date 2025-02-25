@@ -12,9 +12,10 @@ function ShowEDICheckbox() {
     const total = useAppSelector(selectEDITotals);
 
     const changeHandler = (ev: ChangeEvent<HTMLInputElement>) => {
-        LocalStore.setItem(storageKeys.showEDI, checked);
+        LocalStore.setItem(storageKeys.showEDI, ev.target.checked);
         dispatch(toggleShowEDI(ev.target.checked));
     }
+
     return (
         <ShowTotalCheckbox checked={checked} total={total} labelPrefix="EDI" onChange={changeHandler}/>
     )

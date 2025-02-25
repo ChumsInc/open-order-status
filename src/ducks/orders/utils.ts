@@ -35,7 +35,9 @@ const getLeadTime = (defaultValue: number): number => {
     return defaultValue;
 }
 
-export const initialState = (): OrdersState => ({
+export const initialState = (): OrdersState => {
+    const container = getContainerEl();
+    return {
     grouping: {},
     loading: false,
     loaded: false,
@@ -54,9 +56,9 @@ export const initialState = (): OrdersState => ({
         pastCancelDate: LocalStore.getItem(storageKeys.showPastCancelDate, true) ?? true,
         invoicing: LocalStore.getItem(storageKeys.showInvoicing, false) ?? false,
         showChums: LocalStore.getItem(storageKeys.showChums, true) ?? true,
-        showEDI: LocalStore.getItem(storageKeys.showEDI, getContainerEl()?.dataset?.showEdi === 'true') ?? true,
-        showWeb: LocalStore.getItem(storageKeys.showWeb, getContainerEl()?.dataset?.showWeb === 'true') ?? true,
-        showTest: LocalStore.getItem(storageKeys.showTest, getContainerEl()?.dataset?.showTest === 'true') ?? false,
+        showEDI: LocalStore.getItem(storageKeys.showEDI, container?.dataset?.showEdi === 'true') ?? true,
+        showWeb: LocalStore.getItem(storageKeys.showWeb, container?.dataset?.showWeb === 'true') ?? true,
+        showTest: LocalStore.getItem(storageKeys.showTest, container?.dataset?.showTest === 'true') ?? false,
     },
     counts: {},
     expandAll: LocalStore.getItem(storageKeys.expandAll, false) ?? false,
@@ -65,7 +67,8 @@ export const initialState = (): OrdersState => ({
     rowsPerPage: LocalStore.getItem(storageKeys.rowsPerPage, 10) ?? 10,
     sort: {...initialSort},
     updated: null,
-});
+        }
+};
 
 export const groupKeyDate = (date: string | null) => !date ? '-' : dayjs(date).format('YYYYMMDD');
 export const groupKey = (row: SalesOrderRow) => [`${row.ARDivisionNo}-${row.CustomerNo}`, row.OrderType,

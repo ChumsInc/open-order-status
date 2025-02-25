@@ -1,14 +1,14 @@
 import React from 'react';
 import {useAppSelector} from "../../app/configureStore";
 import {selectLoading} from "../../ducks/orders/selectors";
-import {LinearProgress} from "@mui/material";
+import {ProgressBar} from "react-bootstrap";
 
 export default function OrdersLoading() {
     const loading = useAppSelector(selectLoading);
 
     return (
         <div className="my-1">
-            {loading && (<LinearProgress variant="indeterminate" />)}
+            {loading && (<ProgressBar animated striped now={100} style={{height: '5px'}}/>)}
         </div>
     )
 }

@@ -9,11 +9,13 @@ import ShowWebCheckbox from "./ShowWebCheckbox";
 import AutoRefreshInterval from "./AutoRefreshInterval";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+import Stack from "react-bootstrap/Stack";
 import ShowTestCheckbox from "_components/filters/ShowTestCheckbox";
 
-function OrderActionBar() {
+const OrderActionBar = () => {
+
     return (
-        <Row gap={3} className="mb-3 align-items-baseline">
+        <Row className="row g-3 mb-3 align-items-baseline">
             <Col xs="auto">
                 <FilterByDate/>
             </Col>
@@ -21,7 +23,7 @@ function OrderActionBar() {
                 <ImprintToggle/>
             </Col>
             <Col xs="auto">
-                <AutoRefreshInterval />
+                <AutoRefreshInterval/>
             </Col>
             <Col xs="auto">
                 <ReloadButton/>
@@ -29,21 +31,17 @@ function OrderActionBar() {
             <Col xs="auto">
                 <UpdatedTimestamp/>
             </Col>
-            <Col xs/>
+            <Col/>
             <Col xs="auto">
-                <ShowChumsCheckbox/>
-            </Col>
-            <Col xs="auto">
-                <ShowEDICheckbox/>
-            </Col>
-            <Col xs="auto">
-                <ShowWebCheckbox/>
-            </Col>
-            <Col xs="auto">
-                <ShowTestCheckbox/>
+                <Stack direction="horizontal" gap={2}>
+                    <ShowChumsCheckbox/>
+                    <ShowEDICheckbox/>
+                    <ShowWebCheckbox/>
+                    <ShowTestCheckbox/>
+                </Stack>
             </Col>
         </Row>
     )
 }
-OrderActionBar.displayName = "OrderActionBar";
-export default OrderActionBar;
+
+export default OrderActionBar

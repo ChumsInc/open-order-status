@@ -6,11 +6,13 @@ import orderStatusReducer from "../ducks/order-status";
 import ordersReducer from "../ducks/orders";
 import filtersReducer from "../ducks/filters";
 import versionReducer from "../ducks/version";
+import appReducer from "../ducks/app";
 
 
 
 const rootReducer = combineReducers({
     alerts: alertsReducer,
+    app: appReducer,
     filters: filtersReducer,
     orders: ordersReducer,
     orderStatus: orderStatusReducer,

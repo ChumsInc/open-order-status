@@ -1,7 +1,7 @@
 import React, {ChangeEvent, useId} from 'react';
 import numeral from "numeral";
-import classNames from "classnames";
 import FormCheck from "react-bootstrap/FormCheck";
+import classNames from "classnames";
 import Card from "react-bootstrap/Card";
 import {Grid2} from "@mui/material";
 
@@ -28,24 +28,20 @@ export default function StatusCard({
         return onToggleVisibility(ev.target.checked);
     }
     return (
-        <Card className="card">
-            <Card.Header>
+        <Card>
+            <Card.Header as="h2" className={classNames("fs-2 lh-sm", titleClassName)}>
                 <Card.Title className={classNames("fs-4 lh-sm", titleClassName)}>{title}</Card.Title>
             </Card.Header>
             <Card.Body>
-                <Grid2 container>
-                    <Grid2 size="auto">Sales</Grid2>
-                    <Grid2 size="grow" className="text-end">{numeral(sales).format('$ 0,0')}</Grid2>
-                </Grid2>
-                <Grid2 container>
-                    <Grid2 size="auto">Count</Grid2>
-                    <Grid2 size="grow" className="text-end">{numeral(count).format('0,0')}</Grid2>
-                </Grid2>
+                <h3 className="text-center text-nowrap">{numeral(sales).format('$ 0,0')}</h3>
+                <hr />
+                <h4 className="text-center text-secondary">{numeral(count).format('0,0')}</h4>
             </Card.Body>
-            <Card.Footer>
+            <Card.Footer className="card-footer">
                 <FormCheck type="checkbox" id={id}
                            label={visibilityLabel}
                            checked={visible} onChange={visibilityChangeHandler}/>
+
             </Card.Footer>
         </Card>
     )
