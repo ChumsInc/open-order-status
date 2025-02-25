@@ -1,12 +1,12 @@
 import React, {useEffect, useState} from 'react'
 import {useSelector} from "react-redux";
-import {selectLateOrders, selectTotals} from "../ducks/orders/selectors";
-import {useAppDispatch} from "../app/configureStore";
+import {selectLateOrders, selectTotals} from "@/ducks/orders/selectors";
+import {useAppDispatch} from "@/app/configureStore";
 import StatusCard from "./StatusCard";
 import {GroupTotal} from "../types";
-import {toggleShowLate} from "../ducks/orders/actions";
+import {toggleShowLate} from "@/ducks/orders/actions";
 import {LocalStore} from "@chumsinc/ui-utils";
-import {storageKeys} from "../api/preferences";
+import {storageKeys} from "@/api/preferences";
 
 export default function LateOrdersCard() {
     const dispatch = useAppDispatch();

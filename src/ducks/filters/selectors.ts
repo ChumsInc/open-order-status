@@ -1,4 +1,4 @@
-import {RootState} from "../../app/configureStore";
+import {RootState} from "@/app/configureStore";
 import {createSelector} from "@reduxjs/toolkit";
 import {selectARDivisionNo} from "../orders/selectors";
 import {customerSorter} from "@/utils/utils";

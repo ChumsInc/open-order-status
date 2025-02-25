@@ -1,11 +1,11 @@
 import React, {useId} from 'react';
-import {useAppDispatch, useAppSelector} from "../../app/configureStore";
-import {selectFilteredCustomers} from "../../ducks/filters/selectors";
-import {selectCustomer} from "../../ducks/orders/selectors";
+import {useAppDispatch, useAppSelector} from "@/app/configureStore";
+import {selectFilteredCustomers} from "@/ducks/filters/selectors";
+import {selectCustomer} from "@/ducks/orders/selectors";
 import {customerKey} from "@/utils/utils";
 import {useAutocomplete} from "@mui/base/useAutocomplete";
 import {BasicCustomer} from "../../types";
-import {setCustomerFilter} from "../../ducks/orders/actions";
+import {setCustomerFilter} from "@/ducks/orders/actions";
 import {Dropdown, InputGroup} from "react-bootstrap";
 import Stack from "react-bootstrap/Stack";
 import styled from "@emotion/styled";

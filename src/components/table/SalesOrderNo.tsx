@@ -1,11 +1,11 @@
 import React from 'react';
 import {SalesOrderRow} from "../../types";
-import {groupKey} from "../../ducks/orders/utils";
-import {RootState, useAppDispatch, useAppSelector} from "../../app/configureStore";
-import {selectOrderGroup, selectSalesOrderNo, selectSort} from "../../ducks/orders/selectors";
+import {groupKey} from "@/ducks/orders/utils";
+import {RootState, useAppDispatch, useAppSelector} from "@/app/configureStore";
+import {selectOrderGroup, selectSalesOrderNo, selectSort} from "@/ducks/orders/selectors";
 import SalesOrderLink from "./SalesOrderLink";
 import SalesOrderNoRange from "./SalesOrderNoRange";
-import {toggleExpandGroup} from "../../ducks/orders/actions";
+import {toggleExpandGroup} from "@/ducks/orders/actions";
 import {VALUE_VARIES} from "@/utils/utils";
 import SalesOrderToggle from "./SalesOrderToggle";
 

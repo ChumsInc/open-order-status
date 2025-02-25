@@ -1,6 +1,6 @@
 import React from 'react';
 import {SalesOrderRow} from "../../types";
-import {useAppDispatch, useAppSelector} from "../../app/configureStore";
+import {useAppDispatch, useAppSelector} from "@/app/configureStore";
 import {useSelector} from "react-redux";
 import {
     selectFilteredOrderNos,
@@ -8,9 +8,9 @@ import {
     selectRowsPerPage,
     selectSalesOrderNo,
     selectSort
-} from "../../ducks/orders/selectors";
-import {groupKey, orderSorter} from "../../ducks/orders/utils";
-import {toggleExpandGroup} from "../../ducks/orders/actions";
+} from "@/ducks/orders/selectors";
+import {groupKey, orderSorter} from "@/ducks/orders/utils";
+import {toggleExpandGroup} from "@/ducks/orders/actions";
 import classNames from "classnames";
 import Tooltip from "@mui/material/Tooltip";
 import {VALUE_VARIES} from "@/utils/utils";

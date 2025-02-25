@@ -34,7 +34,7 @@ import SalesOrderNo from "./SalesOrderNo";
 import OrderDate from "./OrderDate";
 import Version from "@/ducks/version/Version";
 import InvoiceBadge from "./InvoiceBadge";
-import {storageKeys} from "../../api/preferences";
+import {storageKeys} from "@/api/preferences";
 import Alert from 'react-bootstrap/Alert'
 import {LocalStore} from "@chumsinc/ui-utils";
 

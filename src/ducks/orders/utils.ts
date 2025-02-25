@@ -1,7 +1,7 @@
-import {storageKeys} from "../../api/preferences";
+import {storageKeys} from "@/api/preferences";
 import {OrdersState} from "./index";
 import {SortProps} from "chums-types";
-import {SalesOrderRow, SalesOrderTotals} from "../../types";
+import {SalesOrderRow, SalesOrderTotals} from "@/types/index";
 import dayjs from "dayjs";
 import Decimal from "decimal.js";
 import {customerKey, getContainerEl} from "@/utils/utils";

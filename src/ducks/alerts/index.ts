@@ -1,6 +1,5 @@
 import {createAction, createReducer, isRejected} from "@reduxjs/toolkit";
-import {RootState} from "../../app/configureStore";
-import {ErrorAlert} from "@chumsinc/ui-utils";
+import {RootState} from "@/app/configureStore";
 import {StyledErrorAlert} from "@/types/alerts";
 
 

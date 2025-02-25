@@ -1,12 +1,12 @@
 import React, {useEffect, useState} from 'react'
 import {useSelector} from "react-redux";
-import {selectOnCancelDateOrders, selectTotals} from "../ducks/orders/selectors";
-import {useAppDispatch} from "../app/configureStore";
+import {selectOnCancelDateOrders, selectTotals} from "@/ducks/orders/selectors";
+import {useAppDispatch} from "@/app/configureStore";
 import StatusCard from "./StatusCard";
 import {GroupTotal} from "../types";
-import {toggleShowOnCancelDate} from "../ducks/orders/actions";
+import {toggleShowOnCancelDate} from "@/ducks/orders/actions";
 import {LocalStore} from "@chumsinc/ui-utils";
-import {storageKeys} from "../api/preferences";
+import {storageKeys} from "@/api/preferences";
 
 export default function CancelDateOrdersCard() {
     const dispatch = useAppDispatch();

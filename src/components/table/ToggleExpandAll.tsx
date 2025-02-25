@@ -1,11 +1,11 @@
 import React, {MouseEvent} from "react";
-import {useAppDispatch} from "../../app/configureStore";
-import {toggleExpandAllGroups} from "../../ducks/orders/actions";
+import {useAppDispatch} from "@/app/configureStore";
+import {toggleExpandAllGroups} from "@/ducks/orders/actions";
 import {useSelector} from "react-redux";
-import {selectAnyExpanded} from "../../ducks/orders/selectors";
+import {selectAnyExpanded} from "@/ducks/orders/selectors";
 import Tooltip from "@mui/material/Tooltip";
 import {LocalStore} from "@chumsinc/ui-utils";
-import {storageKeys} from "../../api/preferences";
+import {storageKeys} from "@/api/preferences";
 
 const ToggleExpandAll = () => {
     const dispatch = useAppDispatch();

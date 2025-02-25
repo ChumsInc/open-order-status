@@ -1,6 +1,5 @@
 import React, {useEffect, useRef, useState} from 'react';
 import Alert, {AlertProps} from 'react-bootstrap/Alert'
-import classNames from "classnames";
 import Badge from "react-bootstrap/Badge";
 import {commaFormatter} from "@chumsinc/ui-utils";
 
@@ -21,7 +20,8 @@ export default function ContextAlert({
                                          count = 0,
                                          dismissible,
                                          onClose,
-                                         children}:ContextAlertProps) {
+                                         children
+                                     }: ContextAlertProps) {
     const ref = useRef<number>(0);
     const [show, setShow] = useState(false);
 
@@ -44,7 +44,7 @@ export default function ContextAlert({
     }
 
     return (
-        <Alert color={color} dismissible={dismissible} className={className}>
+        <Alert color={color} dismissible={dismissible} className={className} onClose={closeHandler}>
             <Alert.Heading>
                 {!!context && (<span className="me-1">[{context}]</span>)}
                 {!!title && (<span className="me-1">{title}:</span>)}

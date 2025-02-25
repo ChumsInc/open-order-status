@@ -1,12 +1,12 @@
 import React, {useEffect, useState} from 'react'
 import {useSelector} from "react-redux";
-import {selectPastCancelDateOrders, selectTotals} from "../ducks/orders/selectors";
-import {useAppDispatch} from "../app/configureStore";
+import {selectPastCancelDateOrders, selectTotals} from "@/ducks/orders/selectors";
+import {useAppDispatch} from "@/app/configureStore";
 import StatusCard from "./StatusCard";
 import {GroupTotal} from "../types";
-import {toggleShowPastCancelDate} from "../ducks/orders/actions";
+import {toggleShowPastCancelDate} from "@/ducks/orders/actions";
 import {LocalStore} from "@chumsinc/ui-utils";
-import {storageKeys} from "../api/preferences";
+import {storageKeys} from "@/api/preferences";
 
 export default function PastCancelDateOrdersCard() {
     const dispatch = useAppDispatch();
