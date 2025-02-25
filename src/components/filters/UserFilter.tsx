@@ -1,9 +1,9 @@
 import React, {ChangeEvent, useId} from "react";
-import {useAppDispatch} from "_app/configureStore";
+import {useAppDispatch} from "@/app/configureStore";
 import {useSelector} from "react-redux";
-import {selectUser} from "_ducks/orders/selectors";
-import {selectUserNames} from "_ducks/filters/selectors";
-import {setUserFilter} from "_ducks/orders/actions";
+import {selectUser} from "@/ducks/orders/selectors";
+import {selectUserNames} from "@/ducks/filters/selectors";
+import {setUserFilter} from "@/ducks/orders/actions";
 import InputGroup from "react-bootstrap/InputGroup";
 import FormSelect from "react-bootstrap/FormSelect";
 

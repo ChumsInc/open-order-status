@@ -1,8 +1,8 @@
 import React, {ChangeEvent, useId} from 'react';
-import {useAppDispatch} from "_app/configureStore";
+import {useAppDispatch} from "@/app/configureStore";
 import {useSelector} from "react-redux";
-import {selectSalesOrderNo} from "_ducks/orders/selectors";
-import {setSalesOrderFilter} from "_ducks/orders/actions";
+import {selectSalesOrderNo} from "@/ducks/orders/selectors";
+import {setSalesOrderFilter} from "@/ducks/orders/actions";
 import InputGroup from "react-bootstrap/InputGroup";
 import FormControl from "react-bootstrap/FormControl";
 

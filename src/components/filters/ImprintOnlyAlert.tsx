@@ -1,6 +1,6 @@
 import React from 'react';
 import {useSelector} from "react-redux";
-import {selectImprint} from "_ducks/orders/selectors";
+import {selectImprint} from "@/ducks/orders/selectors";
 import Alert from "react-bootstrap/Alert";
 
 export default function ImprintOnlyAlert() {

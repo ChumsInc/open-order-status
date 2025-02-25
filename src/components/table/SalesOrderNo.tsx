@@ -6,7 +6,7 @@ import {selectOrderGroup, selectSalesOrderNo, selectSort} from "../../ducks/orde
 import SalesOrderLink from "./SalesOrderLink";
 import SalesOrderNoRange from "./SalesOrderNoRange";
 import {toggleExpandGroup} from "../../ducks/orders/actions";
-import {VALUE_VARIES} from "../../utils";
+import {VALUE_VARIES} from "@/utils/utils";
 import SalesOrderToggle from "./SalesOrderToggle";
 
 const SalesOrderNo = ({row}:{row: SalesOrderRow}) => {

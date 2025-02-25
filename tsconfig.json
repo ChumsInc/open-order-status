@@ -19,10 +19,13 @@
       "esnext"
     ],
     "paths": {
-      "_src/*": ["./*"],
-      "_app/*": ["./app/*"],
-      "_components/*": ["./components/*"],
-      "_ducks/*": ["./ducks/*"],
+      "@/src/*": ["./*"],
+      "@/api/*": ["./api/*"],
+      "@/app/*": ["./app/*"],
+      "@/components/*": ["./components/*"],
+      "@/ducks/*": ["./ducks/*"],
+      "@/types/*": ["./types/*"],
+      "@/utils/*": ["./utils/*"]
     },
     "skipLibCheck": true,
     "sourceMap": true,

@@ -1,10 +1,10 @@
 import React, {ChangeEvent} from 'react';
-import {useAppDispatch, useAppSelector} from "_app/configureStore";
-import {selectShowWeb, selectWebTotals} from "_ducks/orders/selectors";
-import {toggleShowWeb} from "_ducks/orders/actions";
-import {LocalStore} from "chums-components";
-import {storageKeys} from "_src/api/preferences";
-import ShowTotalCheckbox from "_components/filters/ShowTotalCheckbox";
+import {useAppDispatch, useAppSelector} from "@/app/configureStore";
+import {selectShowWeb, selectWebTotals} from "@/ducks/orders/selectors";
+import {toggleShowWeb} from "@/ducks/orders/actions";
+import {LocalStore} from "@chumsinc/ui-utils";
+import {storageKeys} from "@/api/preferences";
+import ShowTotalCheckbox from "@/components/filters/ShowTotalCheckbox";
 
 function ShowWebCheckbox() {
     const dispatch = useAppDispatch();

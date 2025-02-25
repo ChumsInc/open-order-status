@@ -29,7 +29,7 @@ import {
     toggleShowWeb
 } from "./actions";
 import Decimal from "decimal.js";
-import {VALUE_VARIES} from "../../utils";
+import {VALUE_VARIES} from "@/utils/utils";
 
 export type OrderStatusCounts = Record<string, number>;
 

@@ -1,10 +1,10 @@
 import React, {ChangeEvent, useId} from 'react';
-import {useAppDispatch, useAppSelector} from "_app/configureStore";
+import {useAppDispatch, useAppSelector} from "@/app/configureStore";
 import dayjs from "dayjs";
-import {setLeadTime} from "_ducks/orders/actions";
-import {selectLeadTime, selectLoading} from "_ducks/orders/selectors";
-import {LocalStore} from "chums-components";
-import {storageKeys} from "_src/api/preferences";
+import {setLeadTime} from "@/ducks/orders/actions";
+import {selectLeadTime, selectLoading} from "@/ducks/orders/selectors";
+import {LocalStore} from "@chumsinc/ui-utils";
+import {storageKeys} from "@/api/preferences";
 import InputGroup from "react-bootstrap/InputGroup";
 import FormControl from "react-bootstrap/FormControl";
 

@@ -1,19 +1,19 @@
 import React, {useEffect, useState} from 'react';
-import {customerKey} from "_src/utils";
-import {useAppDispatch, useAppSelector} from "_app/configureStore";
-import {selectFilteredCustomers} from "_ducks/filters/selectors";
+import {customerKey} from "@/utils/utils";
+import {useAppDispatch, useAppSelector} from "@/app/configureStore";
+import {selectFilteredCustomers} from "@/ducks/filters/selectors";
 import {useSelector} from "react-redux";
-import {selectCustomer} from "_ducks/orders/selectors";
+import {selectCustomer} from "@/ducks/orders/selectors";
 import Autocomplete from "@mui/material/Autocomplete";
 import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
-import {BasicCustomer} from "_src/types";
-import {setCustomerFilter} from "_ducks/orders/actions";
+import {BasicCustomer} from "@/src/types";
+import {setCustomerFilter} from "@/ducks/orders/actions";
 import {Popper, PopperProps} from "@mui/base";
 import FormControl from "react-bootstrap/FormControl";
 import InputGroup from "react-bootstrap/InputGroup";
 
-export default React.forwardRef(function CustomerAutoComplete() {
+export default function CustomerAutoComplete() {
     const dispatch = useAppDispatch();
     const customers = useAppSelector(selectFilteredCustomers);
     const customer = useSelector(selectCustomer);
@@ -70,7 +70,7 @@ export default React.forwardRef(function CustomerAutoComplete() {
             }}
         />
     )
-})
+}
 
 const CustomPopperComponent = (props: PopperProps) => {
     return (

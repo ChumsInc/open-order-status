@@ -6,7 +6,7 @@ import {
     SalesOrderStatusData,
     SalesOrderStatusRow
 } from "../types";
-import {fetchJSON} from "chums-components";
+import {fetchJSON} from "@chumsinc/ui-utils";
 import dayjs from "dayjs";
 
 export async function fetchStatusList(): Promise<OpenOrderStatusCode[]> {

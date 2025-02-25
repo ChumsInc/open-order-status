@@ -19,9 +19,9 @@ const enterFullScreen = (el: HTMLElement) => {
     }
 }
 
-export function useFullScreen<T extends HTMLElement = any>() {
+export function useFullScreen<T extends HTMLElement>() {
     const [fullScreen, setFullScreen] = useState<boolean>(false);
-    const _ref = useRef<T>();
+    const _ref = useRef<T>(null);
 
     const handleFullScreenChange = useCallback(
         (ev: Event) => {

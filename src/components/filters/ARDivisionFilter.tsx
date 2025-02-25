@@ -1,10 +1,10 @@
 import React, {ChangeEvent, useEffect} from "react";
-import {useAppDispatch} from "_app/configureStore";
+import {useAppDispatch} from "@/app/configureStore";
 import {useSelector} from "react-redux";
-import {selectARDivisionNo} from "_ducks/orders/selectors";
-import {selectDivisionList} from "_ducks/filters/selectors";
-import {loadDivisions} from "_ducks/filters/actions";
-import {setARDivisionNoFilter} from "_ducks/orders/actions";
+import {selectARDivisionNo} from "@/ducks/orders/selectors";
+import {selectDivisionList} from "@/ducks/filters/selectors";
+import {loadDivisions} from "@/ducks/filters/actions";
+import {setARDivisionNoFilter} from "@/ducks/orders/actions";
 import FormSelect from "react-bootstrap/FormSelect";
 
 const ARDivisionFilter = () => {

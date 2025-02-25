@@ -1,10 +1,10 @@
 import React, {ChangeEvent} from 'react';
-import {useAppDispatch, useAppSelector} from "_app/configureStore";
-import {selectEDITotals, selectShowEDI} from "_ducks/orders/selectors";
-import {toggleShowEDI} from "_ducks/orders/actions";
-import {LocalStore} from "chums-components";
-import {storageKeys} from "_src/api/preferences";
-import ShowTotalCheckbox from "_components/filters/ShowTotalCheckbox";
+import {useAppDispatch, useAppSelector} from "@/app/configureStore";
+import {selectEDITotals, selectShowEDI} from "@/ducks/orders/selectors";
+import {toggleShowEDI} from "@/ducks/orders/actions";
+import {LocalStore} from "@chumsinc/ui-utils";
+import {storageKeys} from "@/api/preferences";
+import ShowTotalCheckbox from "@/components/filters/ShowTotalCheckbox";
 
 function ShowEDICheckbox() {
     const dispatch = useAppDispatch();

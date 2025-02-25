@@ -1,11 +1,12 @@
 import {createAction, createReducer, isRejected} from "@reduxjs/toolkit";
 import {RootState} from "../../app/configureStore";
-import {ErrorAlert} from "chums-components";
+import {ErrorAlert} from "@chumsinc/ui-utils";
+import {StyledErrorAlert} from "@/types/alerts";
 
 
 export interface AlertsState {
     nextId: number;
-    list: ErrorAlert[];
+    list: StyledErrorAlert[];
 }
 
 export const initialAlertsState: AlertsState = {
@@ -14,7 +15,7 @@ export const initialAlertsState: AlertsState = {
 }
 
 export const dismissAlert = createAction<number>('alerts/dismiss');
-export const addAlert = createAction<ErrorAlert>('alerts/addAlert');
+export const addAlert = createAction<StyledErrorAlert>('alerts/addAlert');
 
 export const selectAlerts = (state: RootState) => state.alerts.list;
 

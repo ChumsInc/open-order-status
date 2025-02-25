@@ -1,6 +1,6 @@
 import React from 'react';
-import {SalesOrderRow} from "_src/types";
-import {friendlyDate} from "_ducks/orders/utils";
+import {SalesOrderRow} from "@/src/types";
+import {friendlyDate} from "@/ducks/orders/utils";
 import dayjs from "dayjs";
 
 const CancelDateField = ({order}:{order:SalesOrderRow}) => {

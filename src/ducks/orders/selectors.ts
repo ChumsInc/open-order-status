@@ -3,7 +3,7 @@ import {createSelector} from "@reduxjs/toolkit";
 import {calcStatus, isChumsOrder, isEDIOrder, orderSorter, showOrderType} from "./utils";
 import {FetchOrdersOptions} from "../../api";
 import {SalesOrderRow} from "../../types";
-import {customerKey} from "../../utils";
+import {customerKey} from "@/utils/utils";
 import dayjs from "dayjs";
 
 export const selectLoading = (state: RootState) => state.orders.loading;

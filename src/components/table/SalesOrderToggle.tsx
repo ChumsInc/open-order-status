@@ -13,7 +13,7 @@ import {groupKey, orderSorter} from "../../ducks/orders/utils";
 import {toggleExpandGroup} from "../../ducks/orders/actions";
 import classNames from "classnames";
 import Tooltip from "@mui/material/Tooltip";
-import {VALUE_VARIES} from "../../utils";
+import {VALUE_VARIES} from "@/utils/utils";
 
 const SalesOrderToggle = ({row}: { row: SalesOrderRow }) => {
     const dispatch = useAppDispatch();

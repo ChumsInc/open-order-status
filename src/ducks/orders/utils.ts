@@ -4,8 +4,8 @@ import {SortProps} from "chums-types";
 import {SalesOrderRow, SalesOrderTotals} from "../../types";
 import dayjs from "dayjs";
 import Decimal from "decimal.js";
-import {customerKey, getContainerEl} from "../../utils";
-import {LocalStore} from "chums-components";
+import {customerKey, getContainerEl} from "@/utils/utils";
+import {LocalStore} from "@chumsinc/ui-utils";
 
 
 export const initialSort: SortProps<SalesOrderRow> = {field: 'ShipExpireDate', ascending: true};
@@ -24,7 +24,7 @@ const initialTotals: SalesOrderTotals = {
 }
 
 const getLeadTime = (defaultValue: number): number => {
-    const leadTime = LocalStore.getItem<number|null>(storageKeys.leadTime, null);
+    const leadTime = LocalStore.getItem<number | null>(storageKeys.leadTime, null);
     if (leadTime) {
         return leadTime;
     }
@@ -284,15 +284,15 @@ export const parseDateTime = (sageDate: string, sageTime: string): Date => {
     return dayjs(sageDate).add(Number(sageTime), 'hours').toDate();
 }
 
-export function isChumsOrder(row:SalesOrderRow) {
+export function isChumsOrder(row: SalesOrderRow) {
     return !row.isEDI && !row.isWebsite && row.CustomerNo !== 'TEST';
 }
 
-export function isEDIOrder(row:SalesOrderRow) {
+export function isEDIOrder(row: SalesOrderRow) {
     return row.isEDI && row.CustomerNo !== 'TEST';
 }
 
-export function isWebOrder(row:SalesOrderRow) {
+export function isWebOrder(row: SalesOrderRow) {
     return row.isWebsite;
 }
 
@@ -302,7 +302,8 @@ export interface ShowOrderProps {
     showTest: boolean;
     showChums: boolean;
 }
-export function showOrderType(row:SalesOrderRow, {showEDI, showWeb, showTest, showChums}:ShowOrderProps) {
+
+export function showOrderType(row: SalesOrderRow, {showEDI, showWeb, showTest, showChums}: ShowOrderProps) {
     if (showEDI && isEDIOrder(row)) {
         return true;
     }

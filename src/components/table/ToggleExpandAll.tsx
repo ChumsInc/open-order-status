@@ -4,7 +4,7 @@ import {toggleExpandAllGroups} from "../../ducks/orders/actions";
 import {useSelector} from "react-redux";
 import {selectAnyExpanded} from "../../ducks/orders/selectors";
 import Tooltip from "@mui/material/Tooltip";
-import {LocalStore} from "chums-components";
+import {LocalStore} from "@chumsinc/ui-utils";
 import {storageKeys} from "../../api/preferences";
 
 const ToggleExpandAll = () => {

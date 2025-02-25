@@ -1,7 +1,7 @@
 import React, {ChangeEvent, useId} from 'react';
-import {useAppDispatch, useAppSelector} from "_app/configureStore";
-import {selectRefreshInterval} from "_ducks/filters/selectors";
-import {setRefreshInterval} from "_ducks/filters/actions";
+import {useAppDispatch, useAppSelector} from "@/app/configureStore";
+import {selectRefreshInterval} from "@/ducks/filters/selectors";
+import {setRefreshInterval} from "@/ducks/filters/actions";
 import {InputGroup} from "react-bootstrap";
 import FormSelect from "react-bootstrap/FormSelect";
 

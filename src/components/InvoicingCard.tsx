@@ -5,7 +5,7 @@ import {useAppDispatch} from "../app/configureStore";
 import StatusCard from "./StatusCard";
 import {GroupTotal} from "../types";
 import {toggleShowInvoicing} from "../ducks/orders/actions";
-import {LocalStore} from "chums-components";
+import {LocalStore} from "@chumsinc/ui-utils";
 import {storageKeys} from "../api/preferences";
 
 export default function InvoicingCard() {

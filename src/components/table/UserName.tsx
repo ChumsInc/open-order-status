@@ -1,7 +1,7 @@
 import React from 'react';
 import {SalesOrderRow} from "../../types";
 import Tooltip from "@mui/material/Tooltip";
-import {dateCreated, dateUpdated} from "../../utils";
+import {dateCreated, dateUpdated} from "@/utils/utils";
 
 const UserName = ({row}: { row: SalesOrderRow }) => {
     const userName = row.UserLogon === 'websites' && !row.CurrentInvoiceNo ? row.UpdatedByUser : row.UserLogon;

@@ -1,5 +1,5 @@
 import React, {Fragment, useEffect} from 'react';
-import {useAppDispatch, useAppSelector} from "../../app/configureStore";
+import {useAppDispatch, useAppSelector} from "@/app/configureStore";
 import {useSelector} from "react-redux";
 import {
     selectFilteredOrders,
@@ -7,19 +7,18 @@ import {
     selectPage,
     selectRowsPerPage,
     selectSort
-} from "../../ducks/orders/selectors";
+} from "@/ducks/orders/selectors";
 import {
     DataTableField,
     DataTableRow,
-    LocalStore,
     SortableTable,
     SortableTableField,
     TablePagination
-} from "chums-components";
+} from "@chumsinc/sortable-tables";
 import {SalesOrderRow} from "../../types";
-import {calcStatus, friendlyDate, groupKey} from "../../ducks/orders/utils";
-import {customerKey} from "../../utils";
-import {loadOrders, setPage, setRowsPerPage, setSort} from "../../ducks/orders/actions";
+import {calcStatus, friendlyDate, groupKey} from "@/ducks/orders/utils";
+import {customerKey} from "@/utils/utils";
+import {loadOrders, setPage, setRowsPerPage, setSort} from "@/ducks/orders/actions";
 import {SortProps} from "chums-types";
 import classNames from "classnames";
 import numeral from "numeral";
@@ -29,14 +28,15 @@ import OrderTypeBadge from "./OrderTypeBadge";
 import HoldReasonBadge from "./HoldReasonBadge";
 import UserName from "./UserName";
 import ImprintBadge from "./ImprintBadge";
-import OrderStatusContainer from "../../ducks/order-status/OrderStatusContainer";
+import OrderStatusContainer from "@/ducks/order-status/OrderStatusContainer";
 import ToggleExpandAll from "./ToggleExpandAll";
 import SalesOrderNo from "./SalesOrderNo";
 import OrderDate from "./OrderDate";
-import Version from "../../ducks/version/Version";
+import Version from "@/ducks/version/Version";
 import InvoiceBadge from "./InvoiceBadge";
 import {storageKeys} from "../../api/preferences";
 import Alert from 'react-bootstrap/Alert'
+import {LocalStore} from "@chumsinc/ui-utils";
 
 const fields: SortableTableField<SalesOrderRow>[] = [
     {
@@ -194,8 +194,8 @@ const OrdersList = () => {
             <div className="d-flex justify-content-between align-items-start">
                 <Version/>
                 <TablePagination page={page} onChangePage={pageChangeHandler}
-                                 rowsPerPage={rowsPerPage} onChangeRowsPerPage={onChangeRowsPerPage}
-                                 showFirst showLast bsSize="sm"
+                                 rowsPerPage={rowsPerPage} rowsPerPageProps={{onChange: onChangeRowsPerPage}}
+                                 showFirst showLast size="sm"
                                  count={list.length}/>
             </div>
         </div>

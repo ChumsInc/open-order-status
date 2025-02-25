@@ -2,7 +2,7 @@ import React, {useId} from 'react';
 import {useAppDispatch, useAppSelector} from "../../app/configureStore";
 import {selectFilteredCustomers} from "../../ducks/filters/selectors";
 import {selectCustomer} from "../../ducks/orders/selectors";
-import {customerKey} from "../../utils";
+import {customerKey} from "@/utils/utils";
 import {useAutocomplete} from "@mui/base/useAutocomplete";
 import {BasicCustomer} from "../../types";
 import {setCustomerFilter} from "../../ducks/orders/actions";
@@ -10,7 +10,7 @@ import {Dropdown, InputGroup} from "react-bootstrap";
 import Stack from "react-bootstrap/Stack";
 import styled from "@emotion/styled";
 
-export default React.forwardRef(function CustomerDropDown() {
+export default function CustomerDropDown() {
     const dispatch = useAppDispatch();
     const customers = useAppSelector(selectFilteredCustomers);
     const customer = useAppSelector(selectCustomer);
@@ -32,9 +32,7 @@ export default React.forwardRef(function CustomerDropDown() {
         getListboxProps,
         getOptionProps,
         groupedOptions,
-        inputValue,
         popupOpen,
-        focusedTag
     } = useAutocomplete({
         id,
         options: customers,
@@ -64,9 +62,9 @@ export default React.forwardRef(function CustomerDropDown() {
                     <Dropdown.Menu as="ul" {...getListboxProps()} show={popupOpen}>
                         {(groupedOptions as BasicCustomer[])
                             .map((option, index) => {
-                                const props = getOptionProps({option, index});
+                                const {key, ...props} = getOptionProps({option, index});
                                 return (
-                                    <Dropdown.Item as="li" {...props}>
+                                    <Dropdown.Item as="li" key={key} {...props}>
                                         <Stack direction="vertical">
                                             {option && (
                                                 <div className="me-3"><strong>{customerKey(option)}</strong></div>)}
@@ -80,7 +78,7 @@ export default React.forwardRef(function CustomerDropDown() {
             </Dropdown>
         </StyledCustomerDropdownRoot>
     )
-})
+}
 
 const StyledCustomerDropdownRoot = styled('div')(() => `
     & .dropdown-menu {

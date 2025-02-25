@@ -1,4 +1,4 @@
-import {BasicCustomer, SalesOrderRow} from "./types";
+import {BasicCustomer, SalesOrderRow} from "@/types/index";
 import dayjs from "dayjs";
 
 export function customerKey(val: { ARDivisionNo: string, CustomerNo: string }): string {

@@ -2,7 +2,7 @@ import React, {useEffect, useRef, useState} from 'react';
 import Alert, {AlertProps} from 'react-bootstrap/Alert'
 import classNames from "classnames";
 import Badge from "react-bootstrap/Badge";
-import {commaFormatter} from "chums-components";
+import {commaFormatter} from "@chumsinc/ui-utils";
 
 export interface ContextAlertProps extends Omit<AlertProps, 'onClose'> {
     message?: string;

@@ -1,10 +1,10 @@
 import React, {ChangeEvent, useId} from 'react';
-import {useAppDispatch} from "_app/configureStore";
+import {useAppDispatch} from "@/app/configureStore";
 import {useSelector} from "react-redux";
-import {selectImprint, selectLoading} from "_ducks/orders/selectors";
-import {toggleImprint} from "_ducks/orders/actions";
-import {LocalStore} from "chums-components";
-import {storageKeys} from "_src/api/preferences";
+import {selectImprint, selectLoading} from "@/ducks/orders/selectors";
+import {toggleImprint} from "@/ducks/orders/actions";
+import {LocalStore} from "@chumsinc/ui-utils";
+import {storageKeys} from "@/api/preferences";
 import FormCheck from "react-bootstrap/FormCheck";
 
 const imprintOrders = "imprint-orders";

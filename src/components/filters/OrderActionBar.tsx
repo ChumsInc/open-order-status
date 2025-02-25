@@ -10,7 +10,7 @@ import AutoRefreshInterval from "./AutoRefreshInterval";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Stack from "react-bootstrap/Stack";
-import ShowTestCheckbox from "_components/filters/ShowTestCheckbox";
+import ShowTestCheckbox from "@/components/filters/ShowTestCheckbox";
 
 const OrderActionBar = () => {
 

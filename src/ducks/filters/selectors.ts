@@ -1,7 +1,7 @@
 import {RootState} from "../../app/configureStore";
 import {createSelector} from "@reduxjs/toolkit";
 import {selectARDivisionNo} from "../orders/selectors";
-import {customerSorter} from "../../utils";
+import {customerSorter} from "@/utils/utils";
 
 export const selectDivisionList = (state:RootState) => state.filters.divisions.list;
 export const selectDivisionsLoading = (state:RootState) => state.filters.divisions.loading;

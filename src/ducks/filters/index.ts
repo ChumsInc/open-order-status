@@ -1,7 +1,7 @@
 import {ARDivisionList, CustomerList} from "../../types";
 import {createReducer} from "@reduxjs/toolkit";
 import {loadOrders} from "../orders/actions";
-import {basicCustomer, customerKey, getContainerEl} from "../../utils";
+import {basicCustomer, customerKey, getContainerEl} from "@/utils/utils";
 import {loadDivisions, setRefreshInterval} from "./actions";
 
 export interface FiltersState {

@@ -1,7 +1,7 @@
 import React, {useId} from 'react';
 import numeral from "numeral";
 import FormCheck, {FormCheckProps} from "react-bootstrap/FormCheck";
-import {GroupTotal} from "_src/types";
+import {GroupTotal} from "@/src/types";
 
 export interface ShowTotalCheckboxProps extends FormCheckProps {
     total: GroupTotal;
