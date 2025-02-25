@@ -5,28 +5,30 @@ import BackOrdersCard from "./BackOrdersCard";
 import CancelDateOrdersCard from "./CancelDateOrdersCard";
 import PastCancelDateOrdersCard from "./PastCancelDateOrdersCard";
 import InvoicingCard from "./InvoicingCard";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
 
 export default function StatusCards() {
     return (
-        <div className="row g-3 mb-5">
-            <div className="col-2">
+        <Row className="g-3 mb-5">
+            <Col xs="2">
                 <OnTimeCard/>
-            </div>
-            <div className="col-2">
+            </Col>
+            <Col xs="2">
                 <LateOrdersCard/>
-            </div>
-            <div className="col-2">
+            </Col>
+            <Col xs="2">
                 <BackOrdersCard/>
-            </div>
-            <div className="col-2">
+            </Col>
+            <Col xs="2">
                 <CancelDateOrdersCard/>
-            </div>
-            <div className="col-2">
+            </Col>
+            <Col xs="2">
                 <PastCancelDateOrdersCard/>
-            </div>
-            <div className="col-2">
+            </Col>
+            <Col xs="2">
                 <InvoicingCard/>
-            </div>
-        </div>
+            </Col>
+        </Row>
     )
 }
