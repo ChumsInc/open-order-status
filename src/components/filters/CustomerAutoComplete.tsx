@@ -5,13 +5,19 @@ import {selectFilteredCustomers} from "@/ducks/filters/selectors";
 import {useSelector} from "react-redux";
 import {selectCustomer} from "@/ducks/orders/selectors";
 import Autocomplete from "@mui/material/Autocomplete";
-import Box from "@mui/material/Box";
-import Stack from "@mui/material/Stack";
 import {BasicCustomer} from "@/src/types";
 import {setCustomerFilter} from "@/ducks/orders/actions";
-import {Popper, PopperProps} from "@mui/base";
+import {Popper, PopperProps} from "@mui/material";
 import FormControl from "react-bootstrap/FormControl";
 import InputGroup from "react-bootstrap/InputGroup";
+import styled from "@emotion/styled";
+
+const CustomerOption = styled.li`
+    width: 20rem;
+    display: flex;
+    flex-direction: column;
+`;
+
 
 export default function CustomerAutoComplete() {
     const dispatch = useAppDispatch();
@@ -57,12 +63,10 @@ export default function CustomerAutoComplete() {
                 // eslint-disable-next-line react/prop-types
                 const {key, ...optionProps} = props;
                 return (
-                    <Box key={key} component="li" sx={{width: 300}} {...optionProps} >
-                        <Stack direction="column" justifyContent="flex-start" alignItems="flex-start">
-                            <div><strong>{customerKey(customer)}</strong></div>
-                            <div>{customer.BillToName}</div>
-                        </Stack>
-                    </Box>
+                    <CustomerOption key={key} {...optionProps} >
+                        <div><strong>{customerKey(customer)}</strong></div>
+                        <div>{customer.BillToName}</div>
+                    </CustomerOption>
                 )
             }}
             slots={{

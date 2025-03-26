@@ -43,6 +43,14 @@ export default function App() {
                 <AlertList/>
                 <OrdersList/>
             </div>
+            <div className="row g-3">
+                <div className="col-auto">
+                    <span className="bi-person me-1" /> Created By User Name
+                </div>
+                <div className="col-auto">
+                    <span className="bi-person-fill text-primary me-1" /> Updated By User Name
+                </div>
+            </div>
         </ThemeProvider>
     )
 }

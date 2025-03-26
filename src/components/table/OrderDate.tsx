@@ -1,9 +1,9 @@
 import React from 'react';
 import {SalesOrderRow} from "../../types";
-import {friendlyDate, groupKey, parseDateTime} from "../../ducks/orders/utils";
+import {friendlyDate, groupKey, parseDateTime} from "@/ducks/orders/utils";
 import Tooltip from "@mui/material/Tooltip";
-import {RootState, useAppSelector} from "../../app/configureStore";
-import {selectOrderGroup} from "../../ducks/orders/selectors";
+import {RootState, useAppSelector} from "@/app/configureStore";
+import {selectOrderGroup} from "@/ducks/orders/selectors";
 
 type DateRange = [Date, Date];
 

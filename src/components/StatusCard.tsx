@@ -3,7 +3,6 @@ import numeral from "numeral";
 import FormCheck from "react-bootstrap/FormCheck";
 import classNames from "classnames";
 import Card from "react-bootstrap/Card";
-import {Grid2} from "@mui/material";
 
 export default function StatusCard({
                                        title,
@@ -34,7 +33,7 @@ export default function StatusCard({
             </Card.Header>
             <Card.Body>
                 <h3 className="text-center text-nowrap">{numeral(sales).format('$ 0,0')}</h3>
-                <hr />
+                <hr/>
                 <h4 className="text-center text-secondary">{numeral(count).format('0,0')}</h4>
             </Card.Body>
             <Card.Footer className="card-footer">
