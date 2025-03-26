@@ -57,9 +57,16 @@ const filtersReducer = createReducer(initialState, (builder) => {
                     state.users.push(row.UserLogon);
                 }
             })
-            state.users = action.payload.orders.reduce((pv, cv) => {
-                return (pv.includes(cv.UserLogon)) ? pv : [...pv, cv.UserLogon];
-            }, [] as string[]).sort();
+            const users:string[] = [];
+            action.payload.orders.forEach(row => {
+                if (!users.includes(row.UserLogon)) {
+                    users.push(row.UserLogon);
+                }
+                if (!users.includes(row.UpdatedByUser)) {
+                    users.push(row.UpdatedByUser);
+                }
+            })
+            state.users = users.sort();
         })
 })
 

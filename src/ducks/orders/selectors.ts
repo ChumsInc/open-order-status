@@ -94,7 +94,7 @@ export const selectFilteredOrders = createSelector(
             .filter(row => showOrderType(row, {showEDI, showWeb, showTest, showChums}))
             .filter(row => !arDivisionNo || row.ARDivisionNo === arDivisionNo)
             .filter(row => !customer || customerKey(row) === customerKey(customer))
-            .filter(row => !user || row.UserLogon === user)
+            .filter(row => !user || row.UserLogon === user || row.UpdatedByUser === user)
             .filter(row => !statusCode || row.status?.StatusCode === statusCode)
             .sort(orderSorter(sort))
     }
