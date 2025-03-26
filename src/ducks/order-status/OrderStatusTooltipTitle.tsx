@@ -26,17 +26,17 @@ const OrderStatusTooltipTitle = ({row, currentStatus}:{
         const [statusCode] = list.filter(sc => sc.StatusCode === code);
         return statusCode?.StatusDescription ?? 'Not Set'
     }
+    if (!currentStatus) {
+        return <div>Not Set</div>
+    }
     return (
         <div>
-            <div><strong>{currentStatus?.StatusDescription ?? 'Not Set'}</strong></div>
-            <div className="mt-1">
-                {row.status?.StatusHistory?.map(history => (
-                    <div key={history.timestamp} className="flex flex-column mb-1">
-                        <div>{statusDescription(history.StatusCode)}</div>
-                        <div><small>{history.User} - {dayjs(history.timestamp).format('MM/DD/YYYY - h:mm a')}</small></div>
-                    </div>
-                ))}
-            </div>
+            {row.status?.StatusHistory?.map(history => (
+                <div key={history.timestamp} className="flex flex-column mb-3">
+                    <div>{statusDescription(history.StatusCode)}</div>
+                    <div><small>{history.User} - {dayjs(history.timestamp).format('MM/DD/YYYY HH:mm')}</small></div>
+                </div>
+            ))}
         </div>
     )
 }
