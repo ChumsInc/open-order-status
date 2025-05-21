@@ -78,11 +78,13 @@ export const selectGroupedList = createSelector(
 export const selectFilteredOrders = createSelector(
     [selectGroupedList, selectImprint, selectARDivisionNo, selectCustomer, selectUser, selectStatusFilter,
         selectOnTime, selectLateOrders, selectBackOrders, selectOnCancelDateOrders, selectPastCancelDateOrders,
-        selectInvoicing, selectShowChums, selectShowEDI, selectShowWeb, selectShowTest, selectSort
+        selectInvoicing, selectShowChums, selectShowEDI, selectShowWeb, selectShowTest, selectSalesOrderNo,
+        selectSort,
+
     ],
     (list, imprint, arDivisionNo, customer, user,
      statusCode, onTime, late, backOrders, onCancelDate, pastCancelDate,
-     invoicing, showChums, showEDI, showWeb, showTest, sort): SalesOrderRow[] => {
+     invoicing, showChums, showEDI, showWeb, showTest, salesOrderNo, sort): SalesOrderRow[] => {
         return Object.values(list)
             .filter(row => ['S', 'B', 'R'].includes(row.OrderType))
             .filter(row => invoicing || !calcStatus(row).invoicing)
@@ -96,11 +98,15 @@ export const selectFilteredOrders = createSelector(
             .filter(row => !customer || customerKey(row) === customerKey(customer))
             .filter(row => !user || row.UserLogon === user || row.UpdatedByUser === user)
             .filter(row => !statusCode || row.status?.StatusCode === statusCode)
+            .filter(row => !salesOrderNo || row.SalesOrderNo.includes(salesOrderNo))
             .sort(orderSorter(sort))
     }
 )
 
-export const selectFilteredOrderNos = createSelector([selectFilteredOrders], (orders) => orders.map(row => row.SalesOrderNo));
+export const selectFilteredOrderNos = createSelector(
+    [selectFilteredOrders],
+    (orders) => orders.map(row => row.SalesOrderNo)
+);
 
 export const selectAnyExpanded = createSelector(
     [selectGrouping, selectExpandAll],

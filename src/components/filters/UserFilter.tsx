@@ -22,7 +22,7 @@ const UserFilter = () => {
                 <span className="bi-person-fill"/>
                 <span className="visually-hidden">User</span>
             </InputGroup.Text>
-            <FormSelect value={user ?? ''} onChange={changeHandler}>
+            <FormSelect value={user ?? ''} onChange={changeHandler} id={id}>
                 <option value="">All Users</option>
                 {list.length > 0 && (<option disabled>---</option>)}
                 {[...list].sort((a, b) => +a - +b)

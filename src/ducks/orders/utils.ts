@@ -71,8 +71,14 @@ export const initialState = (): OrdersState => {
 };
 
 export const groupKeyDate = (date: string | null) => !date ? '-' : dayjs(date).format('YYYYMMDD');
-export const groupKey = (row: SalesOrderRow) => [`${row.ARDivisionNo}-${row.CustomerNo}`, row.OrderType,
-    row.OrderStatus, groupKeyDate(row.OrderDate), groupKeyDate(row.ShipExpireDate), groupKeyDate(row.CancelDate),
+export const groupKey = (row: SalesOrderRow) => [
+    `${row.ARDivisionNo}-${row.CustomerNo}`,
+    row.OrderType,
+    row.OrderStatus,
+    row.UserLogon === row.UpdatedByUser ? row.UserLogon : `${row.UserLogon}-${row.UpdatedByUser}`,
+    groupKeyDate(row.OrderDate),
+    groupKeyDate(row.ShipExpireDate),
+    groupKeyDate(row.CancelDate),
     `${+!!row.CurrentInvoiceNo}}`
 ].join('/');
 
