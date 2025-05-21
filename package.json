@@ -1,6 +1,6 @@
 {
   "name": "open-order-status",
-  "version": "3.3.2",
+  "version": "3.3.3",
   "description": "",
   "main": "index.js",
   "dependencies": {
