@@ -1,4 +1,3 @@
-import React from 'react';
 import {useSelector} from "react-redux";
 import {groupTitle, selectStatusList} from "./index";
 import Menu from "@mui/material/Menu";
@@ -6,7 +5,7 @@ import ListSubheader from "@mui/material/ListSubheader";
 import CheckedMenuItem from "./CheckedMenuItem";
 import {useAppSelector} from "../../app/configureStore";
 import {selectStatusCounts} from "../orders/selectors";
-import {OpenOrderStatusGroup} from "../../types";
+import type {OpenOrderStatusGroup} from "../../types";
 
 
 const orderStatusGroups: OpenOrderStatusGroup[] = ['cs', 'imp', 'shipping'];

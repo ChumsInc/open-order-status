@@ -1,4 +1,4 @@
-import {SalesOrderHeader} from "chums-types";
+import type {SalesOrderHeader} from "chums-types";
 export type BasicCustomer = Pick<SalesOrderHeader, 'ARDivisionNo'|'CustomerNo'|'BillToName'>
 export type OpenOrderStatusGroup = 'shipping' | 'cs' | 'imp';
 
@@ -101,4 +101,9 @@ export interface SalesOrderStatusData {
 export interface ToggleExpandOrder {
     groupKey: string;
     nextPage?: number;
+}
+
+export interface SortProps<T = unknown> {
+    field: keyof T;
+    ascending: boolean;
 }

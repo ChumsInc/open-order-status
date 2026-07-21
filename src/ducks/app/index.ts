@@ -1,16 +1,16 @@
-import {createAction, createReducer, createSelector} from "@reduxjs/toolkit";
-import {RootState} from "../../app/configureStore";
+import {createAction, createReducer} from "@reduxjs/toolkit";
+import type {RootState} from "../../app/configureStore";
 
 export interface AppState {
     fullScreen: boolean;
 }
 
-const initialAppState:AppState = {
+const initialAppState: AppState = {
     fullScreen: false,
 }
 
-export const toggleFullScreen = createAction<boolean|undefined>('app/toggleFullScreen');
-export const selectIsFullScreen = (state:RootState) => state.app.fullScreen;
+export const toggleFullScreen = createAction<boolean | undefined>('app/toggleFullScreen');
+export const selectIsFullScreen = (state: RootState) => state.app.fullScreen;
 
 const appReducer = createReducer(initialAppState, builder => {
     builder.addCase(toggleFullScreen, (state, action) => {

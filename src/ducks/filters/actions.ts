@@ -1,7 +1,7 @@
 import {createAction, createAsyncThunk} from "@reduxjs/toolkit";
-import {ARDivisionList} from "../../types";
+import type {ARDivisionList} from "../../types";
 import {fetchARDivisions} from "../../api";
-import {RootState} from "../../app/configureStore";
+import type {RootState} from "../../app/configureStore";
 import {selectDivisionsLoading} from "./selectors";
 
 export const loadDivisions = createAsyncThunk<ARDivisionList>(
@@ -9,7 +9,7 @@ export const loadDivisions = createAsyncThunk<ARDivisionList>(
     async () => {
         return await fetchARDivisions();
     }, {
-        condition: (arg, {getState}) => {
+        condition: (_, {getState}) => {
             const state = getState() as RootState;
             return !selectDivisionsLoading(state);
         }

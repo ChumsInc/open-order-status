@@ -1,7 +1,7 @@
 import {storageKeys} from "@/api/preferences";
-import {OrdersState} from "./index";
-import {SortProps} from "chums-types";
-import {SalesOrderRow, SalesOrderTotals} from "@/types/index";
+import type {OrdersState} from "./index";
+import type {SortProps} from "chums-types";
+import type {SalesOrderRow, SalesOrderTotals} from "@/types/index";
 import dayjs from "dayjs";
 import Decimal from "decimal.js";
 import {customerKey, getContainerEl} from "@/utils/utils";
@@ -216,16 +216,16 @@ export function buildTotals(rows: SalesOrderRow[]): SalesOrderTotals {
         const total = {
             ...pv,
             chums: isChumsOrder(cv)
-                ? {count: pv.chums.count + 1, value: new Decimal(cv.OrderAmt).add(pv.chums.value).valueOf()}
+                ? {count: pv.chums.count + 1, value: new Decimal(cv.OrderAmt).plus(pv.chums.value).valueOf()}
                 : pv.chums,
             edi: isEDIOrder(cv)
-                ? {count: pv.edi.count + 1, value: new Decimal(cv.OrderAmt).add(pv.edi.value).valueOf()}
+                ? {count: pv.edi.count + 1, value: new Decimal(cv.OrderAmt).plus(pv.edi.value).valueOf()}
                 : pv.edi,
             web: isWebOrder(cv)
-                ? {count: pv.web.count + 1, value: new Decimal(cv.OrderAmt).add(pv.web.value).valueOf()}
+                ? {count: pv.web.count + 1, value: new Decimal(cv.OrderAmt).plus(pv.web.value).valueOf()}
                 : pv.web,
             test: cv.CustomerNo === 'TEST'
-                ? {count: pv.test.count + 1, value: new Decimal(cv.OrderAmt).add(pv.test.value).valueOf()}
+                ? {count: pv.test.count + 1, value: new Decimal(cv.OrderAmt).plus(pv.test.value).valueOf()}
                 : pv.test,
         };
         if (status.invoicing) {
@@ -233,7 +233,7 @@ export function buildTotals(rows: SalesOrderRow[]): SalesOrderTotals {
                 ...total,
                 invoicing: {
                     count: total.invoicing.count + 1,
-                    value: new Decimal(cv.OrderAmt).add(total.invoicing.value).valueOf()
+                    value: new Decimal(cv.OrderAmt).plus(total.invoicing.value).valueOf()
                 }
             }
         }
@@ -242,7 +242,7 @@ export function buildTotals(rows: SalesOrderRow[]): SalesOrderTotals {
                 ...total,
                 late: {
                     count: total.late.count + 1,
-                    value: new Decimal(cv.OrderAmt).add(total.late.value).valueOf()
+                    value: new Decimal(cv.OrderAmt).plus(total.late.value).valueOf()
                 }
             }
         }
@@ -251,7 +251,7 @@ export function buildTotals(rows: SalesOrderRow[]): SalesOrderTotals {
                 ...total,
                 onTime: {
                     count: total.onTime.count + 1,
-                    value: new Decimal(cv.OrderAmt).add(total.onTime.value).valueOf()
+                    value: new Decimal(cv.OrderAmt).plus(total.onTime.value).valueOf()
                 }
             }
         }
@@ -260,7 +260,7 @@ export function buildTotals(rows: SalesOrderRow[]): SalesOrderTotals {
                 ...total,
                 backorder: {
                     count: total.backorder.count + 1,
-                    value: new Decimal(cv.OrderAmt).add(total.backorder.value).valueOf()
+                    value: new Decimal(cv.OrderAmt).plus(total.backorder.value).valueOf()
                 }
             }
         }
@@ -269,7 +269,7 @@ export function buildTotals(rows: SalesOrderRow[]): SalesOrderTotals {
                 ...total,
                 onCancelDate: {
                     count: total.onCancelDate.count + 1,
-                    value: new Decimal(cv.OrderAmt).add(total.onCancelDate.value).valueOf()
+                    value: new Decimal(cv.OrderAmt).plus(total.onCancelDate.value).valueOf()
                 }
             }
         }
@@ -278,7 +278,7 @@ export function buildTotals(rows: SalesOrderRow[]): SalesOrderTotals {
                 ...total,
                 pastCancelDate: {
                     count: total.pastCancelDate.count + 1,
-                    value: new Decimal(cv.OrderAmt).add(total.pastCancelDate.value).valueOf()
+                    value: new Decimal(cv.OrderAmt).plus(total.pastCancelDate.value).valueOf()
                 }
             }
         }

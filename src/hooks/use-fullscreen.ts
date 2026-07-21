@@ -44,7 +44,7 @@ export function useFullScreen<T extends HTMLElement>() {
                 await enterFullScreen(_ref.current!)
             }
         },
-        []
+        [fullScreen]
     )
 
     const hide = useCallback(
@@ -53,7 +53,7 @@ export function useFullScreen<T extends HTMLElement>() {
                 await exitFullScreen()
             }
         },
-        []
+        [fullScreen]
     )
 
     const ref = useCallback(
@@ -82,7 +82,7 @@ export function useFullScreen<T extends HTMLElement>() {
             }
         }
         return undefined;
-    }, [_ref.current]);
+    }, [handleFullScreenChange, handleFullScreenError]);
 
 
     return {ref, show, hide, fullScreen} as const;

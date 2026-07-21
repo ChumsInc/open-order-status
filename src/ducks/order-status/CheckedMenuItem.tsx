@@ -1,15 +1,15 @@
-import React from 'react';
-import MenuItem, {MenuItemProps} from "@mui/material/MenuItem";
+import MenuItem, {type MenuItemProps} from "@mui/material/MenuItem";
 import ListItemText from "@mui/material/ListItemText";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
+import type {ReactNode} from "react";
 
 export interface CheckedMenuItemProps extends MenuItemProps {
     checked?:boolean;
     colorCode?: string;
     count?: number;
-    children: React.ReactNode;
+    children: ReactNode;
 }
 
 const CheckedMenuItem = ({checked, colorCode, count, children, ...rest}:CheckedMenuItemProps) => {

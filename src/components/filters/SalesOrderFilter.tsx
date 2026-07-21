@@ -1,4 +1,4 @@
-import React, {ChangeEvent, useId} from 'react';
+import {type ChangeEvent, useId} from 'react';
 import {useAppDispatch} from "@/app/configureStore";
 import {useSelector} from "react-redux";
 import {selectSalesOrderNo} from "@/ducks/orders/selectors";

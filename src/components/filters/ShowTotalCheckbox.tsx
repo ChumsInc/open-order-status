@@ -1,7 +1,7 @@
-import React, {useId} from 'react';
+import {useId} from 'react';
 import numeral from "numeral";
-import FormCheck, {FormCheckProps} from "react-bootstrap/FormCheck";
-import {GroupTotal} from "@/src/types";
+import FormCheck, {type FormCheckProps} from "react-bootstrap/FormCheck";
+import type {GroupTotal} from "@/src/types";
 
 export interface ShowTotalCheckboxProps extends FormCheckProps {
     total: GroupTotal;
@@ -9,7 +9,8 @@ export interface ShowTotalCheckboxProps extends FormCheckProps {
 }
 
 function ShowTotalCheckbox({checked, total, labelPrefix, onChange, ...props}: ShowTotalCheckboxProps) {
-    const id = props.id ?? useId();
+    const componentId = useId();
+    const id = props.id ?? componentId;
     return (
         <FormCheck inline checked={checked} onChange={onChange} id={id} {...props}
                    label={<span>{labelPrefix} ({numeral(total.count).format('0,0')})</span>}/>

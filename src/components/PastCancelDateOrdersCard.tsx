@@ -1,9 +1,9 @@
-import React, {useEffect, useState} from 'react'
+import {startTransition, useEffect, useState} from 'react'
 import {useSelector} from "react-redux";
 import {selectPastCancelDateOrders, selectTotals} from "@/ducks/orders/selectors";
 import {useAppDispatch} from "@/app/configureStore";
 import StatusCard from "./StatusCard";
-import {GroupTotal} from "../types";
+import type {GroupTotal} from "../types";
 import {toggleShowPastCancelDate} from "@/ducks/orders/actions";
 import {LocalStore} from "@chumsinc/ui-utils";
 import {storageKeys} from "@/api/preferences";
@@ -15,7 +15,9 @@ export default function PastCancelDateOrdersCard() {
     const [total, setTotal] = useState<GroupTotal | null>(totals?.pastCancelDate ?? null);
 
     useEffect(() => {
-        setTotal(totals.pastCancelDate ?? null);
+        startTransition(() => {
+            setTotal(totals.pastCancelDate ?? null);
+        })
     }, [totals]);
 
     const visibilityToggle = (checked: boolean) => {

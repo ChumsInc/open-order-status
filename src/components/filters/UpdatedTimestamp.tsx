@@ -1,4 +1,3 @@
-import React from 'react';
 import {useAppSelector} from "@/app/configureStore";
 import {selectOrdersUpdated} from "@/ducks/orders/selectors";
 

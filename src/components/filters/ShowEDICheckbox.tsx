@@ -1,4 +1,4 @@
-import React, {ChangeEvent} from 'react';
+import {type ChangeEvent} from 'react';
 import {useAppDispatch, useAppSelector} from "@/app/configureStore";
 import {selectEDITotals, selectShowEDI} from "@/ducks/orders/selectors";
 import {toggleShowEDI} from "@/ducks/orders/actions";

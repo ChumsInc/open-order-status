@@ -1,38 +1,7 @@
 {
-  "compilerOptions": {
-    "allowJs": true,
-    "allowSyntheticDefaultImports": true,
-    "baseUrl": "./src",
-    "esModuleInterop": true,
-    "forceConsistentCasingInFileNames": true,
-    "isolatedModules": true,
-    "module": "esnext",
-    "moduleResolution": "node",
-    "noFallthroughCasesInSwitch": true,
-    "noImplicitAny": true,
-    "noEmit": false,
-    "jsx": "react",
-    "resolveJsonModule": true,
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
-    "paths": {
-      "@/src/*": ["./*"],
-      "@/api/*": ["./api/*"],
-      "@/app/*": ["./app/*"],
-      "@/components/*": ["./components/*"],
-      "@/ducks/*": ["./ducks/*"],
-      "@/types/*": ["./types/*"],
-      "@/utils/*": ["./utils/*"]
-    },
-    "skipLibCheck": true,
-    "sourceMap": true,
-    "strict": true,
-    "target": "es2020"
-  },
-  "include": [
-    "src/**/*"
+  "files": [],
+  "references": [
+    { "path": "./tsconfig.app.json" },
+    { "path": "./tsconfig.node.json" }
   ]
 }

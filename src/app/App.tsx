@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import {useEffect, useMemo} from "react";
 import AlertList from "@/components/alerts/AlertList";
 import OrdersList from "@/components/table/OrdersList";
 import OrderFiltersBar from "@/components/filters/OrderFiltersBar";
@@ -7,26 +7,26 @@ import {useAppDispatch} from "./configureStore";
 import {loadStatusList} from "@/ducks/order-status";
 import {createTheme, ThemeProvider} from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
-import useMediaQuery from "@mui/material/useMediaQuery";
 import StatusCards from "@/components/StatusCards";
 import OrdersLoading from "@/components/table/OrdersLoading";
+import {useDocumentColorScheme} from "@chumsinc/ui-utils";
 
 export default function App() {
     const dispatch = useAppDispatch();
-    const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
+    const colorScheme = useDocumentColorScheme();
 
     useEffect(() => {
         dispatch(loadStatusList());
-    }, []);
+    }, [dispatch]);
 
-    const theme = React.useMemo(
+    const theme = useMemo(
         () =>
             createTheme({
                 palette: {
-                    mode: prefersDarkMode ? 'dark' : 'light',
+                    mode: colorScheme,
                 },
             }),
-        [prefersDarkMode],
+        [colorScheme],
     );
 
 
@@ -45,10 +45,10 @@ export default function App() {
             </div>
             <div className="row g-3">
                 <div className="col-auto">
-                    <span className="bi-person me-1" /> Created By User Name
+                    <span className="bi-person me-1"/> Created By User Name
                 </div>
                 <div className="col-auto">
-                    <span className="bi-person-fill text-primary me-1" /> Updated By User Name
+                    <span className="bi-person-fill text-primary me-1"/> Updated By User Name
                 </div>
             </div>
         </ThemeProvider>

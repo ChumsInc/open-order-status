@@ -13,5 +13,5 @@ $ui = new WebUI2([
 ]);
 
 $ui->addCSS('public/styles.css')
-    ->addManifestJSON('public/js/manifest.json')
+    ->addViteManifest()
     ->render();

@@ -1,5 +1,4 @@
-import React from "react";
-import {SalesOrderRow} from "../../types";
+import type {SalesOrderRow} from "../../types";
 import SalesOrderToggle from "./SalesOrderToggle";
 
 const SalesOrderNoRange = ({row, salesOrderNos, onClick}: {

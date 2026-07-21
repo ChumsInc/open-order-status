@@ -1,4 +1,4 @@
-import React, {Fragment, useEffect} from 'react';
+import {Fragment, useEffect} from 'react';
 import {useAppDispatch, useAppSelector} from "@/app/configureStore";
 import {useSelector} from "react-redux";
 import {
@@ -9,17 +9,17 @@ import {
     selectSort
 } from "@/ducks/orders/selectors";
 import {
-    DataTableField,
+    type DataTableField,
     DataTableRow,
     SortableTable,
-    SortableTableField,
+    type SortableTableField,
     TablePagination
 } from "@chumsinc/sortable-tables";
-import {SalesOrderRow} from "../../types";
+import type {SalesOrderRow} from "../../types";
 import {calcStatus, friendlyDate, groupKey} from "@/ducks/orders/utils";
 import {customerKey} from "@/utils/utils";
 import {loadOrders, setPage, setRowsPerPage, setSort} from "@/ducks/orders/actions";
-import {SortProps} from "chums-types";
+import type {SortProps} from "chums-types";
 import classNames from "classnames";
 import numeral from "numeral";
 import CancelDateField from "./CancelDateField";
@@ -144,11 +144,11 @@ const OrdersList = () => {
 
     useEffect(() => {
         dispatch(loadOrders());
-    }, [])
+    }, [dispatch])
 
 
     const pageChangeHandler = (page: number) => dispatch(setPage(page));
-    const onChangeSort = (sort: SortProps) => dispatch(setSort(sort));
+    const onChangeSort = (sort: SortProps<SalesOrderRow>) => dispatch(setSort(sort));
     const onChangeRowsPerPage = (rpp: number) => {
         LocalStore.setItem(storageKeys.rowsPerPage, rpp);
         dispatch(setRowsPerPage(rpp));

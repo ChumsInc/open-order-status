@@ -1,16 +1,12 @@
-import React from 'react';
 import {useAppDispatch, useAppSelector} from "@/app/configureStore";
 import ContextAlert from "@/components/alerts/ContextAlert";
-import {StyledErrorAlert} from "@/types/alerts";
+import type {StyledErrorAlert} from "@/types/alerts";
 import {dismissAlert, selectAlerts} from "@/ducks/alerts";
+import {isFilterFunction} from "@/components/alerts/utils.ts";
 
 
 export type ContextFilterFunction = (alerts: StyledErrorAlert) => boolean;
 export type ContextFilter = string | ContextFilterFunction;
-
-export function isFilterFunction(fn: ContextFilter): fn is ContextFilterFunction {
-    return typeof fn === "function";
-}
 
 export interface AlertListProps {
     contextFilter?: ContextFilter;

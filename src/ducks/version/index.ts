@@ -1,7 +1,7 @@
 import {QueryStatus} from "@reduxjs/toolkit/query";
 import {createAsyncThunk, createReducer} from "@reduxjs/toolkit";
 import {fetchVersion} from "../../api/version";
-import {RootState} from "../../app/configureStore";
+import type {RootState} from "../../app/configureStore";
 
 export interface VersionState  {
     value: string;
@@ -21,7 +21,7 @@ export const loadVersion = createAsyncThunk<string|null>(
     async () => {
         return await fetchVersion();
     }, {
-        condition: (arg, {getState}) => {
+        condition: (_, {getState}) => {
             const state = getState() as RootState;
             return !selectVersionLoading(state);
         }

@@ -1,4 +1,3 @@
-import React from "react";
 import FilterByDate from "./FilterByDate";
 import ImprintToggle from "./ImprintToggle";
 import ReloadButton from "./ReloadButton";

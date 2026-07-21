@@ -1,7 +1,7 @@
-import {OpenOrderStatusCode, OpenOrderStatusGroup} from "../../types";
+import type {OpenOrderStatusCode, OpenOrderStatusGroup} from "../../types";
 import {createAction, createAsyncThunk, createReducer, createSelector} from "@reduxjs/toolkit";
 import {fetchStatusList} from "../../api";
-import {RootState} from "../../app/configureStore";
+import type {RootState} from "../../app/configureStore";
 
 export interface OrderStatusState {
     list: OpenOrderStatusCode[];
@@ -22,7 +22,7 @@ export const initialState: OrderStatusState = {
 export const selectStatusList = (state: RootState) => state.orderStatus.list;
 export const selectStatusLoading = (state: RootState) => state.orderStatus.loading;
 
-export const selectStatusCode = (state:RootState, code:string|null) => code;
+export const selectStatusCode = (_state:RootState, code:string|null) => code;
 export const selectStatusByCode = createSelector(
     [selectStatusList, selectStatusCode],
     (list, code) => {
@@ -58,7 +58,7 @@ export const loadStatusList = createAsyncThunk<OpenOrderStatusCode[]>(
         return await fetchStatusList();
     },
     {
-        condition: (arg, {getState}) => {
+        condition: (_, {getState}) => {
             const state = getState() as RootState;
             return !selectStatusLoading(state);
         }

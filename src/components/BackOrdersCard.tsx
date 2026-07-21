@@ -1,9 +1,9 @@
-import React, {useEffect, useState} from 'react'
+import {startTransition, useEffect, useState} from 'react'
 import {useSelector} from "react-redux";
 import {selectBackOrders, selectTotals} from "@/ducks/orders/selectors";
 import {useAppDispatch} from "@/app/configureStore";
 import StatusCard from "./StatusCard";
-import {GroupTotal} from "../types";
+import type {GroupTotal} from "../types";
 import {toggleShowBackorders} from "@/ducks/orders/actions";
 import {LocalStore} from "@chumsinc/ui-utils";
 import {storageKeys} from "@/api/preferences";
@@ -15,7 +15,9 @@ export default function BackOrdersCard() {
     const [total, setTotal] = useState<GroupTotal | null>(totals?.backorder ?? null);
 
     useEffect(() => {
-        setTotal(totals.backorder ?? null);
+        startTransition(() => {
+            setTotal(totals.backorder ?? null);
+        })
     }, [totals]);
 
     const visibilityToggle = (checked: boolean) => {

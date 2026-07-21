@@ -1,5 +1,4 @@
-import React from 'react';
-import {SalesOrderRow} from "../../types";
+import type {SalesOrderRow} from "../../types";
 
 export default function InvoiceBadge({row}: { row: SalesOrderRow }) {
     if (!row.CurrentInvoiceNo) {

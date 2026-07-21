@@ -1,5 +1,4 @@
-import React from 'react';
-import {SalesOrderRow} from "@/src/types";
+import type {SalesOrderRow} from "@/src/types";
 import {friendlyDate} from "@/ducks/orders/utils";
 import dayjs from "dayjs";
 

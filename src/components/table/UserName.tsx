@@ -1,5 +1,4 @@
-import React from 'react';
-import {SalesOrderRow} from "../../types";
+import type {SalesOrderRow} from "../../types";
 import {dateCreated, dateUpdated} from "@/utils/utils";
 import Badge from "react-bootstrap/Badge";
 

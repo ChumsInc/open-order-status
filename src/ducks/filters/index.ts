@@ -1,4 +1,4 @@
-import {ARDivisionList, CustomerList} from "../../types";
+import type {ARDivisionList, CustomerList} from "../../types";
 import {createReducer} from "@reduxjs/toolkit";
 import {loadOrders} from "../orders/actions";
 import {basicCustomer, customerKey, getContainerEl} from "@/utils/utils";

@@ -1,5 +1,5 @@
-import React, {useEffect, useRef, useState} from 'react';
-import Alert, {AlertProps} from 'react-bootstrap/Alert'
+import {type ReactNode, useEffect, useRef, useState} from 'react';
+import Alert, {type AlertProps} from 'react-bootstrap/Alert'
 import Badge from "react-bootstrap/Badge";
 import {commaFormatter} from "@chumsinc/ui-utils";
 
@@ -8,7 +8,7 @@ export interface ContextAlertProps extends Omit<AlertProps, 'onClose'> {
     context?: string;
     count?: number;
     onClose?: () => void;
-    children?: React.ReactNode
+    children?: ReactNode
 }
 
 export default function ContextAlert({
@@ -23,7 +23,7 @@ export default function ContextAlert({
                                          children
                                      }: ContextAlertProps) {
     const ref = useRef<number>(0);
-    const [show, setShow] = useState(false);
+    const [_show, setShow] = useState(false);
 
     useEffect(() => {
         ref.current = window.setTimeout(() => {

@@ -1,4 +1,4 @@
-import React, {ChangeEvent} from 'react';
+import {type ChangeEvent} from 'react';
 import {useAppDispatch, useAppSelector} from "@/app/configureStore";
 import {selectChumsTotals, selectShowChums} from "@/ducks/orders/selectors";
 import {toggleShowChums} from "@/ducks/orders/actions";

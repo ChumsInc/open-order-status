@@ -1,4 +1,4 @@
-import React, {ChangeEvent} from 'react';
+import {type ChangeEvent} from 'react';
 import {useAppDispatch, useAppSelector} from "@/app/configureStore";
 import {selectShowWeb, selectWebTotals} from "@/ducks/orders/selectors";
 import {toggleShowWeb} from "@/ducks/orders/actions";

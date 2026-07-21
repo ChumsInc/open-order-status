@@ -1,5 +1,5 @@
-import {BasicCustomer, SalesOrderGroupList, SalesOrderRow, SalesOrderTotals} from "../../types";
-import {SortProps} from "chums-types";
+import type {BasicCustomer, SalesOrderGroupList, SalesOrderRow, SalesOrderTotals} from "../../types";
+import type {SortProps} from "chums-types";
 import {createReducer} from "@reduxjs/toolkit";
 import {buildTotals, defaultOrderSorter, groupKey, initialState} from "./utils";
 import {
@@ -95,7 +95,7 @@ const ordersReducer = createReducer(initialState, (builder) => {
                 }
                 state.grouping[key].count += 1;
                 state.grouping[key].salesOrders = [...state.grouping[key].salesOrders, row].sort(defaultOrderSorter);
-                state.grouping[key].row.OrderAmt = new Decimal(state.grouping[key].row.OrderAmt).add(row.OrderAmt).toString();
+                state.grouping[key].row.OrderAmt = new Decimal(state.grouping[key].row.OrderAmt).plus(row.OrderAmt).toString();
                 state.grouping[key].row.ShipVia = row.ShipVia === state.grouping[key].row.ShipVia ? row.ShipVia : VALUE_VARIES;
                 state.grouping[key].row.BillToName = row.BillToName === state.grouping[key].row.BillToName ? row.BillToName : row.CustomerName;
                 state.grouping[key].row.UserLogon = row.UserLogon === state.grouping[key].row.UserLogon ? row.UserLogon : VALUE_VARIES;

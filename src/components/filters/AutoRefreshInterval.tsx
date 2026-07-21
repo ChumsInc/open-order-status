@@ -1,4 +1,4 @@
-import React, {ChangeEvent, useId} from 'react';
+import {type ChangeEvent, useId} from 'react';
 import {useAppDispatch, useAppSelector} from "@/app/configureStore";
 import {selectRefreshInterval} from "@/ducks/filters/selectors";
 import {setRefreshInterval} from "@/ducks/filters/actions";

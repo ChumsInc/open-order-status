@@ -1,9 +1,9 @@
 import {createAction, createAsyncThunk} from "@reduxjs/toolkit";
-import {BasicCustomer, SalesOrderRow, SalesOrderStatusData, SalesOrderStatusRow, ToggleExpandOrder} from "../../types";
+import type {BasicCustomer, SalesOrderRow, SalesOrderStatusData, SalesOrderStatusRow, ToggleExpandOrder} from "../../types";
 import {fetchOrdersList, postOrderStatus} from "../../api";
-import {RootState} from "../../app/configureStore";
+import type {RootState} from "../../app/configureStore";
 import {selectFetchOrderOptions, selectLoading, selectOrderGroup} from "./selectors";
-import {SortProps} from "chums-types";
+import type {SortProps} from "chums-types";
 
 export const setARDivisionNoFilter = createAction<string>('orders/filters/setARDivisionNo');
 export const setCustomerFilter = createAction<BasicCustomer | null>('orders/filters/setCustomer');
@@ -37,7 +37,7 @@ export interface LoadOrdersResponse {
 
 export const loadOrders = createAsyncThunk<LoadOrdersResponse>(
     'orders/load',
-    async (arg, {getState}) => {
+    async (_, {getState}) => {
         const state = getState() as RootState
         const options = selectFetchOrderOptions(state);
         const orders = await fetchOrdersList(options);
@@ -47,7 +47,7 @@ export const loadOrders = createAsyncThunk<LoadOrdersResponse>(
         }
     },
     {
-        condition: (arg, {getState}) => {
+        condition: (_, {getState}) => {
             const state = getState() as RootState;
             return !selectLoading(state);
         }

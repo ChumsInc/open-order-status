@@ -1,4 +1,3 @@
-import React from 'react';
 import ARDivisionFilter from "./ARDivisionFilter";
 import UserFilter from "./UserFilter";
 import SalesOrderFilter from "./SalesOrderFilter";

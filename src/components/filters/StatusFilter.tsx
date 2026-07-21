@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import {startTransition, useEffect, useState} from "react";
 import {useAppDispatch, useAppSelector} from "../../app/configureStore";
 import {useSelector} from "react-redux";
 import {selectStatusFilter} from "../../ducks/orders/selectors";
@@ -6,7 +6,7 @@ import OrderStatusSelect from "../../ducks/order-status/OrderStatusSelect";
 import classNames from "classnames";
 import {selectStatusByCode, selectStatusList} from "../../ducks/order-status";
 import {setStatusFilter} from "../../ducks/orders/actions";
-import {OpenOrderStatusCode} from "../../types";
+import type {OpenOrderStatusCode} from "../../types";
 import {statusButtonClassName} from "../../ducks/order-status/utils";
 import ButtonGroup from "react-bootstrap/ButtonGroup";
 import Button from "react-bootstrap/Button";
@@ -20,8 +20,10 @@ function StatusFilter() {
     const [current, setCurrent] = useState<OpenOrderStatusCode | null>(null);
 
     useEffect(() => {
-        const [current] = list.filter(sc => sc.StatusCode === statusCode);
-        setCurrent(current ?? null);
+        startTransition(() => {
+            const [current] = list.filter(sc => sc.StatusCode === statusCode);
+            setCurrent(current ?? null);
+        })
     }, [statusCode, list]);
 
     const statusChangeHandler = (code: string | null) => {

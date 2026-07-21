@@ -1,4 +1,3 @@
-import React from 'react';
 import OnTimeCard from "./OnTimeCard";
 import LateOrdersCard from "./LateOrdersCard";
 import BackOrdersCard from "./BackOrdersCard";

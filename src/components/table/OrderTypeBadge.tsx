@@ -1,5 +1,4 @@
-import React from 'react';
-import {SalesOrderRow} from "../../types";
+import type {SalesOrderRow} from "../../types";
 import classNames from "classnames";
 
 const statusClassName = ({OrderStatus, OrderType}: SalesOrderRow): string | null => {

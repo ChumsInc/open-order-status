@@ -1,4 +1,4 @@
-import React, {ChangeEvent, useEffect} from "react";
+import {type ChangeEvent, useEffect} from "react";
 import {useAppDispatch} from "@/app/configureStore";
 import {useSelector} from "react-redux";
 import {selectARDivisionNo} from "@/ducks/orders/selectors";
@@ -14,7 +14,7 @@ const ARDivisionFilter = () => {
 
     useEffect(() => {
         dispatch(loadDivisions())
-    }, [])
+    }, [dispatch])
 
     const changeHandler = (ev:ChangeEvent<HTMLSelectElement>) => {
         dispatch(setARDivisionNoFilter(ev.target.value ?? ''));

@@ -1,8 +1,8 @@
-import {RootState} from "@/app/configureStore";
+import type {RootState} from "@/app/configureStore";
 import {createSelector} from "@reduxjs/toolkit";
 import {calcStatus, orderSorter, showOrderType} from "./utils";
-import {FetchOrdersOptions} from "@/src/api";
-import {SalesOrderRow} from "../../types";
+import type {FetchOrdersOptions} from "@/src/api";
+import type {SalesOrderRow} from "../../types";
 import {customerKey} from "@/utils/utils";
 import dayjs from "dayjs";
 
@@ -34,7 +34,7 @@ export const selectRowsPerPage = (state: RootState) => state.orders.rowsPerPage;
 export const selectSort = (state: RootState) => state.orders.sort;
 export const selectGrouping = (state: RootState) => state.orders.grouping;
 export const selectExpandAll = (state: RootState) => state.orders.expandAll;
-export const selectOrderGroupKey = (state: RootState, key: string) => key;
+export const selectOrderGroupKey = (_: RootState, key: string) => key;
 export const selectOrdersUpdated = (state: RootState) => state.orders.updated;
 export const selectStatusCounts = (state: RootState) => state.orders.counts;
 
@@ -82,7 +82,7 @@ export const selectFilteredOrders = createSelector(
         selectSort,
 
     ],
-    (list, imprint, arDivisionNo, customer, user,
+    (list, _imprint, arDivisionNo, customer, user,
      statusCode, onTime, late, backOrders, onCancelDate, pastCancelDate,
      invoicing, showChums, showEDI, showWeb, showTest, salesOrderNo, sort): SalesOrderRow[] => {
         return Object.values(list)

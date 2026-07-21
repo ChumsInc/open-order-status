@@ -1,4 +1,4 @@
-import React, {useEffect, useRef} from 'react';
+import {useEffect, useRef} from 'react';
 import {useAppDispatch, useAppSelector} from "@/app/configureStore";
 import {useSelector} from "react-redux";
 import {selectLoading} from "@/ducks/orders/selectors";
@@ -22,7 +22,7 @@ const ReloadButton = () => {
         return () => {
             window.clearTimeout(refreshRef.current);
         }
-    }, [refreshInterval, loading]);
+    }, [refreshInterval, loading, dispatch]);
 
     const reloadHandler = () => {
         dispatch(loadOrders())

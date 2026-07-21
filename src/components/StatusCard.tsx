@@ -1,4 +1,4 @@
-import React, {ChangeEvent, useId} from 'react';
+import {type ChangeEvent, useId} from 'react';
 import numeral from "numeral";
 import FormCheck from "react-bootstrap/FormCheck";
 import classNames from "classnames";

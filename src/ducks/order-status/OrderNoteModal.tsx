@@ -1,5 +1,5 @@
-import React, {useState} from "react";
-import {SalesOrderRow} from "../../types";
+import {useState} from "react";
+import type {SalesOrderRow} from "../../types";
 import {useAppDispatch} from "../../app/configureStore";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";

@@ -1,5 +1,4 @@
-import React from 'react';
-import {OpenOrderStatusCode, SalesOrderRow} from "../../types";
+import type {OpenOrderStatusCode, SalesOrderRow} from "../../types";
 import {useSelector} from "react-redux";
 import {selectStatusList} from "./index";
 import dayjs from "dayjs";

@@ -3,3 +3,5 @@
 /public/js
 /public/.sass-cache
 /**/*.css.map
+/dist
+/stats.html

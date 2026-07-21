@@ -1,5 +1,4 @@
-import React from 'react';
-import {SalesOrderRow} from "../../types";
+import type {SalesOrderRow} from "../../types";
 import {useAppDispatch, useAppSelector} from "@/app/configureStore";
 import {useSelector} from "react-redux";
 import {

@@ -1,10 +1,10 @@
-import React, {useId} from 'react';
+import {type SyntheticEvent, useId} from 'react';
 import {useAppDispatch, useAppSelector} from "@/app/configureStore";
 import {selectFilteredCustomers} from "@/ducks/filters/selectors";
 import {selectCustomer} from "@/ducks/orders/selectors";
 import {customerKey} from "@/utils/utils";
 import {useAutocomplete} from "@mui/material";
-import {BasicCustomer} from "../../types";
+import type {BasicCustomer} from "../../types";
 import {setCustomerFilter} from "@/ducks/orders/actions";
 import {Dropdown, InputGroup} from "react-bootstrap";
 import Stack from "react-bootstrap/Stack";
@@ -21,7 +21,7 @@ export default function CustomerDropDown() {
     //     setInputValue(customer ? customerKey(customer) : '');
     // }, [customer]);
 
-    const changeHandler = (ev: React.SyntheticEvent, value: BasicCustomer | null) => {
+    const changeHandler = (_ev: SyntheticEvent, value: BasicCustomer | null) => {
         dispatch(setCustomerFilter(value));
     }
 

@@ -1,4 +1,4 @@
-import React, {MouseEvent} from "react";
+import {type MouseEvent} from "react";
 import {useAppDispatch} from "@/app/configureStore";
 import {toggleExpandAllGroups} from "@/ducks/orders/actions";
 import {useSelector} from "react-redux";

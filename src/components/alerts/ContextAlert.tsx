@@ -1,11 +1,11 @@
-import React from 'react';
-import Alert, {AlertProps} from 'react-bootstrap/Alert'
+import Alert, {type AlertProps} from 'react-bootstrap/Alert'
 import {Badge} from "react-bootstrap";
 import numeral from "numeral";
-import {StyledErrorAlert} from "@/types/alerts";
+import type {StyledErrorAlert} from "@/types/alerts";
+import type {ReactNode} from "react";
 
 export interface ContextAlertProps extends Pick<StyledErrorAlert, 'context' | 'count'>, AlertProps {
-    children?: React.ReactNode;
+    children?: ReactNode;
 }
 
 export default function ContextAlert({context, count, children, ...alertProps}: ContextAlertProps) {

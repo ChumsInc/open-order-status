@@ -1,7 +1,8 @@
-import React, {useState} from 'react';
-import {SalesOrderRow} from "../../types";
+import type {MouseEvent} from 'react';
+import {useState} from 'react';
+import type {SalesOrderRow} from "../../types";
 import classNames from "classnames";
-import {RootState, useAppDispatch} from "../../app/configureStore";
+import {type RootState, useAppDispatch} from "../../app/configureStore";
 import {selectStatusList} from "./index";
 import {useSelector} from "react-redux";
 import OrderStatusSelect from "./OrderStatusSelect";
@@ -30,7 +31,7 @@ const OrderStatusContainer = ({
     const groupStatus = !!group && !group.expanded && group.salesOrders.length > 1 && !salesOrderFilter;
     const saving = groupStatus ? group?.saving : row.saving;
 
-    const handleClick = (ev: React.MouseEvent<HTMLButtonElement>) => {
+    const handleClick = (ev: MouseEvent<HTMLButtonElement>) => {
         if (saving) {
             return;
         }
