@@ -68,7 +68,7 @@ const OrderStatusContainer = ({
     return (
         <div>
             <div className="btn-group btn-group-sm">
-                <Tooltip title={<OrderStatusTooltipTitle row={row} currentStatus={currentStatus}/>} arrow placement="left">
+                <Tooltip title={<OrderStatusTooltipTitle row={row} />} arrow placement="left">
                     <button className={classNames('btn btn-sm btn-status', statusButtonClassName({statusCode: row.status?.StatusCode, colorCode: row.status?.colorCode}))}
                             onClick={handleClick}>
                         {saving && (

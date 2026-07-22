@@ -27,6 +27,7 @@ export interface CustomerList {
 export interface StatusHistoryRow {
     StatusCode: string;
     User: string;
+    Notes?: string;
     timestamp: string;
 }
 
@@ -39,6 +40,7 @@ export interface SalesOrderStatusRow {
     User: string|null;
     StatusType?: string|null;
     StatusHistory?: StatusHistoryRow[]|null;
+    statusHistory?: StatusHistoryRow[]|null;
     timestamp: string|null;
 }
 
