@@ -78,7 +78,7 @@ const fields: SortableTableField<SalesOrderRow>[] = [
         field: 'OrderAmt',
         title: 'Total',
         sortable: true,
-        className: 'text-end',
+        align: 'end',
         render: (row) => numeral(row.OrderAmt).format('$0,0')
     },
     // {field: 'Comment', title: 'Comment', sortable: true},
@@ -87,7 +87,7 @@ const fields: SortableTableField<SalesOrderRow>[] = [
         title: 'Status',
         render: row => <OrderStatusContainer row={row}/>,
         sortable: true,
-        className: 'text-end'
+        align: 'end',
     }
 ];
 
