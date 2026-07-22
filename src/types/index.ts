@@ -39,7 +39,6 @@ export interface SalesOrderStatusRow {
     Notes: string|null;
     User: string|null;
     StatusType?: string|null;
-    StatusHistory?: StatusHistoryRow[]|null;
     statusHistory?: StatusHistoryRow[]|null;
     timestamp: string|null;
 }
