@@ -75,7 +75,7 @@ export async function postOrderStatus(arg:SalesOrderStatusData):Promise<SalesOrd
 
 export async function fetchARDivisions():Promise<ARDivisionList> {
     try {
-        const url = '/api/search/division/chums';
+        const url = '/api/search/division.json';
         const res = await fetchJSON<{result: ARDivisionResponse[]}>(url, {cache: 'no-cache'});
         const response:ARDivisionList = {};
         res?.result?.forEach(div => {
