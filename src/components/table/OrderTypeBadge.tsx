@@ -20,7 +20,7 @@ const OrderTypeBadge = ({row}: { row: SalesOrderRow }) => {
         return null
     }
     return (
-        <span className={classNames('badge', className)}>
+        <span className={classNames('badge me-1', className)}>
             {row.OrderType}/{row.OrderStatus}
         </span>
     )

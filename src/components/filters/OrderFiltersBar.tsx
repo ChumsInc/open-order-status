@@ -10,7 +10,7 @@ import Col from "react-bootstrap/Col";
 const OrderFiltersBar = () => {
     return (
         <>
-            <Row className="g-3 align-items-baseline">
+            <Row className="g-3 mb-3 align-items-baseline">
                 <Col xs="auto">
                     Filters:
                 </Col>

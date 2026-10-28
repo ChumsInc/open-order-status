@@ -5,9 +5,9 @@ import Badge from "react-bootstrap/Badge";
 const UserName = ({row}: { row: SalesOrderRow }) => {
     return (
         <div>
-            {row.isB2B && (<Badge bg="primary">B2B</Badge>)}
-            {row.isEDI && (<Badge bg="info">EDI</Badge>)}
-            {row.isWebsite && (<Badge bg="secondary">Shopify</Badge>)}
+            {row.isB2B && (<Badge bg="primary" className="me-1">B2B</Badge>)}
+            {row.isEDI && (<Badge bg="info" className="me-1">EDI</Badge>)}
+            {row.isWebsite && (<Badge bg="secondary" className="me-1">Shopify</Badge>)}
             <div>
                 <div>
                     <span className="bi-person me-1" />

@@ -1,6 +1,7 @@
 import {createAction, createReducer, isRejected} from "@reduxjs/toolkit";
 import type {RootState} from "@/app/configureStore";
 import type {StyledErrorAlert} from "@/types/alerts";
+import type {ErrorAlert} from "@chumsinc/ui-utils";
 
 
 export interface AlertsState {
@@ -13,7 +14,7 @@ export const initialAlertsState: AlertsState = {
     list: [],
 }
 
-export const dismissAlert = createAction<number>('alerts/dismiss');
+export const dismissAlert = createAction<ErrorAlert>('alerts/dismiss');
 export const addAlert = createAction<StyledErrorAlert>('alerts/addAlert');
 
 export const selectAlerts = (state: RootState) => state.alerts.list;
@@ -21,7 +22,7 @@ export const selectAlerts = (state: RootState) => state.alerts.list;
 const alertsReducer = createReducer(initialAlertsState, (builder) => {
     builder
         .addCase(dismissAlert, (state, action) => {
-            state.list = state.list.filter(alert => alert.id !== action.payload);
+            state.list = state.list.filter(alert => alert.id !== action.payload.id);
         })
         .addCase(addAlert, (state, action) => {
             const [contextAlert] = state.list.filter(alert => action.payload.context !== '' && alert.context === action.payload.context)
@@ -49,6 +50,7 @@ const alertsReducer = createReducer(initialAlertsState, (builder) => {
                 } else {
                     state.list.push({
                         context,
+                        variant: 'danger',
                         message: action.error.message ?? '',
                         id: state.nextId,
                         count: 1

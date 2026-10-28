@@ -3,6 +3,7 @@ import ContextAlert from "@/components/alerts/ContextAlert";
 import type {StyledErrorAlert} from "@/types/alerts";
 import {dismissAlert, selectAlerts} from "@/ducks/alerts";
 import {isFilterFunction} from "@/components/alerts/utils.ts";
+import type {ErrorAlert} from "@chumsinc/ui-utils";
 
 
 export type ContextFilterFunction = (alerts: StyledErrorAlert) => boolean;
@@ -16,8 +17,8 @@ const AlertList = ({contextFilter}: AlertListProps) => {
     const dispatch = useAppDispatch();
     const list = useAppSelector(selectAlerts);
 
-    const dismissHandler = (id: number) => {
-        dispatch(dismissAlert(id));
+    const dismissHandler = (alert:ErrorAlert) => {
+        dispatch(dismissAlert(alert));
     }
 
     return (
@@ -31,7 +32,7 @@ const AlertList = ({contextFilter}: AlertListProps) => {
                     ))
                 .map(alert => (
                     <ContextAlert key={alert.id} variant={alert.variant} dismissible
-                                  onClose={() => dismissHandler(alert.id)}
+                                  onClose={() => dismissHandler(alert)}
                                   context={alert.context} count={alert.count}>
                         {alert.message}
                     </ContextAlert>

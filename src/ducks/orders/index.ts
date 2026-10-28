@@ -30,11 +30,13 @@ import {
 } from "./actions";
 import Decimal from "decimal.js";
 import {VALUE_VARIES} from "@/utils/utils";
+import {dismissAlert} from "@/ducks/alerts";
 
 export type OrderStatusCounts = Record<string, number>;
 
 export interface OrdersState {
     grouping: SalesOrderGroupList;
+    status: 'init'|'idle'|'loading'|'saving'|'rejected';
     loading: boolean;
     loaded: boolean;
     filters: {
@@ -74,9 +76,11 @@ const ordersReducer = createReducer(initialState, (builder) => {
             state.filters.leadTime = action.payload;
         })
         .addCase(loadOrders.pending, (state) => {
+            state.status = 'loading';
             state.loading = true;
         })
         .addCase(loadOrders.fulfilled, (state, action) => {
+            state.status = 'idle';
             state.loading = false;
             state.grouping = {};
             state.counts = {};
@@ -119,9 +123,11 @@ const ordersReducer = createReducer(initialState, (builder) => {
             state.updated = action.payload.updated;
         })
         .addCase(loadOrders.rejected, (state) => {
+            state.status = 'rejected';
             state.loading = false;
         })
         .addCase(saveOrderStatus.pending, (state, action) => {
+            state.status = 'saving';
             const group = state.grouping[action.meta.arg.groupKey];
             if (group) {
                 if (group.row.SalesOrderNo === action.meta.arg.SalesOrderNo) {
@@ -135,6 +141,7 @@ const ordersReducer = createReducer(initialState, (builder) => {
             }
         })
         .addCase(saveOrderStatus.fulfilled, (state, action) => {
+            state.status = 'idle';
             const group = state.grouping[action.meta.arg.groupKey];
             if (group) {
                 const existing = group.salesOrders.filter(row => row.SalesOrderNo !== action.payload?.SalesOrderNo);
@@ -164,6 +171,7 @@ const ordersReducer = createReducer(initialState, (builder) => {
             })
         })
         .addCase(saveOrderStatus.rejected, (state, action) => {
+            state.status = 'rejected';
             const group = state.grouping[action.meta.arg.groupKey];
             if (group) {
                 group.salesOrders = [
@@ -299,6 +307,11 @@ const ordersReducer = createReducer(initialState, (builder) => {
         .addCase(setRowsPerPage, (state, action) => {
             state.rowsPerPage = action.payload;
             state.page = 0;
+        })
+        .addCase(dismissAlert, (state, action) => {
+            if (action.payload.context === loadOrders.typePrefix || action.payload.context === saveOrderStatus.typePrefix) {
+                state.status = 'idle'
+            }
         })
 })
 

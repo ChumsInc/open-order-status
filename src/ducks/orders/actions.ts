@@ -1,8 +1,14 @@
 import {createAction, createAsyncThunk} from "@reduxjs/toolkit";
-import type {BasicCustomer, SalesOrderRow, SalesOrderStatusData, SalesOrderStatusRow, ToggleExpandOrder} from "../../types";
+import type {
+    BasicCustomer,
+    SalesOrderRow,
+    SalesOrderStatusData,
+    SalesOrderStatusRow,
+    ToggleExpandOrder
+} from "../../types";
 import {fetchOrdersList, postOrderStatus} from "../../api";
 import type {RootState} from "../../app/configureStore";
-import {selectFetchOrderOptions, selectLoading, selectOrderGroup} from "./selectors";
+import {selectFetchOrderOptions, selectOrderGroup, selectOrdersStatus} from "./selectors";
 import type {SortProps} from "chums-types";
 
 export const setARDivisionNoFilter = createAction<string>('orders/filters/setARDivisionNo');
@@ -35,7 +41,7 @@ export interface LoadOrdersResponse {
     updated: string;
 }
 
-export const loadOrders = createAsyncThunk<LoadOrdersResponse>(
+export const loadOrders = createAsyncThunk<LoadOrdersResponse, void, { state: RootState }>(
     'orders/load',
     async (_, {getState}) => {
         const state = getState() as RootState
@@ -49,7 +55,8 @@ export const loadOrders = createAsyncThunk<LoadOrdersResponse>(
     {
         condition: (_, {getState}) => {
             const state = getState() as RootState;
-            return !selectLoading(state);
+            const status = selectOrdersStatus(state);
+            return status === 'idle' || status === 'init';
         }
     }
 )
@@ -62,12 +69,13 @@ export const saveOrderStatus = createAsyncThunk<SalesOrderStatusRow | null, Sale
     {
         condition: (arg, {getState}) => {
             const state = getState() as RootState;
+            const status = selectOrdersStatus(state);
             const group = selectOrderGroup(state, arg.groupKey);
             if (!group) {
                 return false;
             }
             const [salesOrder] = group.salesOrders.filter(row => row.SalesOrderNo === arg.SalesOrderNo);
-            return !!salesOrder && !salesOrder.saving;
+            return !!salesOrder && !salesOrder.saving && status === 'idle';
         }
     }
 )

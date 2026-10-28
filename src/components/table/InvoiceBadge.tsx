@@ -7,7 +7,7 @@ export default function InvoiceBadge({row}: { row: SalesOrderRow }) {
     const params = new URLSearchParams({company: 'chums', invoice: row.CurrentInvoiceNo});
     const invoiceUrl = `/reports/account/invoice/?${params.toString()}`
     return (
-        <a href={invoiceUrl} target="_blank" rel="noreferrer" className="badge text-bg-success">
+        <a href={invoiceUrl} target="_blank" rel="noreferrer" className="badge text-bg-success me-1">
             {row.CurrentInvoiceNo}
         </a>
     )

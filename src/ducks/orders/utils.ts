@@ -39,6 +39,7 @@ export const initialState = (): OrdersState => {
     const container = getContainerEl();
     return {
         grouping: {},
+        status: 'init',
         loading: false,
         loaded: false,
         filters: {

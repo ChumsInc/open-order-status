@@ -7,6 +7,7 @@ import {customerKey} from "@/utils/utils";
 import dayjs from "dayjs";
 
 export const selectLoading = (state: RootState) => state.orders.loading;
+export const selectOrdersStatus = (state: RootState) => state.orders.status;
 export const selectImprint = (state: RootState) => state.orders.filters.imprint;
 export const selectLeadTime = (state: RootState) => state.orders.filters.leadTime;
 export const selectARDivisionNo = (state: RootState) => state.orders.filters.arDivisionNo;
