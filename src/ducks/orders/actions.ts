@@ -87,7 +87,6 @@ export const saveGroupStatus = createAsyncThunk<void, SalesOrderStatusData>(
         const group = selectOrderGroup(state, arg.groupKey);
         for await (const so of group?.salesOrders ?? []) {
             const data: SalesOrderStatusData = {
-                id: so.status?.id ?? 0,
                 groupKey: arg.groupKey,
                 SalesOrderNo: so.SalesOrderNo,
                 StatusCode: arg.StatusCode ?? so.status?.StatusCode ?? '',

@@ -161,7 +161,7 @@ const OrdersList = () => {
 
         return (
             <Fragment key={row.SalesOrderNo}>
-                <DataTableRow fields={fields} row={row} rowClassName={classNames(rowClassName(row), 'border-0')}/>
+                <DataTableRow fields={fields} row={row} rowClassName={classNames(rowClassName(row), 'border-0 has-comment')}/>
                 {!!row.status?.Notes && <DataTableRow fields={notesFields} row={row}
                                                       rowClassName={classNames(rowClassName(row), 'comment-row', {'border-0': !!row.lineComments || !!row.errorMessage})}/>}
                 {!!row.lineComments && <DataTableRow fields={commentFields} row={row}

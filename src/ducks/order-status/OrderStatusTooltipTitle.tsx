@@ -22,7 +22,9 @@ const OrderStatusTooltipTitle = ({row}: {
 
     return (
         <div>
-            {row.status?.statusHistory.map((history, index) => (
+            {[...(row.status?.statusHistory ?? [])]
+                .sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime())
+                .map((history, index) => (
                 <div key={history.timestamp} className="flex flex-column mb-3">
                     <div>{localStatusDescription(history.StatusCode, index)}</div>
                     <div><small>{history.User} - {dayjs(history.timestamp).format('MM/DD/YYYY HH:mm')}</small></div>

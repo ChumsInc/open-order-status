@@ -43,14 +43,12 @@ const OrderStatusContainer = ({
         const key = groupKey(row);
         if (groupStatus) {
             dispatch(saveGroupStatus({
-                id: 0,
                 groupKey: key,
                 SalesOrderNo: row.SalesOrderNo,
                 StatusCode: code ?? '',
             }));
         } else if (row.status?.StatusCode !== code) {
             dispatch(saveOrderStatus({
-                id: row.status?.id ?? 0,
                 groupKey: key,
                 SalesOrderNo: row.SalesOrderNo,
                 StatusCode: code,

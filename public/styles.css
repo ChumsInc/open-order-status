@@ -20,6 +20,16 @@
 .table tr.text-success td {
     color: rgba(var(--bs-success-rgb), var(--bs-text-opacity)) !important;
 }
+
+tr.has-comment td {
+    --bs-border-width: 0;
+}
+tr.comment-row td.text-danger {
+    padding-top: 0;
+    --bs-border-width: 1px;
+    border-bottom-color: rgba(var(--bs-danger-rgb)) !important;
+}
+
 html[data-bs-theme="dark"] .table tr.table-dark td {
     background-color: var(--bs-secondary-bg) !important;
 }

@@ -55,7 +55,6 @@ export async function postOrderStatus(arg:SalesOrderStatusData):Promise<SalesOrd
         const body = {
             action: 'save',
             company: 'chums',
-            id: arg.id,
             so: arg.SalesOrderNo,
             state: arg.StatusCode ?? '',
             note: arg.Notes ?? '',

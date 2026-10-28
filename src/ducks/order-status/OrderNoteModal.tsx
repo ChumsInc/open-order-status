@@ -16,14 +16,12 @@ const OrderNoteModal = ({row, open, onClose, groupStatus}: { row: SalesOrderRow,
     const saveHandler = () => {
         if (groupStatus) {
             dispatch(saveGroupStatus({
-                id: 0,
                 groupKey: groupKey(row),
                 SalesOrderNo: row.SalesOrderNo,
                 Notes: value,
             }));
         } else if (value !== (row.status?.Notes ?? '')) {
             dispatch(saveOrderStatus({
-                id: row.status?.id ?? 0,
                 SalesOrderNo: row.SalesOrderNo,
                 groupKey: groupKey(row),
                 Notes: value.trim(),

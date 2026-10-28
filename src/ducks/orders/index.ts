@@ -107,7 +107,6 @@ const ordersReducer = createReducer(initialState, (builder) => {
                 state.grouping[key].row.status = row.status?.StatusCode === state.grouping[key].row.status?.StatusCode
                     ? (row.status ?? null)
                     : {
-                        id: 0,
                         SalesOrderNo: row.SalesOrderNo,
                         Notes: null,
                         StatusCode: VALUE_VARIES,

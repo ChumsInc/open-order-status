@@ -32,8 +32,7 @@ export interface StatusHistoryRow {
 }
 
 export interface SalesOrderStatusRow {
-    id: number;
-    SalesOrderNo?: string;
+    SalesOrderNo: string;
     StatusCode: string|null;
     colorCode?: string|null;
     Notes: string|null;
@@ -91,12 +90,10 @@ export type SalesOrderTotals = {
     [key in SalesOrderStatusGroup]: GroupTotal;
 };
 
-export interface SalesOrderStatusData {
-    id: number;
-    groupKey: string;
-    SalesOrderNo: string;
+export interface SalesOrderStatusData extends Pick<SalesOrderStatusRow, 'SalesOrderNo'> {
     StatusCode?: string|null;
     Notes?: string|null;
+    groupKey: string;
 }
 
 export interface ToggleExpandOrder {
